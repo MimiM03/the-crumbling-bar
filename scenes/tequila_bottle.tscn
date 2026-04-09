@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bn7kukftnjmaq"]
+
+[ext_resource type="PackedScene" uid="uid://dr12wcjko4jta" path="res://scenes/base_bottle.tscn" id="1_4gf0n"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qsyv6"]
+size = Vector3(0.1, 0.38, 0.2)
+
+[node name="Tequila Bottle" unique_id=811362861 groups=["pickables", "tequila"] instance=ExtResource("1_4gf0n")]
+
+[node name="MeshInstance3D" parent="." index="0" unique_id=1955064074]
+mesh = SubResource("BoxMesh_qsyv6")

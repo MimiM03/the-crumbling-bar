@@ -1,0 +1,28 @@
+# PlacementZone.gd
+extends Area3D
+
+@export var required_group: String = ""
+var is_occupied: bool = true
+var current_object: Area3D
+
+# Returns true only if the zone is empty AND the object is acceptable
+func can_accept(object: Area3D) -> bool:
+	print(!is_occupied)
+	print(object.is_in_group(required_group))
+	return !is_occupied and object.is_in_group(required_group)
+
+# Places object on it's marker
+func place_object(object: Area3D):
+	if !is_occupied:
+		is_occupied = true
+		current_object = object
+		
+		# Snap the bottle to the SnapPoint
+		object.global_position = $SnapPoint.global_position
+		object.global_rotation = $SnapPoint.global_rotation
+		print("Zone full")
+
+func release_object():
+	is_occupied = false
+	current_object = null
+	print("Zone is now empty")

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cv1fe051vudkb"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uroio"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.3
+radial_segments = 8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uroio"]
+height = 0.3
+radius = 0.1
+
+[node name="Mixer" type="Area3D" unique_id=1476808702]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=446317040]
+mesh = SubResource("CylinderMesh_uroio")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=791679340]
+shape = SubResource("CylinderShape3D_uroio")

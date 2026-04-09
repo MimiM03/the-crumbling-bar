@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://s3nbmpxliyw6"]
+
+[ext_resource type="PackedScene" uid="uid://c1631ywoykip3" path="res://scenes/bar.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cnmb3r1hin7wo" path="res://scenes/player.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://bclwag1i8b420" path="res://scenes/glass_wine.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://c8elryja5bcqu" path="res://scenes/whiskey_bottle.tscn" id="4_gee14"]
+[ext_resource type="PackedScene" uid="uid://cs3ysn4i4b6uv" path="res://scenes/vodka_bottle.tscn" id="5_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://beb46pl2ia5wn" path="res://scenes/mixer-machine.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://md3siaqjarrn" path="res://scenes/base_zone.tscn" id="5_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://cv1fe051vudkb" path="res://scenes/mixer.tscn" id="6_p57ef"]
+[ext_resource type="PackedScene" uid="uid://bn7kukftnjmaq" path="res://scenes/tequila_bottle.tscn" id="6_vtaks"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lnu2h"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_lbhrr"]
+sky_material = SubResource("ProceduralSkyMaterial_lnu2h")
+
+[sub_resource type="Environment" id="Environment_iywne"]
+background_mode = 2
+sky = SubResource("Sky_lbhrr")
+tonemap_mode = 2
+
+[node name="Game" type="Node3D" unique_id=1941939539]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=40969024]
+environment = SubResource("Environment_iywne")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1256541479]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Bar" parent="." unique_id=1974740427 instance=ExtResource("1_uwrxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Glasses" type="Node" parent="." unique_id=755452356]
+
+[node name="Wine" type="Node" parent="Glasses" unique_id=2045416380]
+
+[node name="Wineglass" parent="Glasses/Wine" unique_id=1207764400 instance=ExtResource("3_lnu2h")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -2.14322, 1.001759, 0.7481369)
+
+[node name="Shot" type="Node" parent="Glasses" unique_id=711110547]
+
+[node name="Wineglass2" parent="Glasses/Shot" unique_id=1835176468 instance=ExtResource("3_lnu2h")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.934895, 1.0017592, 0.7481369)
+
+[node name="Single" type="Node" parent="Glasses" unique_id=99096499]
+
+[node name="Wineglass3" parent="Glasses" unique_id=1730627341 instance=ExtResource("3_lnu2h")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.7353828, 1.001759, 0.7481369)
+
+[node name="Double" type="Node" parent="Glasses" unique_id=63614432]
+
+[node name="Wineglass4" parent="Glasses/Double" unique_id=40169690 instance=ExtResource("3_lnu2h")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.507, 1.002, 0.748)
+
+[node name="Player" parent="." unique_id=22417174 instance=ExtResource("2_yqjtg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.110553)
+
+[node name="Drinks" type="Node" parent="." unique_id=890893839]
+
+[node name="Spirit" type="Node" parent="Drinks" unique_id=982895525]
+
+[node name="Whiskey Zone" parent="Drinks/Spirit" unique_id=2109655507 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 2.179, 1.196, 1)
+required_group = "whiskey"
+
+[node name="Whiskey Bottle" parent="Drinks/Spirit/Whiskey Zone" unique_id=811362861 instance=ExtResource("4_gee14")]
+transform = Transform3D(1.010101, 0, 3.5527137e-15, 0, 1.010101, 0, -3.5527137e-15, 0, 1.010101, 0, 0, 0)
+
+[node name="Vodka Zone" parent="Drinks/Spirit" unique_id=609688481 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 1.901, 1.196, 1)
+required_group = "vodka"
+
+[node name="Vodka Bottle" parent="Drinks/Spirit/Vodka Zone" unique_id=643159259 instance=ExtResource("5_0tnpc")]
+transform = Transform3D(1.010101, 0, 3.5527137e-15, 0, 1.010101, 0, -3.5527137e-15, 0, 1.010101, 0, 0, 0)
+
+[node name="Tequila Zone" parent="Drinks/Spirit" unique_id=2011654135 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 1.623, 1.196, 1)
+required_group = "tequila"
+
+[node name="Tequila Bottle" parent="Drinks/Spirit/Tequila Zone" unique_id=1713008491 instance=ExtResource("6_vtaks")]
+transform = Transform3D(1.010101, 0, 3.5527137e-15, 0, 1.010101, 0, -3.5527137e-15, 0, 1.010101, 0, 0, 0)
+
+[node name="Beer" type="Node" parent="Drinks" unique_id=1938318575]
+
+[node name="Wine" type="Node" parent="Drinks" unique_id=1241663878]
+
+[node name="Mixers" type="Node" parent="Drinks" unique_id=1974900512]
+
+[node name="Mixer Machine" parent="Drinks/Mixers" unique_id=627728024 instance=ExtResource("5_iywne")]
+transform = Transform3D(1.44, 0, 0, 0, 1.44, 0, 0, 0, 1.44, 2.9234078, 1.4704084, 0.88206756)
+
+[node name="Mixer" parent="Drinks/Mixers" unique_id=1476808702 instance=ExtResource("6_p57ef")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.547079, 1.1549826, 1.3670855)
+
+[node name="Mixer2" parent="Drinks/Mixers" unique_id=1251188481 instance=ExtResource("6_p57ef")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7377565, 1.1549826, 1.3670855)
+
+[node name="Mixer3" parent="Drinks/Mixers" unique_id=524845484 instance=ExtResource("6_p57ef")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9319012, 1.1549826, 1.3670855)
+
+[node name="Mixer4" parent="Drinks/Mixers" unique_id=263563524 instance=ExtResource("6_p57ef")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0879192, 1.1549826, 1.3670855)

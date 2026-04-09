@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://beb46pl2ia5wn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uroio"]
+size = Vector3(0.665, 0.65, 0.305)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uroio"]
+size = Vector3(0.66430664, 0.6503906, 0.30566406)
+
+[node name="Mixer Machine" type="Area3D" unique_id=627728024]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1118891983]
+mesh = SubResource("BoxMesh_uroio")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1653634234]
+shape = SubResource("BoxShape3D_uroio")

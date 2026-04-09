@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://cnmb3r1hin7wo"]
+
+[ext_resource type="Script" uid="uid://d73ovnbj3xed" path="res://scenes/player.gd" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://dv86jne51it7v" path="res://assets/crosshair001.png" id="2_g2els"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3vyb7"]
+
+[node name="Player" type="CharacterBody3D" unique_id=22417174]
+script = ExtResource("1_3vyb7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1621306174]
+mesh = SubResource("CapsuleMesh_u8vuu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1198499255]
+shape = SubResource("CapsuleShape3D_3vyb7")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=435233284]
+transform = Transform3D(1, 0, 0, 0, 0.9848078, 0.1736482, 0, -0.1736482, 0.9848078, 0, 0.8781818, -0.27393866)
+
+[node name="Control" type="Control" parent="Camera3D" unique_id=1087917919]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D/Control" unique_id=1780154551]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_g2els")
+expand_mode = 1
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1689180894]
+target_position = Vector3(0, 0, -1.5)
+collide_with_areas = true
+
+[node name="CarryObjectRightMarker" type="Marker3D" parent="." unique_id=797763015]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.3983516, 0.55622315, -0.9508406)
