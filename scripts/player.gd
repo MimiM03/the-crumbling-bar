@@ -25,7 +25,7 @@ func _input(event):
 		print(target)
 		# if zone - check if holding smth
 		if target == Target.ZONE:
-			if pickedObjectRight:
+			if pickedObjectRight or pickedObjectLeft:
 				drop_object()
 		#if pickable - check if u can pick up
 		elif target == Target.PICKABLE:
@@ -125,15 +125,16 @@ func pick_up_object(object):
 	
 	
 	print("Obejct picked:" )
-	print(pickedObjectRight)
+	print(object)
+	
 
 # Handles putting down an object
 func drop_object():
-	if !pickedObjectRight and !pickedObjectLeft: return
-	
 	# Check if the zone is the correct
 	var zone = get_nearby_zone()
-	if zone and zone.can_accept(pickedObjectRight):
+	
+	# Handle left and right 
+	if pickedObjectRight and zone.can_accept(pickedObjectRight):
 		$Camera3D/RayCast3D.remove_exception(pickedObjectRight)
 		# Move the object out of the Player's hierarchy and into the zone
 		pickedObjectRight.reparent(zone)
@@ -142,6 +143,15 @@ func drop_object():
 		zone.place_object(pickedObjectRight)
 		
 		pickedObjectRight = null
+	elif pickedObjectLeft and zone.can_accept(pickedObjectLeft):
+		$Camera3D/RayCast3D.remove_exception(pickedObjectLeft)
+		# Move the object out of the Player's hierarchy and into the zone
+		pickedObjectLeft.reparent(zone)
+		
+		# Tell the zone to handle the snapping
+		zone.place_object(pickedObjectLeft)
+		
+		pickedObjectLeft = null
 	else:
 		# If the raycast isn't hitting a valid zone, do nothing 
 		print("No valid zone in sight!")
