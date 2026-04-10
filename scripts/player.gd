@@ -4,11 +4,13 @@ extends CharacterBody3D
 
 const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.1
+enum Target {ZONE, PICKABLE}
 
 @onready var camera: Camera3D = $Camera3D
 var pitch := 0.0
 var yaw := 0.0
 var pickedObjectRight: Area3D
+var pickedObjectLeft: Area3D
 var mouse_visible := false
 
 func _ready() -> void:
@@ -18,12 +20,18 @@ func _ready() -> void:
 func _input(event):
 	# Handle mouse interaction (left button)
 	if event.is_action_pressed("pick"):
-		if pickedObjectRight:
-			drop_object()
-		else:
-			var target = get_pointed_object()
-			if target:
-				pick_up_object(target)
+		#if clicked - check if zone vs pickable
+		var target = ZoneOrPickable()
+		print(target)
+		# if zone - check if holding smth
+		if target == Target.ZONE:
+			if pickedObjectRight:
+				drop_object()
+		#if pickable - check if u can pick up
+		elif target == Target.PICKABLE:
+			var object = get_pointed_object()
+			if object:
+				pick_up_object(object)
 				
 	# Handle mouse visibility in game
 	if event.is_action_pressed("mouse_vis"):
@@ -52,14 +60,21 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("left", "right")
 	velocity.x = direction * SPEED
 
+	var rotation_speed =  deg_to_rad(135) / 0.25
 	# Handle pouring (Q left hand/E right hand):
-	# TODO: add Q: left hand
 	if pickedObjectRight:
 		if Input.is_action_pressed("pour_right"):
-			pickedObjectRight.rotation.x = move_toward(pickedObjectRight.rotation.x, deg_to_rad(-135), deg_to_rad(135) / 0.3 * delta)
+			pickedObjectRight.rotation.x = move_toward(pickedObjectRight.rotation.x, deg_to_rad(-135),  rotation_speed * delta)
 		else:
 			# Return to upright (0 degrees)
-			pickedObjectRight.rotation.x = move_toward(pickedObjectRight.rotation.x, 0, deg_to_rad(135) / 0.3 * delta)
+			pickedObjectRight.rotation.x = move_toward(pickedObjectRight.rotation.x, 0, rotation_speed * delta)
+	if pickedObjectLeft:
+		if Input.is_action_pressed("pour_left"):
+			pickedObjectLeft.rotation.x = move_toward(pickedObjectLeft.rotation.x, deg_to_rad(135),  rotation_speed * delta)
+		else:
+			# Return to upright (0 degrees)
+			pickedObjectLeft.rotation.x = move_toward(pickedObjectLeft.rotation.x, 0, rotation_speed * delta)
+
 	
 	move_and_slide()
 	
@@ -69,34 +84,52 @@ func get_pointed_object():
 		var hit = $Camera3D/RayCast3D.get_collider()
 		print(hit)
 		
-		# can only pick up if object is packable
+		# can only pick up if object is pickable
 		if hit.is_in_group("pickables"):
-			print("found")
+			print("Picked up")
 			return hit
 	return null
 
 # Handles picking up an object
 func pick_up_object(object):
+	var directionRight: bool
+	# if hands empty - pick up with right hand
+	if !pickedObjectRight and !pickedObjectLeft:
+		directionRight = true
+	# if right hand full, left hand empty - pick up with left hand
+	elif !pickedObjectLeft:
+		directionRight = false
+	else:
+		return
+	
 	# Make the zone empty
 	var parent = object.get_parent()
 	print(parent)
 	if parent.has_method("release_object"):
 		parent.release_object()
 	
+	
 	# Fix position and parent
 	object.reparent(self)
 	$Camera3D/RayCast3D.add_exception(object)
-	object.global_position = %CarryObjectRightMarker.global_position
-	object.global_rotation = %CarryObjectRightMarker.global_rotation
+	if directionRight:
+		object.global_position = %CarryObjectRightMarker.global_position
+		object.global_rotation = %CarryObjectRightMarker.global_rotation
+		await get_tree().create_timer(0.1).timeout
+		pickedObjectRight = object
+	else:
+		object.global_position = %CarryObjectLeftMarker.global_position
+		object.global_rotation = %CarryObjectLeftMarker.global_rotation
+		await get_tree().create_timer(0.1).timeout
+		pickedObjectLeft = object
 	
-	await get_tree().create_timer(0.1).timeout
-	pickedObjectRight = object
+	
 	print("Obejct picked:" )
 	print(pickedObjectRight)
 
 # Handles putting down an object
 func drop_object():
-	if !pickedObjectRight: return
+	if !pickedObjectRight and !pickedObjectLeft: return
 	
 	# Check if the zone is the correct
 	var zone = get_nearby_zone()
@@ -121,4 +154,15 @@ func get_nearby_zone():
 		# Check if the thing we hit has our 'can_accept' function
 		if hit_collider.has_method("can_accept"):
 			return hit_collider
+	return null
+
+
+func ZoneOrPickable():
+	if $Camera3D/RayCast3D.is_colliding():
+		var hit_collider = $Camera3D/RayCast3D.get_collider()
+		
+		if hit_collider.has_method("can_accept"):
+			return Target.ZONE
+		elif hit_collider.is_in_group("pickables"):
+			return Target.PICKABLE
 	return null

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cnmb3r1hin7wo"]
 
-[ext_resource type="Script" uid="uid://d73ovnbj3xed" path="res://scenes/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://d73ovnbj3xed" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://dv86jne51it7v" path="res://assets/crosshair001.png" id="2_g2els"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
@@ -52,3 +52,7 @@ collide_with_areas = true
 [node name="CarryObjectRightMarker" type="Marker3D" parent="." unique_id=797763015]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.3983516, 0.55622315, -0.9508406)
+
+[node name="CarryObjectLeftMarker" type="Marker3D" parent="." unique_id=1446667859]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.33252746, 0.55622315, -0.9508406)
