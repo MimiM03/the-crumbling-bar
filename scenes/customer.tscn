@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://rqvsmq0j8qw1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fx2s6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fx2s6"]
+albedo_color = Color(0.90588236, 0.17254902, 0.16862746, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fx2s6"]
+material = SubResource("StandardMaterial3D_fx2s6")
+
+[node name="Customer" type="CharacterBody3D" unique_id=70302993]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=676967836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_fx2s6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=890274925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_fx2s6")
