@@ -58,6 +58,12 @@ mouse_vis={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="floor"
+3d_physics/layer_2="chairs"
+avoidance/layer_2="tables"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
