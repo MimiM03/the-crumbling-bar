@@ -26,7 +26,6 @@ func _physics_process(_delta):
 		# Get the next point in the path
 		var current_pos = global_position
 		var next_pos = nav_agent.get_next_path_position()
-		print(next_pos)
 		# Calculate velocity and move
 		var new_velocity = (next_pos - current_pos).normalized() * SPEED
 		
@@ -84,3 +83,11 @@ func start_looking_for_bar_space():
 func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
 	velocity = velocity.move_toward(safe_velocity, 0.25)
 	move_and_slide()
+
+
+func _on_navigation_agent_3d_target_reached() -> void:
+	# Snap to the exact marker position
+	global_position = target_wait_area.global_position
+	# Stop moving
+	velocity = Vector3.ZERO
+	# TODO: Rotate them to face the bar/counter

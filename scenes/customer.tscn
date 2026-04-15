@@ -24,6 +24,10 @@ shape = SubResource("CapsuleShape3D_fx2s6")
 mesh = SubResource("CapsuleMesh_fx2s6")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1843951864]
+path_desired_distance = 0.4
+target_desired_distance = 0.1
 avoidance_enabled = true
+radius = 0.3
 
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]

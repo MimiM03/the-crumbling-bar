@@ -2,10 +2,12 @@ extends Marker3D
 
 var customerScene: PackedScene = preload("res://scenes/customer.tscn")
 var customerContainer: NodePath = "../Customers"
+
+
 func _ready():
 	# For testing: spawn something every 5 seconds
 	while true:
-		await get_tree().create_timer(2.0).timeout
+		await get_tree().create_timer(3.0).timeout
 		spawn_random_arrival()
 
 func spawn_random_arrival():
@@ -16,7 +18,7 @@ func spawn_random_arrival():
 		print("Spawned 1")
 		spawn_group(1)
 	elif chance < 0.75:
-		# 25% chance for a group of 2
+		 #25% chance for a group of 2
 		print("Spawned 2")
 		spawn_group(2)
 	else:
@@ -39,6 +41,7 @@ func spawn_group(size: int):
 	var isGroup = size > 1
 	
 	for i in range(size):
+		await get_tree().create_timer(float(i)).timeout
 		var customer = customerScene.instantiate()
 		get_node(customerContainer).add_child(customer, true)
 		
