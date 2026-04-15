@@ -151,7 +151,6 @@ script = ExtResource("2_bwlfd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.017218, -0.08381832, 1.1028862)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_5dekh")
 
 [node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair" unique_id=1320041312]
 layers = 2
@@ -164,7 +163,6 @@ shape = SubResource("CylinderShape3D_5dekh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0639822, -0.08381832, 1.0589066)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_5dekh")
 
 [node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair2" unique_id=1921130764]
 layers = 2
@@ -177,7 +175,6 @@ shape = SubResource("CylinderShape3D_5dekh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3238177, -0.08381832, -1.3940048)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_5dekh")
 
 [node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair3" unique_id=1426624388]
 layers = 2
@@ -190,7 +187,6 @@ shape = SubResource("CylinderShape3D_5dekh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8676088, -0.08381832, -1.3445253)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_5dekh")
 
 [node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair4" unique_id=778716346]
 layers = 2
@@ -218,7 +214,6 @@ script = ExtResource("2_bwlfd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00032544136, -0.08380228, -1.590352)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_5dekh")
 
 [node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table2/Chair" unique_id=2126620294]
 layers = 2
@@ -231,7 +226,6 @@ shape = SubResource("CylinderShape3D_5dekh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00032544136, -0.08380228, 1.6146047)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_5dekh")
 
 [node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table2/Chair2" unique_id=16110836]
 layers = 2

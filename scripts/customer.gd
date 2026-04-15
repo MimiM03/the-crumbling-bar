@@ -40,28 +40,28 @@ func _physics_process(_delta):
 		nav_agent.set_velocity(new_velocity)
 
 func start_looking_for_seat():
-	target_seat = find_empty_seat()
+	#target_seat = find_empty_seat()
 	if target_seat:
 		target_seat.is_occupied = true # Claim the seat immediately
 		is_moving = true
 		nav_agent.target_position = target_seat.global_position
 
-func find_empty_seat():
-	var all_seats = get_tree().get_nodes_in_group("seats").filter(
-		func(seat): return !seat.is_occupied
-	)
-	var available_seats = []
-	
-	for seat in all_seats:
-		var parent = seat.get_parent()
-		if parent and parent.name == "Bar chairs":
-			available_seats.append(seat)
-
-	if available_seats.size() > 0:
-		# Pick a random seat
-		return available_seats[randi() % available_seats.size()]
-		
-	return null
+#func find_empty_seat():
+	#var available_seats = get_tree().get_nodes_in_group("seats").filter(
+		#func(seat): return  seat.get_parent() and seat.get_parent().name == "Bar chairs" and !seat.is_occupied
+	#)
+	##var available_seats = []
+	##
+	##for seat in all_seats:
+		##var parent = seat.get_parent()
+		##if parent and parent.name == "Bar chairs":
+			##available_seats.append(seat)
+#
+	#if available_seats.size() > 0:
+		## Pick a random seat
+		#return available_seats[randi() % available_seats.size()]
+		#
+	#return null
 				
 
 #func get_closest_seat(seats_array):
@@ -160,7 +160,6 @@ func find_free_table_for_size(size: int):
 
 func move_to_assigned_seat(seat_marker: StaticBody3D):
 	target_seat = seat_marker
-	target_seat.is_occupied = true
 	target_wait_area.is_occupied = false
 	target_wait_area = null # Clear the old bar target
 
