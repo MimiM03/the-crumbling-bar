@@ -5,7 +5,7 @@ extends CharacterBody3D
 var target_seat = null
 const SPEED := 3.0
 var isGroup: bool = false
-var isGroupLeader: bool = false
+# var isGroup4: bool = false
 enum ChairType {BAR, TABLE4, TABLE2}
 
 func _ready() -> void:
@@ -14,7 +14,8 @@ func _ready() -> void:
 	if !isGroup:
 		start_looking_for_seat(ChairType.BAR)
 	else:
-		start_looking_for_seat(ChairType.TABLE4)
+		go_to_bar()
+
 
 func _physics_process(_delta):
 	if target_seat:
@@ -24,15 +25,13 @@ func _physics_process(_delta):
 		
 		# Calculate velocity and move
 		var new_velocity = (next_pos - current_pos).normalized() * SPEED
-		velocity = new_velocity
 		
 		# Check if we arrived
 		if nav_agent.is_navigation_finished():
 			# TODO: SIT
-			print("finished")
-			velocity = Vector3(0,0,0)
-			
-		move_and_slide()
+			new_velocity = Vector3(0,0,0)
+		
+		nav_agent.set_velocity(new_velocity)
 			
 
 func start_looking_for_seat(type: ChairType):
@@ -71,3 +70,10 @@ func get_closest_seat(seats_array):
 		if global_position.distance_to(seat.global_position) < global_position.distance_to(closest.global_position):
 			closest = seat
 	return closest
+
+func go_to_bar():
+	pass
+	
+func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
+	velocity = velocity.move_toward(safe_velocity, 0.25)
+	move_and_slide()

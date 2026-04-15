@@ -1,14 +1,18 @@
 [gd_scene format=3 uid="uid://rqvsmq0j8qw1"]
 
-[ext_resource type="Script" uid="uid://da2yrwy2axuoq" path="res://scenes/customer.gd" id="1_ktfjk"]
+[ext_resource type="Script" uid="uid://da2yrwy2axuoq" path="res://scripts/customer.gd" id="1_ktfjk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fx2s6"]
+radius = 0.3
+height = 1.3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fx2s6"]
 albedo_color = Color(0.90588236, 0.17254902, 0.16862746, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fx2s6"]
 material = SubResource("StandardMaterial3D_fx2s6")
+radius = 0.3
+height = 1.3
 
 [node name="Customer" type="CharacterBody3D" unique_id=70302993]
 script = ExtResource("1_ktfjk")
@@ -20,3 +24,6 @@ shape = SubResource("CapsuleShape3D_fx2s6")
 mesh = SubResource("CapsuleMesh_fx2s6")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1843951864]
+avoidance_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
