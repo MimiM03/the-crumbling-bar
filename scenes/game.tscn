@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cn551v7xq4onb" path="res://scenes/customer_spawn_point.gd" id="3_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://bclwag1i8b420" path="res://scenes/glass_wine.tscn" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c8elryja5bcqu" path="res://scenes/whiskey_bottle.tscn" id="4_gee14"]
+[ext_resource type="Script" uid="uid://bdj4b56gc40g3" path="res://scenes/wait_area.gd" id="4_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://cs3ysn4i4b6uv" path="res://scenes/vodka_bottle.tscn" id="5_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://md3siaqjarrn" path="res://scenes/base_zone.tscn" id="5_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://cv1fe051vudkb" path="res://scenes/mixer.tscn" id="6_p57ef"]
@@ -55,6 +56,25 @@ navigation_layers = 3
 [node name="CustomerSpawnPoint" type="Marker3D" parent="." unique_id=643920096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.946214, 0.6562581, -4.0369797)
 script = ExtResource("3_kvpfn")
+
+[node name="WaitAreas" type="Node3D" parent="." unique_id=1490713742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0.656, 0)
+
+[node name="WaitArea" type="Marker3D" parent="WaitAreas" unique_id=1307708657 groups=["wait_area"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, 0, 0)
+script = ExtResource("4_kvpfn")
+
+[node name="WaitArea2" type="Marker3D" parent="WaitAreas" unique_id=187633937 groups=["wait_area"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.84, 0, 0)
+script = ExtResource("4_kvpfn")
+
+[node name="WaitArea3" type="Marker3D" parent="WaitAreas" unique_id=269024194 groups=["wait_area"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.72, 0, 0)
+script = ExtResource("4_kvpfn")
+
+[node name="WaitArea4" type="Marker3D" parent="WaitAreas" unique_id=1802606232 groups=["wait_area"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.605857, 0, 0)
+script = ExtResource("4_kvpfn")
 
 [node name="Customers" type="Node" parent="." unique_id=1122904274]
 

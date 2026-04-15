@@ -23,6 +23,7 @@ tequila=""
 pickables=""
 shaker=""
 seats=""
+wait_area=""
 
 [input]
 

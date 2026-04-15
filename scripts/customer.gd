@@ -3,8 +3,12 @@ extends CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 
 var target_seat = null
+var target_wait_area = null
 const SPEED := 3.0
 var isGroup: bool = false
+var group_members: Array = [] # To keep track of who is in the group
+var is_leader: bool = false
+var assigned_table_node = null # The parent node of the 4 chairs
 # var isGroup4: bool = false
 enum ChairType {BAR, TABLE4, TABLE2}
 
@@ -14,15 +18,15 @@ func _ready() -> void:
 	if !isGroup:
 		start_looking_for_seat(ChairType.BAR)
 	else:
-		go_to_bar()
+		start_looking_for_bar_space()
 
 
 func _physics_process(_delta):
-	if target_seat:
+	if target_seat or target_wait_area:
 		# Get the next point in the path
 		var current_pos = global_position
 		var next_pos = nav_agent.get_next_path_position()
-		
+		print(next_pos)
 		# Calculate velocity and move
 		var new_velocity = (next_pos - current_pos).normalized() * SPEED
 		
@@ -64,15 +68,18 @@ func find_empty_seat(type: ChairType):
 		
 	return null
 
-func get_closest_seat(seats_array):
-	var closest = seats_array[0]
-	for seat in seats_array:
-		if global_position.distance_to(seat.global_position) < global_position.distance_to(closest.global_position):
-			closest = seat
-	return closest
+#func get_closest_seat(seats_array):
+	#var closest = seats_array[0]
+	#for seat in seats_array:
+		#if global_position.distance_to(seat.global_position) < global_position.distance_to(closest.global_position):
+			#closest = seat
+	#return closest
 
-func go_to_bar():
-	pass
+func start_looking_for_bar_space():
+	if target_wait_area:
+		nav_agent.target_position = target_wait_area.global_position
+		print(nav_agent.target_position)
+	
 	
 func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
 	velocity = velocity.move_toward(safe_velocity, 0.25)
