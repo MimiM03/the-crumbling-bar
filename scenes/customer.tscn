@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://rqvsmq0j8qw1"]
 
+[ext_resource type="Script" uid="uid://da2yrwy2axuoq" path="res://scenes/customer.gd" id="1_ktfjk"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fx2s6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fx2s6"]
@@ -9,9 +11,12 @@ albedo_color = Color(0.90588236, 0.17254902, 0.16862746, 1)
 material = SubResource("StandardMaterial3D_fx2s6")
 
 [node name="Customer" type="CharacterBody3D" unique_id=70302993]
+script = ExtResource("1_ktfjk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=676967836]
 shape = SubResource("CapsuleShape3D_fx2s6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=890274925]
 mesh = SubResource("CapsuleMesh_fx2s6")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1843951864]
