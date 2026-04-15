@@ -7,8 +7,9 @@ var customerContainer: NodePath = "../Customers"
 func _ready():
 	# For testing: spawn something every 5 seconds
 	while true:
-		await get_tree().create_timer(3.0).timeout
 		spawn_random_arrival()
+		await get_tree().create_timer(13.0).timeout
+		
 
 func spawn_random_arrival():
 	var chance = randf()
@@ -41,7 +42,6 @@ func spawn_group(size: int):
 	var isGroup = size > 1
 	
 	for i in range(size):
-		await get_tree().create_timer(float(i)).timeout
 		var customer = customerScene.instantiate()
 		get_node(customerContainer).add_child(customer, true)
 		
@@ -60,6 +60,6 @@ func spawn_group(size: int):
 		# Give every member a list of their friends
 		for member in members:
 			member.group_members = members
-		# Pass the variables to your Customer script
-		customer.isGroup = isGroup
+			member.isGroup = isGroup
 		
+		await get_tree().create_timer(0.8).timeout		

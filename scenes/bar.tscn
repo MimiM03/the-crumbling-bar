@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c1631ywoykip3"]
 
 [ext_resource type="Script" uid="uid://cbpwuw7jvkkca" path="res://scripts/chair.gd" id="1_5dekh"]
+[ext_resource type="Script" uid="uid://bo5l7dkjbp6g1" path="res://scripts/table.gd" id="2_bwlfd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dekh"]
 albedo_color = Color(0.21887064, 0.39350355, 0.45039648, 1)
@@ -142,8 +143,9 @@ mesh = SubResource("CylinderMesh_efgdo")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Bar chairs/Chair4" unique_id=1352284264]
 shape = SubResource("CylinderShape3D_5dekh")
 
-[node name="Table4" type="Node3D" parent="Seats+Tables" unique_id=1745432889]
+[node name="Table4" type="Node3D" parent="Seats+Tables" unique_id=1745432889 groups=["TABLE4"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4541202, 0.3938023, -4.8328505)
+script = ExtResource("2_bwlfd")
 
 [node name="Chair" type="StaticBody3D" parent="Seats+Tables/Table4" unique_id=2047155607 groups=["seats"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.017218, -0.08381832, 1.1028862)
@@ -208,8 +210,9 @@ mesh = SubResource("CylinderMesh_7r073")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table4/Table" unique_id=1542192499]
 shape = SubResource("CylinderShape3D_bwlfd")
 
-[node name="Table2" type="Node3D" parent="Seats+Tables" unique_id=782815042]
+[node name="Table2" type="Node3D" parent="Seats+Tables" unique_id=782815042 groups=["TABLE2"]]
 transform = Transform3D(0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 0.99999994, -2.509502, 0.3938023, -4.8328505)
+script = ExtResource("2_bwlfd")
 
 [node name="Chair" type="StaticBody3D" parent="Seats+Tables/Table2" unique_id=1773647387 groups=["seats"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00032544136, -0.08380228, -1.590352)
