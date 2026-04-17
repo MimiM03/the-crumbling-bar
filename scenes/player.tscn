@@ -46,7 +46,7 @@ texture = ExtResource("2_g2els")
 expand_mode = 1
 
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1689180894]
-target_position = Vector3(0, 0, -1.5)
+target_position = Vector3(0, 0, -2)
 collide_with_areas = true
 
 [node name="CarryObjectRightMarker" type="Marker3D" parent="." unique_id=797763015]

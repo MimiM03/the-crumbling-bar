@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://4es5fbpssnfg"]
+
+[ext_resource type="Script" uid="uid://bo5l7dkjbp6g1" path="res://scripts/table.gd" id="1_jjjj7"]
+[ext_resource type="PackedScene" uid="uid://dh6vs0mwh354h" path="res://scenes/chair.tscn" id="2_xv804"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2j1ym"]
+albedo_color = Color(0.3189073, 0.13080737, 0.05913744, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7r073"]
+material = SubResource("StandardMaterial3D_2j1ym")
+top_radius = 0.8
+bottom_radius = 0.7
+height = 0.8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bwlfd"]
+height = 0.8
+radius = 0.8
+
+[node name="Table4" type="Node3D" unique_id=1629710349 groups=["TABLE4"]]
+script = ExtResource("1_jjjj7")
+
+[node name="Chair4" parent="." unique_id=1931849647 instance=ExtResource("2_xv804")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.017218, -0.08381832, 1.1028862)
+
+[node name="Chair3" parent="." unique_id=2005220366 instance=ExtResource("2_xv804")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0639822, -0.08381832, 1.0589066)
+
+[node name="Chair2" parent="." unique_id=1690142214 instance=ExtResource("2_xv804")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3238177, -0.08381832, -1.3940048)
+
+[node name="Chair" parent="." unique_id=1242140433 instance=ExtResource("2_xv804")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8676088, -0.08381832, -1.3445253)
+
+[node name="Table" type="StaticBody3D" parent="." unique_id=1253575364]
+collision_layer = 2
+collision_mask = 0
+
+[node name="table" type="MeshInstance3D" parent="Table" unique_id=59932697]
+layers = 2
+mesh = SubResource("CylinderMesh_7r073")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table" unique_id=226425361]
+shape = SubResource("CylinderShape3D_bwlfd")

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dh6vs0mwh354h"]
+
+[ext_resource type="Script" uid="uid://cbpwuw7jvkkca" path="res://scripts/chair.gd" id="1_i2o7u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdsxc"]
+albedo_color = Color(0.38858387, 0.19589737, 0.09972047, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g0fx2"]
+material = SubResource("StandardMaterial3D_qdsxc")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.75
+radial_segments = 16
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5dekh"]
+height = 0.75
+radius = 0.3
+
+[node name="Chair" type="StaticBody3D" unique_id=1931849647 groups=["seats"]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_i2o7u")
+
+[node name="chair" type="MeshInstance3D" parent="." unique_id=1798323109]
+layers = 2
+mesh = SubResource("CylinderMesh_g0fx2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=815664397]
+transform = Transform3D(1, 0, 0, 0, 0.999999, -0.0014311696, 0, 0.0014311696, 0.999999, 0, 0, 0)
+shape = SubResource("CylinderShape3D_5dekh")
+
+[node name="sitMarker" type="Marker3D" parent="." unique_id=2065904463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0297219, 0)

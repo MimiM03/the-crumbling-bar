@@ -11,6 +11,9 @@ var is_leader: bool = false
 var is_moving: bool = false
 enum ChairType {CHAIR, TABLE4, TABLE2, BAR}
 var type: ChairType
+var is_sitting: bool = false
+var has_ordered: bool = false
+var has_been_served = false
 
 func _ready() -> void:
 	# Wait for the first physics frame so the NavigationServer is ready
@@ -36,45 +39,59 @@ func _physics_process(_delta):
 			current_speed = max(current_speed, 0.5)   # Don't let it go to total zero
 		# Calculate velocity and move
 		var new_velocity = (next_pos - current_pos).normalized() * current_speed
-		
+		if !is_sitting:
+			if distance < 1 and type != ChairType.BAR and target_seat:
+				is_sitting = true
+				is_moving = false
+				sit()
+				
+				
 		nav_agent.set_velocity(new_velocity)
 
 func start_looking_for_seat():
-	#target_seat = find_empty_seat()
 	if target_seat:
 		target_seat.is_occupied = true # Claim the seat immediately
 		is_moving = true
 		nav_agent.target_position = target_seat.global_position
 
-#func find_empty_seat():
-	#var available_seats = get_tree().get_nodes_in_group("seats").filter(
-		#func(seat): return  seat.get_parent() and seat.get_parent().name == "Bar chairs" and !seat.is_occupied
-	#)
-	##var available_seats = []
-	##
-	##for seat in all_seats:
-		##var parent = seat.get_parent()
-		##if parent and parent.name == "Bar chairs":
-			##available_seats.append(seat)
-#
-	#if available_seats.size() > 0:
-		## Pick a random seat
-		#return available_seats[randi() % available_seats.size()]
-		#
-	#return null
-				
-
-#func get_closest_seat(seats_array):
-	#var closest = seats_array[0]
-	#for seat in seats_array:
-		#if global_position.distance_to(seat.global_position) < global_position.distance_to(closest.global_position):
-			#closest = seat
-	#return closest
-
 func start_looking_for_bar_space():
 	if target_wait_area:
 		is_moving = true
 		nav_agent.target_position = target_wait_area.global_position
+
+func dispatch_group_to_table():
+	# 1. Find a table large enough for the whole group
+	var table = find_free_table_for_size(group_members.size())
+
+	if table:
+		table.is_occupied = true
+		var chairs = get_tree().get_nodes_in_group("seats").filter(
+			func(node): return table.is_ancestor_of(node)
+		)
+		# 2. Assign members one by one with a small delay
+		for i in range(group_members.size()):
+			var member = group_members[i]
+			var seat = chairs[i] # Assign the i-th chair
+			member.move_to_assigned_seat(seat)
+			await get_tree().create_timer(0.8).timeout # The "one-by-one" feel			
+
+func find_free_table_for_size(size: int):
+	var free_tables_this_size = get_tree().get_nodes_in_group(ChairType.keys()[type]).filter(
+		func(table): return !table.is_occupied
+	)
+
+	if free_tables_this_size.size() > 0:
+		# Pick a random seat
+		return free_tables_this_size[randi() % free_tables_this_size.size()]
+		
+	return null
+
+func move_to_assigned_seat(seat_marker: StaticBody3D):
+	target_seat = seat_marker
+	target_wait_area.is_occupied = false
+	target_wait_area = null # Clear the old bar target
+
+	nav_agent.target_position = target_seat.global_position
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
 	velocity = velocity.move_toward(safe_velocity, 0.25)
@@ -90,10 +107,6 @@ func _on_navigation_agent_3d_target_reached() -> void:
 	# TODO: Rotate them to face the bar/counter
 	
 	match type:
-		ChairType.CHAIR:
-			# TODO: sit()
-			# then, Order()
-			pass
 		ChairType.BAR:
 			# If I'm the leader, I manage the group timing
 			var all_arrived := false
@@ -116,51 +129,19 @@ func _on_navigation_agent_3d_target_reached() -> void:
 			else:
 				type = ChairType.TABLE4
 			if is_leader: dispatch_group_to_table()
-		ChairType.TABLE4 or ChairType.TABLE2:
-			# TODO: sit()
-			pass
 
-func check_group_arrival() -> bool:
-	print("checking if all arrived")
-	# Wait for all members to be 'finished' with their nav
-	for m in group_members:
-		if m.is_moving:
-			print(m, " is moving")
-			return false
+func sit():
+	# Disable nav agent so it doesn't try to keep walking
+	nav_agent.target_position = global_position 
+	print('sitting')
+	# Smoothly move them into the chair over 1 seconds
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", target_seat.sit_marker.global_position, 1)
+	tween.parallel().tween_property(self, "global_basis", target_seat.sit_marker.global_basis, 1)
 	
-	return true
-
-func dispatch_group_to_table():
-	# 1. Find a table large enough for the whole group
-	var table = find_free_table_for_size(group_members.size())
-
-	if table:
-		table.is_occupied = true
-		var chairs = get_tree().get_nodes_in_group("seats").filter(
-			func(node): return table.is_ancestor_of(node)
-		)
-		# 2. Assign members one by one with a small delay
-		for i in range(group_members.size()):
-			var member = group_members[i]
-			var seat = chairs[i] # Assign the i-th chair
-			member.move_to_assigned_seat(seat)
-			await get_tree().create_timer(0.8).timeout # The "one-by-one" feel
-			
-
-func find_free_table_for_size(size: int):
-	var free_tables_this_size = get_tree().get_nodes_in_group(ChairType.keys()[type]).filter(
-		func(table): return !table.is_occupied
-	)
-
-	if free_tables_this_size.size() > 0:
-		# Pick a random seat
-		return free_tables_this_size[randi() % free_tables_this_size.size()]
-		
-	return null
-
-func move_to_assigned_seat(seat_marker: StaticBody3D):
-	target_seat = seat_marker
-	target_wait_area.is_occupied = false
-	target_wait_area = null # Clear the old bar target
-
-	nav_agent.target_position = target_seat.global_position
+	# if at the bar:
+	#TODO: order()
+	#TODO: be served()
+	#if at table: just drink it
+	
+	# then leave

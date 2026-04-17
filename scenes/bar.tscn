@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://c1631ywoykip3"]
 
-[ext_resource type="Script" uid="uid://cbpwuw7jvkkca" path="res://scripts/chair.gd" id="1_5dekh"]
-[ext_resource type="Script" uid="uid://bo5l7dkjbp6g1" path="res://scripts/table.gd" id="2_bwlfd"]
+[ext_resource type="PackedScene" uid="uid://dh6vs0mwh354h" path="res://scenes/chair.tscn" id="1_x848m"]
+[ext_resource type="PackedScene" uid="uid://4es5fbpssnfg" path="res://scenes/table_4.tscn" id="2_qdsxc"]
+[ext_resource type="PackedScene" uid="uid://iiuah3f1jrhx" path="res://scenes/table_2.tscn" id="3_efgdo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dekh"]
 albedo_color = Color(0.21887064, 0.39350355, 0.45039648, 1)
@@ -22,44 +23,6 @@ size = Vector3(10, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g0fx2"]
 size = Vector3(10, 1, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdsxc"]
-albedo_color = Color(0.38858387, 0.19589737, 0.09972047, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_g0fx2"]
-material = SubResource("StandardMaterial3D_qdsxc")
-top_radius = 0.3
-bottom_radius = 0.3
-height = 0.75
-radial_segments = 16
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_5dekh"]
-height = 0.75
-radius = 0.3
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_efgdo"]
-material = SubResource("StandardMaterial3D_qdsxc")
-top_radius = 0.3
-bottom_radius = 0.3
-height = 0.75
-radial_segments = 16
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2j1ym"]
-albedo_color = Color(0.3189073, 0.13080737, 0.05913744, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_7r073"]
-material = SubResource("StandardMaterial3D_2j1ym")
-top_radius = 0.8
-bottom_radius = 0.7
-height = 0.8
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_bwlfd"]
-height = 0.8
-radius = 0.8
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_g0fx2"]
-height = 0.8
-radius = 0.8
 
 [node name="Bar" type="Node3D" unique_id=1974740427]
 
@@ -90,157 +53,20 @@ shape = SubResource("BoxShape3D_g0fx2")
 
 [node name="Bar chairs" type="Node3D" parent="Seats+Tables" unique_id=254419667]
 
-[node name="Chair" type="StaticBody3D" parent="Seats+Tables/Bar chairs" unique_id=1372085224 groups=["seats"]]
+[node name="Chair" parent="Seats+Tables/Bar chairs" unique_id=1931849647 instance=ExtResource("1_x848m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3619156, 0.31, -1.151)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("1_5dekh")
 
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Bar chairs/Chair" unique_id=1680328326]
-layers = 2
-mesh = SubResource("CylinderMesh_g0fx2")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Bar chairs/Chair" unique_id=786134589]
-transform = Transform3D(1, 0, 0, 0, 0.999999, -0.0014311696, 0, 0.0014311696, 0.999999, 0, 0, 0)
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Chair2" type="StaticBody3D" parent="Seats+Tables/Bar chairs" unique_id=635385833 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3322744, 0.30998397, -1.1508095)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("1_5dekh")
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Bar chairs/Chair2" unique_id=1594818821]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Bar chairs/Chair2" unique_id=898869504]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Chair3" type="StaticBody3D" parent="Seats+Tables/Bar chairs" unique_id=2020272302 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43407, 0.30998397, -1.1508095)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("1_5dekh")
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Bar chairs/Chair3" unique_id=1141321331]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Bar chairs/Chair3" unique_id=1516060108]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Chair4" type="StaticBody3D" parent="Seats+Tables/Bar chairs" unique_id=71898257 groups=["seats"]]
+[node name="Chair2" parent="Seats+Tables/Bar chairs" unique_id=1358021659 instance=ExtResource("1_x848m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2544959, 0.30998397, -1.1508095)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("1_5dekh")
 
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Bar chairs/Chair4" unique_id=641370586]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
+[node name="Chair3" parent="Seats+Tables/Bar chairs" unique_id=1579616108 instance=ExtResource("1_x848m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43407, 0.30998397, -1.1508095)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Bar chairs/Chair4" unique_id=1352284264]
-shape = SubResource("CylinderShape3D_5dekh")
+[node name="Chair4" parent="Seats+Tables/Bar chairs" unique_id=1833736478 instance=ExtResource("1_x848m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3322744, 0.30998397, -1.1508095)
 
-[node name="Table4" type="Node3D" parent="Seats+Tables" unique_id=1745432889 groups=["TABLE4"]]
+[node name="Table4" parent="Seats+Tables" unique_id=1629710349 instance=ExtResource("2_qdsxc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4541202, 0.3938023, -4.8328505)
-script = ExtResource("2_bwlfd")
 
-[node name="Chair" type="StaticBody3D" parent="Seats+Tables/Table4" unique_id=2047155607 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.017218, -0.08381832, 1.1028862)
-collision_layer = 2
-collision_mask = 0
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair" unique_id=1320041312]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table4/Chair" unique_id=1316375869]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Chair2" type="StaticBody3D" parent="Seats+Tables/Table4" unique_id=737358325 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0639822, -0.08381832, 1.0589066)
-collision_layer = 2
-collision_mask = 0
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair2" unique_id=1921130764]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table4/Chair2" unique_id=646212312]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Chair3" type="StaticBody3D" parent="Seats+Tables/Table4" unique_id=135266843 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3238177, -0.08381832, -1.3940048)
-collision_layer = 2
-collision_mask = 0
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair3" unique_id=1426624388]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table4/Chair3" unique_id=234560217]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Chair4" type="StaticBody3D" parent="Seats+Tables/Table4" unique_id=1909559029 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8676088, -0.08381832, -1.3445253)
-collision_layer = 2
-collision_mask = 0
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table4/Chair4" unique_id=778716346]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table4/Chair4" unique_id=1962764650]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Table" type="StaticBody3D" parent="Seats+Tables/Table4" unique_id=342820931]
-collision_layer = 2
-collision_mask = 0
-
-[node name="table" type="MeshInstance3D" parent="Seats+Tables/Table4/Table" unique_id=756591216]
-layers = 2
-mesh = SubResource("CylinderMesh_7r073")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table4/Table" unique_id=1542192499]
-shape = SubResource("CylinderShape3D_bwlfd")
-
-[node name="Table2" type="Node3D" parent="Seats+Tables" unique_id=782815042 groups=["TABLE2"]]
+[node name="Table2" parent="Seats+Tables" unique_id=1405121641 instance=ExtResource("3_efgdo")]
 transform = Transform3D(0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 0.99999994, -2.509502, 0.3938023, -4.8328505)
-script = ExtResource("2_bwlfd")
-
-[node name="Chair" type="StaticBody3D" parent="Seats+Tables/Table2" unique_id=1773647387 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00032544136, -0.08380228, -1.590352)
-collision_layer = 2
-collision_mask = 0
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table2/Chair" unique_id=2126620294]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table2/Chair" unique_id=571553638]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Chair2" type="StaticBody3D" parent="Seats+Tables/Table2" unique_id=553341562 groups=["seats"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00032544136, -0.08380228, 1.6146047)
-collision_layer = 2
-collision_mask = 0
-
-[node name="chair" type="MeshInstance3D" parent="Seats+Tables/Table2/Chair2" unique_id=16110836]
-layers = 2
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table2/Chair2" unique_id=1109309245]
-shape = SubResource("CylinderShape3D_5dekh")
-
-[node name="Table" type="StaticBody3D" parent="Seats+Tables/Table2" unique_id=1847735475]
-collision_layer = 2
-collision_mask = 0
-
-[node name="table" type="MeshInstance3D" parent="Seats+Tables/Table2/Table" unique_id=503133118]
-layers = 2
-mesh = SubResource("CylinderMesh_7r073")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Seats+Tables/Table2/Table" unique_id=1746700461]
-shape = SubResource("CylinderShape3D_g0fx2")
