@@ -46,9 +46,7 @@ func _input(event):
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		# Horizontal
-		yaw -= event.relative.x * MOUSE_SENSITIVITY
-		yaw = clamp (yaw, -90, 90)
-		rotation_degrees.y = yaw
+		rotation_degrees.y -= event.relative.x * MOUSE_SENSITIVITY
 		
 		# Vertical
 		pitch -= event.relative.y * MOUSE_SENSITIVITY
@@ -57,8 +55,15 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.		
-	var direction := Input.get_axis("left", "right")
-	velocity.x = direction * SPEED
+	var input_dir := Input.get_vector("left", "right", "forward", "back")
+	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = direction.x * SPEED
+		velocity.z = direction.z * SPEED
+	else:
+		# Smoothly stop the character
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	var rotation_speed =  deg_to_rad(135) / 0.25
 	# Handle pouring (Q left hand/E right hand):

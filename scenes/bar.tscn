@@ -1,107 +1,72 @@
 [gd_scene format=3 uid="uid://c1631ywoykip3"]
 
+[ext_resource type="PackedScene" uid="uid://dh6vs0mwh354h" path="res://scenes/chair.tscn" id="1_x848m"]
+[ext_resource type="PackedScene" uid="uid://4es5fbpssnfg" path="res://scenes/table_4.tscn" id="2_qdsxc"]
+[ext_resource type="PackedScene" uid="uid://iiuah3f1jrhx" path="res://scenes/table_2.tscn" id="3_efgdo"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dekh"]
-albedo_color = Color(0.37403873, 0.476691, 0.75696987, 1)
+albedo_color = Color(0.21887064, 0.39350355, 0.45039648, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bwlfd"]
+material = SubResource("StandardMaterial3D_5dekh")
+size = Vector2(12, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x848m"]
+size = Vector3(12, 0.05, 12)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g0fx2"]
 albedo_color = Color(0.36163375, 0.21696255, 0.09048141, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_yqjtg"]
 material = SubResource("StandardMaterial3D_g0fx2")
+size = Vector3(10, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwlfd"]
-albedo_color = Color(0.11964836, 0.7859001, 0.75823057, 1)
-
-[sub_resource type="PrismMesh" id="PrismMesh_x848m"]
-material = SubResource("StandardMaterial3D_bwlfd")
-size = Vector3(1, 4.25, 2)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdsxc"]
-albedo_color = Color(0.38858387, 0.19589737, 0.09972047, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_efgdo"]
-material = SubResource("StandardMaterial3D_qdsxc")
-top_radius = 0.3
-bottom_radius = 0.3
-height = 0.75
-radial_segments = 16
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2j1ym"]
-albedo_color = Color(0.3189073, 0.13080737, 0.05913744, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_7r073"]
-material = SubResource("StandardMaterial3D_2j1ym")
-top_radius = 0.8
-bottom_radius = 0.7
-height = 0.8
+[sub_resource type="BoxShape3D" id="BoxShape3D_g0fx2"]
+size = Vector3(10, 1, 1)
 
 [node name="Bar" type="Node3D" unique_id=1974740427]
 
-[node name="Ground" type="CSGBox3D" parent="." unique_id=1636589340]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.0164273)
-size = Vector3(10, 0.001, 10)
-material = SubResource("StandardMaterial3D_5dekh")
+[node name="Floor" type="StaticBody3D" parent="." unique_id=548685077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+collision_mask = 0
 
-[node name="Bar Top" type="MeshInstance3D" parent="." unique_id=1250291508]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="floor" type="MeshInstance3D" parent="Floor" unique_id=2141877962]
+mesh = SubResource("PlaneMesh_bwlfd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=912510684]
+shape = SubResource("BoxShape3D_x848m")
+
+[node name="Bar Top" type="StaticBody3D" parent="." unique_id=251006387]
+collision_layer = 2
+collision_mask = 0
+
+[node name="Bar" type="MeshInstance3D" parent="Bar Top" unique_id=1250291508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+layers = 2
 mesh = SubResource("BoxMesh_yqjtg")
 
-[node name="Entrance" type="MeshInstance3D" parent="." unique_id=472567301]
-transform = Transform3D(0.00013161448, 0.0006323457, -1, -0.9939857, -0.109508745, -0.0002000725, -0.10950879, 0.99398583, 0.00061413774, -3.9909317, 0.23438883, -4.885228)
-mesh = SubResource("PrismMesh_x848m")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bar Top" unique_id=718856659]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_g0fx2")
 
-[node name="Chair" type="MeshInstance3D" parent="." unique_id=1680328326]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2492228, 0.30998397, -1.1508095)
-mesh = SubResource("CylinderMesh_efgdo")
+[node name="Seats+Tables" type="Node3D" parent="." unique_id=2130191028]
 
-[node name="Chair2" type="MeshInstance3D" parent="." unique_id=1921130764]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7919557, 0.30998397, -3.773944)
-mesh = SubResource("CylinderMesh_efgdo")
+[node name="Bar chairs" type="Node3D" parent="Seats+Tables" unique_id=254419667]
 
-[node name="Chair3" type="MeshInstance3D" parent="." unique_id=1426624388]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.051791, 0.30998397, -6.2268553)
-mesh = SubResource("CylinderMesh_efgdo")
+[node name="Chair" parent="Seats+Tables/Bar chairs" unique_id=1931849647 instance=ExtResource("1_x848m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3619156, 0.31, -1.151)
 
-[node name="Chair4" type="MeshInstance3D" parent="." unique_id=778716346]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8603647, 0.30998397, -6.177376)
-mesh = SubResource("CylinderMesh_efgdo")
+[node name="Chair2" parent="Seats+Tables/Bar chairs" unique_id=1358021659 instance=ExtResource("1_x848m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2544959, 0.30998397, -1.1508095)
 
-[node name="Chair5" type="MeshInstance3D" parent="." unique_id=1320041312]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7107555, 0.30998397, -3.7299643)
-mesh = SubResource("CylinderMesh_efgdo")
+[node name="Chair3" parent="Seats+Tables/Bar chairs" unique_id=1579616108 instance=ExtResource("1_x848m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43407, 0.30998397, -1.1508095)
 
-[node name="Chair6" type="MeshInstance3D" parent="." unique_id=2126620294]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.036893755, 0.30998397, -6.043782)
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="Chair7" type="MeshInstance3D" parent="." unique_id=16110836]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9534249, 0.30998397, -3.8024924)
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="Chair8" type="MeshInstance3D" parent="." unique_id=933985328]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15458602, 0.30998397, -3.8792791)
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="Chair9" type="MeshInstance3D" parent="." unique_id=744010344]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9751058, 0.30998397, -5.9713383)
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="Chair10" type="MeshInstance3D" parent="." unique_id=1594818821]
+[node name="Chair4" parent="Seats+Tables/Bar chairs" unique_id=1833736478 instance=ExtResource("1_x848m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3322744, 0.30998397, -1.1508095)
-mesh = SubResource("CylinderMesh_efgdo")
 
-[node name="Chair11" type="MeshInstance3D" parent="." unique_id=1141321331]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3602595, 0.30998397, -1.1508095)
-mesh = SubResource("CylinderMesh_efgdo")
+[node name="Table4" parent="Seats+Tables" unique_id=1629710349 instance=ExtResource("2_qdsxc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4541202, 0.3938023, -4.8328505)
 
-[node name="Chair12" type="MeshInstance3D" parent="." unique_id=641370586]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.312466, 0.30998397, -1.1508095)
-mesh = SubResource("CylinderMesh_efgdo")
-
-[node name="Table" type="MeshInstance3D" parent="." unique_id=503133118]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.99858284, 0.3938023, -4.8328505)
-mesh = SubResource("CylinderMesh_7r073")
-
-[node name="Table2" type="MeshInstance3D" parent="." unique_id=756591216]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7279735, 0.3938023, -4.8328505)
-mesh = SubResource("CylinderMesh_7r073")
+[node name="Table2" parent="Seats+Tables" unique_id=1405121641 instance=ExtResource("3_efgdo")]
+transform = Transform3D(0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 0.99999994, -2.509502, 0.3938023, -4.8328505)
