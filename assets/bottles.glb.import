@@ -1,0 +1,99 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://b3bp4pckorfd7"
+path="res://.godot/imported/bottles.glb-447366c19d7dec79214fa7924578c4ab.scn"
+
+[deps]
+
+source_file="res://assets/bottles.glb"
+dest_files=["res://.godot/imported/bottles.glb-447366c19d7dec79214fa7924578c4ab.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"nodes": {
+"PATH:Plane": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Baileys": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Becherovka": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Beefeater": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Chivas": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Cointreau": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Crema_di_Limoncino": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Curacao": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Havana_Club": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Jagermeister": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Jameson": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Kahlua": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Malibu": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Martel": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Molinari_Sambuka": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Pernod": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Ramazzotti": {
+"import/skip_import": true
+},
+"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Sortilege": {
+"import/skip_import": true
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

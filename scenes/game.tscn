@@ -107,25 +107,25 @@ transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.507, 1.002, 0.748)
 [node name="Spirit" type="Node" parent="Drinks" unique_id=982895525]
 
 [node name="Whiskey Zone" parent="Drinks/Spirit" unique_id=2109655507 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 2.179, 1.196, 1)
+transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 2.179, 1.0003128, 1)
 required_group = "whiskey"
 
 [node name="Whiskey Bottle" parent="Drinks/Spirit/Whiskey Zone" unique_id=811362861 instance=ExtResource("4_gee14")]
-transform = Transform3D(1.010101, 0, 3.5527137e-15, 0, 1.010101, 0, -3.5527137e-15, 0, 1.010101, 0, 0, 0)
+transform = Transform3D(1.0101006, 0, 1.4210855e-14, 0, 1.0101006, 0, -1.4210855e-14, 0, 1.0101006, 0, 0, 0)
 
 [node name="Vodka Zone" parent="Drinks/Spirit" unique_id=609688481 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 1.901, 1.196, 1)
+transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 1.901, 1, 1)
 required_group = "vodka"
 
 [node name="Vodka Bottle" parent="Drinks/Spirit/Vodka Zone" unique_id=643159259 instance=ExtResource("5_0tnpc")]
-transform = Transform3D(1.010101, 0, 3.5527137e-15, 0, 1.010101, 0, -3.5527137e-15, 0, 1.010101, 0, 0, 0)
+transform = Transform3D(1.0101007, 0, 1.0658141e-14, 0, 1.0101007, 0, -1.0658141e-14, 0, 1.0101007, 0, 0, 0)
 
 [node name="Tequila Zone" parent="Drinks/Spirit" unique_id=2011654135 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 1.623, 1.196, 1)
+transform = Transform3D(-4.3274273e-08, 0, 0.99, 0, 0.99, 0, -0.99, 0, -4.3274273e-08, 1.623, 1, 1)
 required_group = "tequila"
 
 [node name="Tequila Bottle" parent="Drinks/Spirit/Tequila Zone" unique_id=1713008491 instance=ExtResource("6_vtaks")]
-transform = Transform3D(1.010101, 0, 3.5527137e-15, 0, 1.010101, 0, -3.5527137e-15, 0, 1.010101, 0, 0, 0)
+transform = Transform3D(1.0101007, 0, 1.0658141e-14, 0, 1.0101007, 0, -1.0658141e-14, 0, 1.0101007, 0, 0, 0)
 
 [node name="Beer" type="Node" parent="Drinks" unique_id=1938318575]
 
