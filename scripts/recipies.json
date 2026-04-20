@@ -1,0 +1,70 @@
+[
+	{
+		"name": "Vodka Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 2.5
+			}
+		]
+	},
+	{
+		"name": "Mojito",
+		"glass": "Highball",
+		"ingredients": [
+		  {
+			"item": "white rum",
+			"amount": 60
+		  },
+		  {
+			"item": "fresh lime juice",
+			"amount": 30
+		  },
+		  {
+			"item": "simple syrup",
+			"amount": 15
+		  },
+		  {
+			"item": "fresh mint leaves",
+			"amount": 10
+		  },
+		  {
+			"item": "soda water",
+			"amount": "fill"
+		  },
+		  {
+			"item": "ice",
+			"type": "crushed",
+			"amount": "fill"
+		  }
+		],
+	},
+	{
+		"name": "Old Fashioned",
+		"glass": "Rocks",
+		"ingredients": [
+		  {
+			"item": "whiskey",
+			"amount": 60
+		  },
+		  {
+			"item": "simple syrup",
+			"amount": 5
+		  },
+		  {
+			"item": "bitters",
+			"amount": 2
+		  },
+		  {
+			"item": "orange peel",
+			"amount": 1
+		  },
+		  {
+			"item": "ice",
+			"type": "cube",
+			"amount": 1
+		  }
+		],
+  },
+]
