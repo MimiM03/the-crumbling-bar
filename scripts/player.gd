@@ -154,6 +154,10 @@ func pick_up_object(object):
 func drop_object():
 	# Check if the zone is the correct
 	var zone = get_nearby_zone()
+	if !zone:
+		# Avoid calling can_accept() on null when the raycast hits nothing.
+		print("No valid zone in sight!")
+		return
 	
 	# Handle left and right 
 	if pickedObjectRight and zone.can_accept(pickedObjectRight):
@@ -226,12 +230,14 @@ func start_pouring(shaker):
 		var target_transform = shaker.markerRight.global_transform
 
 		pickedObjectRight.reparent(shaker.markerRight)
+		# Reparent first, then tween in global space so bottles keep world alignment.
 		tween.tween_property(pickedObjectRight, "global_transform", target_transform, 0.3)
 		#pickedObjectRight = null
 	if pickedObjectLeft:
 		var target_transform = shaker.markerLeft.global_transform
 
 		pickedObjectLeft.reparent(shaker.markerLeft)
+		# Same for left hand: preserve world-space snap after reparenting.
 		tween.tween_property(pickedObjectLeft, "global_transform", target_transform, 0.3)
 		#pickedObjectLeft = null
 
@@ -240,12 +246,14 @@ func reset_pour():
 	if pickedObjectRight:
 		#pickedObjectRight = shaker.markerRight.get_child(0)
 		pickedObjectRight.reparent(camera)
+		# Tween local transform after reparenting back to the camera rig.
 		var local_target = %CarryObjectRightMarker.transform
 		tween.tween_property(pickedObjectRight, "transform", local_target, 0.3)
 		
 	if pickedObjectLeft:
 		#pickedObjectLeft = shaker.markerLeft.get_child(0)
 		pickedObjectLeft.reparent(camera)
+		# Local-space tween keeps carried offsets stable across camera movement.
 		var local_target = %CarryObjectLeftMarker.transform
 		tween.tween_property(pickedObjectLeft, "transform", local_target, 0.3)
 		
@@ -269,14 +277,11 @@ func reset_pour():
 	tween.tween_property(camera, "fov", 65, 0.3).set_trans(Tween.TRANS_SINE)
 	
 	tween.finished.connect(func():
-		# Reset pitch to 0 so the vertical mouse movement starts from the horizon
+		# Reset pitch sothe vertical mouse movement starts from the horizon
 		pitch = tilt_angle
-		
-		# Reset camera rotation to 0 explicitly just in case
 		camera.rotation_degrees.x = pitch
 		
 		# Sync the body's yaw (Y rotation) so turning starts from current direction
-		# Since you used Quaternion.IDENTITY, this is likely 0, but this is safer:
 		rotation_degrees.y = self.rotation_degrees.y
 		
 		# Now that variables are synced, allow interaction/movement again
