@@ -126,6 +126,7 @@ func _on_navigation_agent_3d_target_reached() -> void:
 				type = ChairType.TABLE2
 			else:
 				type = ChairType.TABLE4
+			# Only the leader dispatches to avoid duplicate seat assignments.
 			if is_leader: dispatch_group_to_table()
 
 func sit():
