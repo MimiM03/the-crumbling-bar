@@ -17,9 +17,11 @@ func place_object(object: Area3D):
 		is_occupied = true
 		current_object = object
 		
+		var tween = create_tween()
 		# Snap the bottle to the SnapPoint
-		object.global_position = $SnapPoint.global_position
-		object.global_rotation = $SnapPoint.global_rotation
+		tween.tween_property(object, "global_transform", $SnapPoint.global_transform, 0.3)
+		#object.global_position = .global_position
+		#object.global_rotation = $SnapPoint.global_rotation
 		print("Zone full")
 
 func release_object():
