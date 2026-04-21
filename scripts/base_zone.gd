@@ -20,6 +20,7 @@ func place_object(object: Area3D):
 		is_occupied = true
 		current_object = object
 		
+		var tween = create_tween()
 		# Snap the bottle to the SnapPoint
 		var bottle_snap_point = current_object.get_node("SnapPoint")
 		var offset = - bottle_snap_point.position	
