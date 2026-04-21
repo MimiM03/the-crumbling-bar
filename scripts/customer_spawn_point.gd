@@ -12,16 +12,17 @@ func _ready():
 		
 
 func spawn_random_arrival():
-	var available_areas = get_tree().get_nodes_in_group("wait_area").filter(
-		func(area): return !area.is_occupied
-		)
-	var available_seats = get_tree().get_nodes_in_group("seats").filter(
-		func(seat): return  seat.get_parent() and seat.get_parent().name == "Bar chairs" and !seat.is_occupied
-	)
 	# RULE: If not enough spots for the whole group, they don't enter	
 	var has_spawned := false
 	while !has_spawned:
 		await get_tree().process_frame
+		# Recompute every loop so occupancy changes from previous spawns are reflected.
+		var available_areas = get_tree().get_nodes_in_group("wait_area").filter(
+			func(area): return !area.is_occupied
+		)
+		var available_seats = get_tree().get_nodes_in_group("seats").filter(
+			func(seat): return seat.get_parent() and seat.get_parent().name == "Bar chairs" and !seat.is_occupied
+		)
 		# no spawn if no space
 		if available_seats.size() < 1 and available_areas.size() < 2:
 			break

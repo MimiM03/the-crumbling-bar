@@ -7,6 +7,9 @@ var current_object: Area3D
 
 # Returns true only if the zone is empty AND the object is acceptable
 func can_accept(object: Area3D) -> bool:
+	if !object:
+		return false
+	# `required_group` acts as a simple type filter for zone compatibility.
 	print(!is_occupied)
 	print(object.is_in_group(required_group))
 	return !is_occupied and object.is_in_group(required_group)
@@ -17,9 +20,11 @@ func place_object(object: Area3D):
 		is_occupied = true
 		current_object = object
 		
+		var tween = create_tween()
 		# Snap the bottle to the SnapPoint
-		object.global_position = $SnapPoint.global_position
-		object.global_rotation = $SnapPoint.global_rotation
+		tween.tween_property(object, "global_transform", $SnapPoint.global_transform, 0.3)
+		#object.global_position = .global_position
+		#object.global_rotation = $SnapPoint.global_rotation
 		print("Zone full")
 
 func release_object():
