@@ -66,19 +66,20 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	var rotation_speed =  deg_to_rad(135) / 0.25
+	var tween = create_tween().set_parallel(true)
 	# Handle pouring (Q left hand/E right hand):
 	if pickedObjectRight:
 		if Input.is_action_pressed("pour_right"):
-			pickedObjectRight.rotation.x = move_toward(pickedObjectRight.rotation.x, deg_to_rad(-135),  rotation_speed * delta)
+			pickedObjectRight.rotation.x = lerp_angle(pickedObjectRight.rotation.x, deg_to_rad(-135),  rotation_speed * delta)
 		else:
 			# Return to upright (0 degrees)
-			pickedObjectRight.rotation.x = move_toward(pickedObjectRight.rotation.x, 0, rotation_speed * delta)
+			pickedObjectRight.rotation.x = lerp_angle(pickedObjectRight.rotation.x, 0, rotation_speed * delta)
 	if pickedObjectLeft:
 		if Input.is_action_pressed("pour_left"):
-			pickedObjectLeft.rotation.x = move_toward(pickedObjectLeft.rotation.x, deg_to_rad(135),  rotation_speed * delta)
+			pickedObjectLeft.rotation.x = lerp_angle(pickedObjectLeft.rotation.x, deg_to_rad(135),  rotation_speed * delta)
 		else:
 			# Return to upright (0 degrees)
-			pickedObjectLeft.rotation.x = move_toward(pickedObjectLeft.rotation.x, 0, rotation_speed * delta)
+			pickedObjectLeft.rotation.x = lerp_angle(pickedObjectLeft.rotation.x, 0, rotation_speed * delta)
 
 	
 	move_and_slide()

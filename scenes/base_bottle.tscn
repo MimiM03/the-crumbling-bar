@@ -7,3 +7,5 @@ size = Vector3(0.1, 0.38, 0.2)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2080982735]
 shape = SubResource("BoxShape3D_h4k8v")
+
+[node name="SnapPoint" type="Marker3D" parent="." unique_id=1474468336]

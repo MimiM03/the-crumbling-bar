@@ -119,10 +119,8 @@ func _on_navigation_agent_3d_target_reached() -> void:
 							all_arrived = false
 							break # Someone is still moving, keep waiting
 							
-			print("all at bar")
 			# TODO: change wait time -> Order()
 			await get_tree().create_timer(5.0).timeout
-			print("all leaving bar")
 			# After order served: move to table
 			if group_members.size() == 2:
 				type = ChairType.TABLE2
@@ -133,7 +131,6 @@ func _on_navigation_agent_3d_target_reached() -> void:
 func sit():
 	# Disable nav agent so it doesn't try to keep walking
 	nav_agent.target_position = global_position 
-	print('sitting')
 	# Smoothly move them into the chair over 1 seconds
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", target_seat.sit_marker.global_position, 1)
