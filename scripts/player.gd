@@ -81,7 +81,6 @@ func _physics_process(delta: float) -> void:
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		move_and_slide()
 	var rotation_speed =  deg_to_rad(135) / 0.25
-	var tween = create_tween().set_parallel(true)
 	# Handle pouring (Q left hand/E right hand):
 	if pickedObjectRight:
 		if Input.is_action_pressed("pour_right"):
