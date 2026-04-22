@@ -53,8 +53,8 @@ collide_with_areas = true
 
 [node name="CarryObjectRightMarker" type="Marker3D" parent="Camera3D" unique_id=797763015]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, 0, 1, 0.17364818, 0.98480767, 7.590403e-09, -0.98480767, 0.17364818, -4.304731e-08, 0.3983516, -0.19952464, -0.7225258)
+transform = Transform3D(0.8660252, -7.581995e-09, -0.49999988, -0.08682407, 0.9848073, -0.15038374, 0.49240372, 0.17364813, 0.8528682, 0.333, -0.2, -0.723)
 
 [node name="CarryObjectLeftMarker" type="Marker3D" parent="Camera3D" unique_id=1446667859]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, 0, 1, 0.17364818, 0.98480767, 7.590403e-09, -0.98480767, 0.17364818, -4.304731e-08, -0.33252746, -0.19952464, -0.7225258)
+transform = Transform3D(0.8660252, 7.581994e-09, 0.49999988, 0.08682406, 0.9848073, -0.15038371, -0.49240366, 0.17364813, 0.8528682, -0.33252746, -0.19952476, -0.7225256)

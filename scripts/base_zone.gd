@@ -20,12 +20,10 @@ func place_object(object: Area3D):
 		is_occupied = true
 		current_object = object
 		
-		var tween = create_tween()
 		# Snap the bottle to the SnapPoint
 		var bottle_snap_point = current_object.get_node("SnapPoint")
 		var offset = - bottle_snap_point.position	
 		
-		print(offset)
 		var tween = create_tween().set_parallel(true)
 		tween.tween_property(current_object, "global_position", $SnapPoint.global_position + offset, 0.3)
 		tween.tween_property(current_object, "global_rotation", $SnapPoint.global_rotation, 0.3)

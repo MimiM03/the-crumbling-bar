@@ -98,18 +98,18 @@ shadow_mesh = SubResource("ArrayMesh_daej7")
 [node name="Tequila Bottle" unique_id=811362861 groups=["pickables", "tequila"] instance=ExtResource("1_4gf0n")]
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=2080982735]
-transform = Transform3D(-0.021876808, 0.016355224, 7.1490935e-10, -7.681219e-17, -1.1939595e-09, 0.02731461, 0.016355224, 0.021876808, 9.562654e-10, 0, -0.5119729, 0)
+transform = Transform3D(0.015706047, 0.022347441, 9.768376e-10, 0, -1.1939596e-09, 0.02731461, 0.022347441, -0.015706047, -6.865331e-10, 0, -0.54401135, 0)
 shape = SubResource("ConcavePolygonShape3D_rv1br")
 
-[node name="Olmeca" type="Node3D" parent="." index="1" unique_id=41976635]
-transform = Transform3D(-0.021876806, 0.016355224, 7.149094e-10, -1.750921e-17, -1.1939594e-09, 0.02731461, 0.016355224, 0.021876806, 9.562657e-10, 0, -0.5119729, 0)
+[node name="SnapPoint" parent="." index="1" unique_id=1474468336]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54401135, 0)
 
-[node name="Olmeca_Atlas_0" type="MeshInstance3D" parent="Olmeca" index="0" unique_id=243402548]
+[node name="Olmeca" type="Node3D" parent="." index="2" unique_id=1547508158]
+transform = Transform3D(0.01571306, 0.022342501, 9.76622e-10, 4.2020825e-17, -1.1939595e-09, 0.02731461, 0.022342501, -0.01571306, -6.8683975e-10, 0, -0.5440385, 0)
+
+[node name="Olmeca_Atlas_0" type="MeshInstance3D" parent="Olmeca" index="0" unique_id=486328477]
 mesh = SubResource("ArrayMesh_qwjgq")
 
 [node name="pourer" type="MeshInstance3D" parent="Olmeca" index="1" unique_id=1037858527]
-transform = Transform3D(-0.6547153, -4.6112334e-08, 0.3779998, 0.3779998, -2.6773213e-08, 0.6547153, -1.6383822e-08, 1.225, 2.8538192e-08, 0.006254116, 0.06256269, 22.144325)
+transform = Transform3D(-0.4349736, -8.599971e-08, -0.6183314, -0.6183314, -4.549237e-08, 0.4349736, -5.3499566e-08, 1.2249998, -2.7255792e-08, -1.5613663e-13, -9.676417e-07, 22.137056)
 mesh = SubResource("ArrayMesh_sn1gf")
-
-[node name="SnapPoint" parent="." index="2" unique_id=1474468336]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5119729, 0)

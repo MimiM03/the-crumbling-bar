@@ -2,7 +2,15 @@
 
 [ext_resource type="Script" uid="uid://btmtwf486dt4b" path="res://scripts/shaker.gd" id="1_2al81"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2al81"]
+cull_mode = 2
+albedo_color = Color(0.67687863, 0.67687863, 0.67687863, 1)
+metallic = 0.8
+metallic_specular = 1.0
+roughness = 0.2
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_7fpgt"]
+material = SubResource("StandardMaterial3D_2al81")
 top_radius = 0.15
 bottom_radius = 0.1
 height = 0.45
@@ -22,10 +30,10 @@ mesh = SubResource("CylinderMesh_7fpgt")
 shape = SubResource("CylinderShape3D_2al81")
 
 [node name="RightBottleMarker" type="Marker3D" parent="." unique_id=891215721]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.236, 0.57758534, 0)
+transform = Transform3D(0.8660253, 0, -0.49999994, -1.4901161e-08, 0.99999994, -2.5809568e-08, 0.5, 0, 0.8660254, 0.2996634, 0.61276126, 0)
 
 [node name="LeftBottleMarker" type="Marker3D" parent="." unique_id=989304478]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.236, 0.57758534, 0)
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -0.3, 0.61276126, 0)
 
 [node name="SnapPoint" type="Marker3D" parent="." unique_id=1718858035]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22544467, 0)

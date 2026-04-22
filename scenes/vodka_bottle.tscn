@@ -146,11 +146,11 @@ shadow_mesh = SubResource("ArrayMesh_fvgfv")
 [node name="Vodka Bottle" unique_id=811362861 groups=["pickables", "vodka"] instance=ExtResource("1_hjujr")]
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=2080982735]
-transform = Transform3D(0.027314609, 0, 0, 0, -1.1939595e-09, 0.027314609, 0, -0.027314609, -1.1939595e-09, 0, -0.55061257, 0)
+transform = Transform3D(0.027314609, 0, 0, 0, -1.1939595e-09, 0.027314609, 0, -0.027314609, -1.1939595e-09, 0, -0.5321976, 0)
 shape = SubResource("ConcavePolygonShape3D_57eis")
 
 [node name="Absolut Vodka" type="Node3D" parent="." index="1" unique_id=1256172282]
-transform = Transform3D(1.5753581e-05, 0.027314596, 3.8903223e-09, -2.442116e-09, -3.2561553e-09, 0.02731461, 0.0273146, -1.5748927e-05, 1.1966028e-09, 0, -0.55061257, 0)
+transform = Transform3D(0.027314603, 0, 0, 0, -1.1939592e-09, 0.02731461, 0, -0.027314601, -1.1939596e-09, 0, -0.5321976, 0)
 
 [node name="Absolut_Vodka" type="Node3D" parent="Absolut Vodka" index="0" unique_id=47439951]
 
@@ -163,7 +163,7 @@ mesh = SubResource("ArrayMesh_njvio")
 surface_material_override/0 = SubResource("StandardMaterial3D_57eis")
 
 [node name="pourer" type="MeshInstance3D" parent="Absolut Vodka/Absolut_Vodka/Object_35" index="1" unique_id=129180595]
-transform = Transform3D(-0.6547153, -4.611232e-08, 0.37799993, 0.3779998, -2.677321e-08, 0.6547153, -1.6383794e-08, 1.225, 2.8538174e-08, 0.006251609, 0.06256276, 21.795889)
+transform = Transform3D(-0.7559992, -7.515776e-08, -0.0010820017, -0.0010820094, 7.210278e-08, 0.7559992, -4.6319347e-08, 1.2249998, -4.4564047e-08, 0, 0, 21.796001)
 mesh = SubResource("ArrayMesh_57eis")
 
 [node name="Absolut_Vodka_Sprite" type="Node3D" parent="Absolut Vodka" index="1" unique_id=676059452]
@@ -177,4 +177,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5267454e-06, 0, 0)
 mesh = SubResource("ArrayMesh_g42uv")
 
 [node name="SnapPoint" parent="." index="2" unique_id=1474468336]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.55061257, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5321976, 0)

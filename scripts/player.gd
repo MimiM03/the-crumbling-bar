@@ -6,6 +6,13 @@ const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.1
 enum Target {ZONE, PICKABLE}
 
+# Define the Target Orientations
+# This creates a rotation of 0 on Y
+var upright_quad = Quaternion(Vector3.UP, deg_to_rad(0))
+
+# "Pouring" position (60 on Y, 135 on Z)
+var pour_quat_right = Quaternion(Vector3.UP, deg_to_rad(-60)) * Quaternion(Vector3.LEFT, deg_to_rad(-135))
+var pour_quat_left = Quaternion(Vector3.UP, deg_to_rad(60)) * Quaternion(Vector3.RIGHT, deg_to_rad(135))
 @onready var camera: Camera3D = $Camera3D
 var pitch := 0.0
 var yaw := 0.0
@@ -23,7 +30,7 @@ func _input(event):
 	if is_in_cutscene and event.is_action_pressed("pick"):
 		if cutscene_timer > 0.5:
 			reset_pour()
-			is_in_cutscene = false
+			#is_in_cutscene = false
 			cutscene_timer = 0.0
 			return
 	# Handle mouse interaction (left button)
@@ -81,20 +88,17 @@ func _physics_process(delta: float) -> void:
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		move_and_slide()
 	var rotation_speed =  deg_to_rad(135) / 0.25
-	# Handle pouring (Q left hand/E right hand):
+		# Handle pouring (Q left hand/E right hand):
 	if pickedObjectRight:
-		if Input.is_action_pressed("pour_right"):
-			pickedObjectRight.rotation.x = lerp_angle(pickedObjectRight.rotation.x, deg_to_rad(-135),  rotation_speed * delta)
-		else:
-			# Return to upright (0 degrees)
-			pickedObjectRight.rotation.x = lerp_angle(pickedObjectRight.rotation.x, 0, rotation_speed * delta)
+		var target_right = pour_quat_right if Input.is_action_pressed("pour_right") else upright_quad
+		
+		# Smoothly interpolate the entire rotation at once
+		# slerp handles all axes simultaneously for a "perfect" arc
+		pickedObjectRight.quaternion = pickedObjectRight.quaternion.slerp(target_right, rotation_speed * delta)
+		
 	if pickedObjectLeft:
-		if Input.is_action_pressed("pour_left"):
-			pickedObjectLeft.rotation.x = lerp_angle(pickedObjectLeft.rotation.x, deg_to_rad(135),  rotation_speed * delta)
-		else:
-			# Return to upright (0 degrees)
-			pickedObjectLeft.rotation.x = lerp_angle(pickedObjectLeft.rotation.x, 0, rotation_speed * delta)
-
+		var target_left = pour_quat_left if Input.is_action_pressed("pour_left") else upright_quad
+		pickedObjectLeft.quaternion = pickedObjectLeft.quaternion.slerp(target_left, rotation_speed * delta)
 	
 	
 	
@@ -102,16 +106,15 @@ func _physics_process(delta: float) -> void:
 func get_pointed_object():
 	if $Camera3D/RayCast3D.is_colliding():
 		var hit = $Camera3D/RayCast3D.get_collider()
-		print(hit)
 		
 		# can only pick up if object is pickable
 		if hit.is_in_group("pickables"):
-			print("Picked up")
 			return hit
 	return null
 
 # Handles picking up an object
 func pick_up_object(object):
+	is_in_cutscene = true
 	var directionRight: bool
 	# if hands empty - pick up with right hand
 	if !pickedObjectRight and !pickedObjectLeft:
@@ -119,33 +122,33 @@ func pick_up_object(object):
 	# if right hand full, left hand empty - pick up with left hand
 	elif !pickedObjectLeft:
 		directionRight = false
+	# if left hand full, right hand empty - pick up with right hand
+	elif !pickedObjectRight:
+		directionRight = true
 	else:
 		return
 	
 	# Make the zone empty
 	var parent = object.get_parent()
-	print(parent)
 	if parent.has_method("release_object"):
 		parent.release_object()
 	
 	
 	# Fix position and parent
-	object.reparent(camera)
 	var tween = create_tween()
 	$Camera3D/RayCast3D.add_exception(object)
 	if directionRight:
+		object.reparent(%CarryObjectRightMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectRightMarker.global_transform, 0.2)
-		#object.global_position = %CarryObjectRightMarker.global_position
-		#object.global_rotation = %CarryObjectRightMarker.global_rotation
-		#await get_tree().create_timer(0.1).timeout
 		pickedObjectRight = object
 	else:
+		object.reparent(%CarryObjectLeftMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectLeftMarker.global_transform, 0.2)
-		#object.global_position = %CarryObjectLeftMarker.global_position
-		#object.global_rotation = %CarryObjectLeftMarker.global_rotation
-		#await get_tree().create_timer(0.1).timeout
 		pickedObjectLeft = object
 	
+	tween.finished.connect(func():
+		is_in_cutscene = false
+	)
 	
 	print("Obejct picked:" )
 	print(object)
@@ -206,7 +209,6 @@ func ZoneOrPickable():
 
 # Pour feature
 func start_pouring(shaker):
-	set_collision_mask_value(2, false)
 	is_in_cutscene = true
 	
 	var tween = create_tween().set_parallel(true)
@@ -215,16 +217,16 @@ func start_pouring(shaker):
 	shaker_forward.y = 0
 	shaker_forward = shaker_forward.normalized()
 
-	var target_player_pos = shaker.global_position + (shaker_forward * 0.65)
+	var target_player_pos = shaker.global_position + (shaker_forward * 1.1)
 	target_player_pos.y = self.global_position.y
 
 	tween.tween_property(self, "global_position", target_player_pos, 0.3)
 	tween.tween_property(self, "quaternion", Quaternion.IDENTITY, 0.3)
-	var tilt_angle = deg_to_rad(-45.0)
+	var tilt_angle = deg_to_rad(-20.0)
 	var target_tilt = Quaternion.from_euler(Vector3(tilt_angle, 0, 0))
 
 	tween.tween_property(camera, "quaternion", target_tilt, 0.3).set_trans(Tween.TRANS_SINE)
-	tween.tween_property(camera, "fov", 75, 0.3).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(camera, "fov", 60, 0.3).set_trans(Tween.TRANS_SINE)
 
 	if pickedObjectRight:
 		var target_transform = shaker.markerRight.global_transform
@@ -244,47 +246,24 @@ func start_pouring(shaker):
 func reset_pour():
 	var tween = create_tween().set_parallel(true).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	if pickedObjectRight:
-		#pickedObjectRight = shaker.markerRight.get_child(0)
-		pickedObjectRight.reparent(camera)
-		# Tween local transform after reparenting back to the camera rig.
-		var local_target = %CarryObjectRightMarker.transform
-		tween.tween_property(pickedObjectRight, "transform", local_target, 0.3)
-		
+		pickedObjectRight.reparent(%CarryObjectRightMarker)
+		# Tween transform after reparenting back to the camera rig.
+		tween.tween_property(pickedObjectRight, "global_transform", %CarryObjectRightMarker.global_transform, 0.2)
 	if pickedObjectLeft:
-		#pickedObjectLeft = shaker.markerLeft.get_child(0)
-		pickedObjectLeft.reparent(camera)
-		# Local-space tween keeps carried offsets stable across camera movement.
-		var local_target = %CarryObjectLeftMarker.transform
-		tween.tween_property(pickedObjectLeft, "transform", local_target, 0.3)
-		
+		pickedObjectLeft.reparent(%CarryObjectLeftMarker)
+		# Tween transform after reparenting back to the camera rig.
+		tween.tween_property(pickedObjectLeft, "global_transform", %CarryObjectLeftMarker.global_transform, 0.2)
 	
-	# Get the direction the player is currently facing (which is the shaker)
-	# basis.z is 'Backwards' in Godot's coordinate system
-	var move_direction = self.global_transform.basis.z
-	move_direction.y = 0
-	move_direction = move_direction.normalized()
-	
-	# Move the player back by the 0.45m difference
-	# (1.1 total distance - 0.65 current distance)
-	var target_pos = self.global_position + (move_direction * 0.45)
-	
-	tween.tween_property(self, "global_position", target_pos, 0.3)
-
-	# Reset the camera tilt to look straight again
-	var tilt_angle = -30.0
-	var target_tilt = Quaternion.from_euler(Vector3(deg_to_rad(tilt_angle), 0, 0))
-	tween.tween_property(camera, "quaternion", target_tilt, 0.3).set_trans(Tween.TRANS_SINE).from_current()
+	# Reset the camera fov
 	tween.tween_property(camera, "fov", 65, 0.3).set_trans(Tween.TRANS_SINE)
 	
 	tween.finished.connect(func():
 		# Reset pitch sothe vertical mouse movement starts from the horizon
-		pitch = tilt_angle
-		camera.rotation_degrees.x = pitch
+		pitch = camera.rotation_degrees.x
 		
 		# Sync the body's yaw (Y rotation) so turning starts from current direction
 		rotation_degrees.y = self.rotation_degrees.y
 		
 		# Now that variables are synced, allow interaction/movement again
 		is_in_cutscene = false
-		set_collision_mask_value(2, true)
 	)

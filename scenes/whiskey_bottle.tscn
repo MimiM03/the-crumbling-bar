@@ -98,18 +98,18 @@ shadow_mesh = SubResource("ArrayMesh_r1kbj")
 [node name="Whiskey Bottle" unique_id=811362861 groups=["pickables", "whiskey"] instance=ExtResource("1_1x54e")]
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=2080982735]
-transform = Transform3D(-1.1939596e-09, 0.02731461, 1.1939596e-09, 0, -1.1939596e-09, 0.02731461, 0.02731461, 1.1939596e-09, 5.218963e-17, 0, -0.5442174, 0)
+transform = Transform3D(0.02731461, 0, 0, 0, -1.1939596e-09, 0.02731461, 0, -0.02731461, -1.1939596e-09, 0, -0.59191, 0)
 shape = SubResource("ConcavePolygonShape3D_68oq7")
 
 [node name="Jack_Daniel\'s" type="Node3D" parent="." index="1" unique_id=806270031]
-transform = Transform3D(-1.1939595e-09, 0.02731461, 9.768466e-09, 0, -9.768466e-09, 0.02731461, 0.02731461, 1.1939595e-09, 4.269932e-16, 0, -0.5448787, 0)
+transform = Transform3D(0.02731461, 0, 0, 0, -1.1939596e-09, 0.02731461, 0, -0.02731461, -1.1939596e-09, 0, -0.5925713, 0)
 
 [node name="Jack_Daniel\'s_Atlas_0" type="MeshInstance3D" parent="Jack_Daniel\'s" index="0" unique_id=300110262]
 mesh = SubResource("ArrayMesh_q2m0e")
 
 [node name="pourer" type="MeshInstance3D" parent="Jack_Daniel\'s" index="1" unique_id=358606746]
-transform = Transform3D(-0.6547153, -4.6112334e-08, 0.3779998, 0.3779998, -2.6773195e-08, 0.6547153, -1.638379e-08, 1.225, 2.8538201e-08, 0.006254116, 0.06256207, 23.87806)
+transform = Transform3D(-0.7559934, -2.4420316e-07, 0.0031532198, 0.0031532198, -1.0391436e-07, 0.7559934, -1.5043939e-07, 1.225, 6.475808e-08, 0, 0, 23.878)
 mesh = SubResource("ArrayMesh_j55v4")
 
 [node name="SnapPoint" parent="." index="2" unique_id=1474468336]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54415846, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.59185106, 0)
