@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://s3nbmpxliyw6"]
 
 [ext_resource type="PackedScene" uid="uid://c1631ywoykip3" path="res://scenes/bar.tscn" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://bkl01n12uerp4" path="res://scripts/order_gen.gd" id="2_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cnmb3r1hin7wo" path="res://scenes/player.tscn" id="2_yqjtg"]
 [ext_resource type="Script" uid="uid://cn551v7xq4onb" path="res://scripts/customer_spawn_point.gd" id="3_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://bclwag1i8b420" path="res://scenes/glass_wine.tscn" id="3_lnu2h"]
@@ -47,6 +48,9 @@ shadow_enabled = true
 
 [node name="Player" parent="." unique_id=22417174 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.007936)
+
+[node name="OrderGen" type="Node" parent="Player" unique_id=356084582]
+script = ExtResource("2_dinhu")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=988907710]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008371353, 0, 0.9989114)
