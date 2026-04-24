@@ -1,6 +1,6 @@
 extends Node
 
-@export var json_file_path: String = "res://scripts/recipies.json"
+@export var json_file_path: String = "res://scripts/recipes.json"
 
 
 var drinks: Array = []
