@@ -1,0 +1,88 @@
+[
+	{
+		"name": "Vodka Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 2.5
+			}
+		]
+	},
+	{
+		"name": "Whiskey Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "whiskey",
+				"amount": 2.5
+			}
+		]
+	},
+	{
+		"name": "Tequila Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "tequila",
+				"amount": 2.5
+			}
+		]
+	},
+	{
+		"name": "Vodka Drink 1",
+		"glass": "Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 2.5
+			},
+			{
+				"item": "mixer",
+				"amount": 60
+			}
+		]
+	},
+	{
+		"name": "Vodka Drink 2",
+		"glass": "Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 2.5
+			},
+			{
+				"item": "mixer2",
+				"amount": 60
+			}
+		]
+	},
+	{
+		"name": "Vodka Drink 3",
+		"glass": "Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 2.5
+			},
+			{
+				"item": "mixer3",
+				"amount": 60
+			}
+		]
+	},
+	{
+		"name": "Vodka Drink 4",
+		"glass": "Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 2.5
+			},
+			{
+				"item": "mixer4",
+				"amount": 60
+			}
+		]
+	},
+]
