@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bn7evjvrvuttf"]
 
 [ext_resource type="Script" uid="uid://btmtwf486dt4b" path="res://scripts/shaker.gd" id="1_2al81"]
+[ext_resource type="Shader" uid="uid://lr08g6cctxlc" path="res://shaders/liquidShader.gdshader" id="2_kkwqg"]
+[ext_resource type="Script" uid="uid://n7eik74jsiex" path="res://scripts/LiquidWobble.gd" id="3_htgps"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2al81"]
 cull_mode = 2
@@ -20,6 +22,26 @@ cap_top = false
 height = 0.45
 radius = 0.15
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kkwqg"]
+render_priority = 0
+shader = ExtResource("2_kkwqg")
+shader_parameter/fill_percent = 0.5
+shader_parameter/liquid_surface_color = Color(0.7, 0.5, 1, 1)
+shader_parameter/rim_emission_intensity = 0.2
+shader_parameter/rim_exponent = 3.0
+shader_parameter/emission_intensity = 0.1
+shader_parameter/liquid_surface_gradient_size = 3.0
+shader_parameter/wobble = Vector2(3.2255258e-16, -1.2662257e-19)
+shader_parameter/world_bottom_y = -0.21374999
+shader_parameter/world_vertical_length = 0.42749998
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_htgps"]
+transparency = 1
+albedo_color = Color(0.8235294, 0.7137255, 0.39215687, 0.30588236)
+metallic = 0.56
+metallic_specular = 1.0
+roughness = 0.0
+
 [node name="Shaker" type="Area3D" unique_id=2091606909 groups=["pickables", "shaker"]]
 script = ExtResource("1_2al81")
 
@@ -37,3 +59,10 @@ transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -0.3, 0.
 
 [node name="SnapPoint" type="Marker3D" parent="." unique_id=1718858035]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22544467, 0)
+
+[node name="liquid" type="MeshInstance3D" parent="." unique_id=445175253]
+transform = Transform3D(0.95, -5.3291914e-29, 1.3500312e-14, 1.5987579e-28, 0.95, -7.5001735e-15, -1.3500312e-14, 7.5001735e-15, 0.95, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_kkwqg")
+mesh = SubResource("CylinderMesh_7fpgt")
+surface_material_override/0 = SubResource("StandardMaterial3D_htgps")
+script = ExtResource("3_htgps")

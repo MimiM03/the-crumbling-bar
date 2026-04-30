@@ -19,7 +19,7 @@ shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
-shader_parameter/wobble = Vector2(-0.0005019815, -0.0010005583)
+shader_parameter/wobble = Vector2(0, 0)
 shader_parameter/world_bottom_y = -0.51061857
 shader_parameter/world_vertical_length = 0.57509434
 
@@ -118,6 +118,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_daej7")
 
 [node name="Tequila Bottle" unique_id=811362861 groups=["pickables", "tequila"] instance=ExtResource("1_4gf0n")]
+liquid_mesh_path = NodePath("Olmeca/liquid")
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=2080982735]
 transform = Transform3D(0.015706047, 0.022347441, 9.768376e-10, 0, -1.1939596e-09, 0.02731461, 0.022347441, -0.015706047, -6.865331e-10, 0, -0.54401135, 0)
