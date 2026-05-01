@@ -143,3 +143,7 @@ script = ExtResource("6_68oq7")
 
 [node name="SnapPoint" parent="." index="2" unique_id=1474468336]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.59185106, 0)
+
+[node name="RayCast3D" parent="." index="3" unique_id=226302505]
+transform = Transform3D(1, 0, 0, 0, 0.98318803, -0.1825959, 0, 0.1825959, 0.98318803, 0, 0.17035663, 0)
+target_position = Vector3(0, 1, 0)

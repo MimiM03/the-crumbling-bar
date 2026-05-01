@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dr12wcjko4jta"]
 
-[ext_resource type="Script" uid="uid://bae38yc7rsx57" path="res://scenes/bottle.gd" id="1_w0pu3"]
+[ext_resource type="Script" uid="uid://bae38yc7rsx57" path="res://scripts/bottle.gd" id="1_w0pu3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h4k8v"]
 size = Vector3(0.1, 0.38, 0.2)
@@ -12,3 +12,7 @@ script = ExtResource("1_w0pu3")
 shape = SubResource("BoxShape3D_h4k8v")
 
 [node name="SnapPoint" type="Marker3D" parent="." unique_id=1474468336]
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=226302505]
+collision_mask = 4
+collide_with_areas = true

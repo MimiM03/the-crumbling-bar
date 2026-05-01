@@ -31,7 +31,7 @@ shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
-shader_parameter/wobble = Vector2(3.2255258e-16, -1.2662257e-19)
+shader_parameter/wobble = Vector2(0, 0)
 shader_parameter/world_bottom_y = -0.21374999
 shader_parameter/world_vertical_length = 0.42749998
 
@@ -43,7 +43,9 @@ metallic_specular = 1.0
 roughness = 0.0
 
 [node name="Shaker" type="Area3D" unique_id=2091606909 groups=["pickables", "shaker"]]
+collision_layer = 5
 script = ExtResource("1_2al81")
+liquid_mesh_path = NodePath("liquid")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=448471451]
 mesh = SubResource("CylinderMesh_7fpgt")

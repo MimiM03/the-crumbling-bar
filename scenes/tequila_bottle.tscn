@@ -143,3 +143,7 @@ mesh = SubResource("ArrayMesh_qwjgq")
 [node name="pourer" type="MeshInstance3D" parent="Olmeca" index="2" unique_id=1037858527]
 transform = Transform3D(-0.4349736, -8.599971e-08, -0.6183314, -0.6183314, -4.549237e-08, 0.4349736, -5.3499566e-08, 1.2249998, -2.7255792e-08, -1.5613663e-13, -9.676417e-07, 22.137056)
 mesh = SubResource("ArrayMesh_sn1gf")
+
+[node name="RayCast3D" parent="." index="3" unique_id=226302505]
+transform = Transform3D(1, 0, 0, 0, 0.98318803, -0.18259591, 0, 0.18259591, 0.98318803, 0, 0.17035663, 0)
+target_position = Vector3(0, 1, 0)

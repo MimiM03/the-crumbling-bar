@@ -1,8 +1,10 @@
 extends Area3D
 
+@onready var raycast:= $RayCast3D
 @export var liquid_mesh_path: NodePath
+@export var bottle_capacity := 900.0
 @export var max_liquid_ml := 750.0
-var current_ml := 750
+var current_ml := 750.0
 var pour_rate = 15.0 # ~~ ml per sec
 
 var liquid_material: ShaderMaterial
@@ -20,14 +22,19 @@ func pour(delta):
 	if current_ml > 0.01:
 		var amount_requested = pour_rate * delta
 		var amount = clamp(amount_requested, 0.0, current_ml)
-		print(amount)
+		if raycast.is_colliding():
+			var hit = raycast.get_collider()
+			print(hit)
+			if hit.has_method("get_liquid"):
+				print('adding?')
+				hit.get_liquid(amount)
 		current_ml -= amount
 		update_visual()
 		
 
 func normalized_fill() -> float:
 	#print(clamp(current_ml / max_liquid_ml, 0.0, 1.0))
-	return clamp(current_ml / max_liquid_ml, 0.0, 1.0)
+	return clamp(current_ml / bottle_capacity, 0.0, 1.0)
 
 func update_visual() -> void:
 	if liquid_material:
