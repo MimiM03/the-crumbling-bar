@@ -3,7 +3,7 @@ shader_type spatial;
 render_mode cull_disabled,shadows_disabled;
 
 uniform float fill_percent : hint_range(0.0, 1.0) = 0.5;
-// ANCHOR: surface_color
+// ANCHOR: surface_colora
 uniform vec4 liquid_surface_color: source_color = vec4(0.7, 0.5, 1.0, 1.0);
 // END: surface_color
 uniform sampler2D liquid_rim_gradient;
@@ -49,6 +49,10 @@ void vertex() {
 }
 
 void fragment() {
+	// If the bottle is empty, don't render anything
+	if (fill_percent <= 0.0001) {
+		discard;
+	}
 	// ANCHOR: fresnel
 	float fresnel = dot(normalize(NORMAL), normalize(VERTEX));
 	fresnel = abs(fresnel);
