@@ -24,9 +24,7 @@ func pour(delta):
 		var amount = clamp(amount_requested, 0.0, current_ml)
 		if raycast.is_colliding():
 			var hit = raycast.get_collider()
-			print(hit)
 			if hit.has_method("get_liquid"):
-				print('adding?')
 				hit.get_liquid(amount)
 		current_ml -= amount
 		update_visual()

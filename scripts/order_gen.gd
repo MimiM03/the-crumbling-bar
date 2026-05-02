@@ -1,22 +1,15 @@
+class_name OrderGen
 extends Node
 
-@export var json_file_path: String = "res://scripts/recipes.json"
-
-
-var drinks: Array = []
-var rng := RandomNumberGenerator.new()
-var amount = 3
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	rng.randomize()
-	if load_json(json_file_path):
-		var picks := pick_random_drinks(amount)
-		for i in picks.size():
-			print(" [%d] %s" % [i +1, picks[i]])
+static var json_file_path: String = "res://scripts/recipes.json"
+static var drinks: Array = []
+static var rng := RandomNumberGenerator.new()
 
 ## Loads json into the file
-func load_json(path: String) -> bool:
+static func load_json(path: String) -> bool:
+	if not drinks.is_empty():
+		return true # Already loaded
+		
 	if not FileAccess.file_exists(path):
 		push_error("OrderGen: File not found — %s" % path)
 		return false
@@ -47,9 +40,11 @@ func load_json(path: String) -> bool:
 	#print("OrderGen: Loaded %d drink(s) from %s" % [drinks.size(), path])
 	return true
 
-
 ## Pick drinks from list
-func pick_random_drinks(count: int) -> Array:
+static func pick_random_drinks(count: int) -> Array:
+	rng.randomize()
+	load_json(json_file_path)
+	
 	if drinks.is_empty():
 		push_warning("OrderGen: No drinks loaded.")
 		return []
@@ -65,7 +60,7 @@ func pick_random_drinks(count: int) -> Array:
  
  
 ## Prints a single drink entry cleanly to the console.
-func print_drink(number: int, drink: Dictionary) -> void:
+static func print_drink(number: int, drink: Dictionary) -> void:
 	print("[%d] %s  (%s)" % [number, drink.get("name", "Unknown"), drink.get("glass", "Unknown glass")])
 	var ingredients: Array = drink.get("ingredients", [])
 	for ing in ingredients:
@@ -75,20 +70,18 @@ func print_drink(number: int, drink: Dictionary) -> void:
  
 ## Call this at runtime to re-pick without reloading the file.
 ## Returns the array of picked drink Dictionaries.
-func repick(count: int) -> Array:
+static func repick(count: int) -> Array:
 	var picks := pick_random_drinks(count)
 	print("Re-picked %d drink(s):\n" % picks.size())
 	for i in picks.size():
 		print_drink(i + 1, picks[i])
 	return picks
- 
- 
-func get_name_drink(drink: Dictionary) -> String:
+
+static func get_name_drink(drink: Dictionary) -> String:
 	return drink.get("name", "Unknown")
  
- 
 ## Returns a flat list of ingredient strings for a given drink, ["vodka 2.5", "mixer 60"]
-func get_ingredient_strings(drink: Dictionary) -> Array:
+static func get_ingredient_strings(drink: Dictionary) -> Array:
 	var result: Array = []
 	for ing in drink.get("ingredients", []):
 		result.append("%s %.1f" % [ing.get("item", "?"), ing.get("amount", 0.0)])

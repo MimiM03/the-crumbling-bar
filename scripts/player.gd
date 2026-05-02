@@ -1,8 +1,6 @@
 # Player.gd
 extends CharacterBody3D
 
-@onready var order_gen = $OrderGen
-
 
 const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.1
@@ -61,8 +59,6 @@ func _input(event):
 			mouse_visible = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			
-	if event.is_action_pressed("order"):
-		var _order = order_gen.repick(4)
 
 # Handle camera rotation with mouse movement
 func _unhandled_input(event: InputEvent) -> void:
