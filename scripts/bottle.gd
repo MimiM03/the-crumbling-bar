@@ -1,11 +1,10 @@
 extends Area3D
 
-@onready var markerLeft := $LeftBottleMarker
-@onready var markerRight := $RightBottleMarker
-
+@onready var raycast:= $RayCast3D
 @export var liquid_mesh_path: NodePath
+@export var bottle_capacity := 900.0
 @export var max_liquid_ml := 750.0
-var current_ml := 0.0
+var current_ml := 750.0
 var pour_rate = 15.0 # ~~ ml per sec
 
 var liquid_material: ShaderMaterial
@@ -23,19 +22,18 @@ func pour(delta):
 	if current_ml > 0.01:
 		var amount_requested = pour_rate * delta
 		var amount = clamp(amount_requested, 0.0, current_ml)
+		if raycast.is_colliding():
+			var hit = raycast.get_collider()
+			if hit.has_method("get_liquid"):
+				hit.get_liquid(amount)
 		current_ml -= amount
 		update_visual()
 		
 
 func normalized_fill() -> float:
-	return clamp(current_ml / max_liquid_ml, 0.0, 1.0)
+	#print(clamp(current_ml / max_liquid_ml, 0.0, 1.0))
+	return clamp(current_ml / bottle_capacity, 0.0, 1.0)
 
 func update_visual() -> void:
 	if liquid_material:
 		liquid_material.set_shader_parameter("fill_percent", normalized_fill())
-		
-		
-func get_liquid(amount) -> void:
-	if current_ml < max_liquid_ml:
-		current_ml += amount
-		update_visual()

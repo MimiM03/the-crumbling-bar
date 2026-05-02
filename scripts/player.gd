@@ -1,8 +1,6 @@
 # Player.gd
 extends CharacterBody3D
 
-@onready var order_gen = $OrderGen
-
 
 const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.1
@@ -61,8 +59,6 @@ func _input(event):
 			mouse_visible = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			
-	if event.is_action_pressed("order"):
-		var _order = order_gen.repick(4)
 
 # Handle camera rotation with mouse movement
 func _unhandled_input(event: InputEvent) -> void:
@@ -100,10 +96,11 @@ func _physics_process(delta: float) -> void:
 		# Smoothly interpolate the entire rotation at once
 		# slerp handles all axes simultaneously for a "perfect" arc
 		pickedObjectRight.quaternion = pickedObjectRight.quaternion.slerp(target_right, rotation_speed * delta)
-		
+		can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), pour_quat_right, delta)
 	if pickedObjectLeft:
 		var target_left = pour_quat_left if Input.is_action_pressed("pour_left") else upright_quad
 		pickedObjectLeft.quaternion = pickedObjectLeft.quaternion.slerp(target_left, rotation_speed * delta)
+		can_pour(pickedObjectLeft, Input.is_action_pressed("pour_left"), pour_quat_left, delta)
 	
 	
 	
@@ -200,7 +197,6 @@ func get_nearby_zone():
 			return hit_collider
 	return null
 
-
 func ZoneOrPickable():
 	if $Camera3D/RayCast3D.is_colliding():
 		var hit_collider = $Camera3D/RayCast3D.get_collider()
@@ -272,3 +268,16 @@ func reset_pour():
 		# Now that variables are synced, allow interaction/movement again
 		is_in_cutscene = false
 	)
+
+func can_pour(object, is_pouring, target_quat, _delta):
+	if object == null or not is_pouring:
+		return
+	
+	#Check if bottle is rotated
+	const ANGLE_TOLERANCE:= 10.0
+	var angle_diff_deg = rad_to_deg(object.quaternion.angle_to(target_quat))
+	if angle_diff_deg > ANGLE_TOLERANCE:
+		return
+		
+	object.pour(_delta)
+	pass
