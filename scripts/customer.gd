@@ -2,8 +2,10 @@ extends CharacterBody3D
 
 @onready var nav_agent = $NavigationAgent3D
 
+var exit_position = null
 var target_seat = null
 var target_wait_area = null
+var target_table = null
 const SPEED := 3.0
 var isGroup: bool = false
 var group_members: Array = [] # To keep track of who is in the group
@@ -14,10 +16,21 @@ var type: ChairType
 var is_sitting: bool = false
 var has_ordered: bool = false
 var has_been_served = false
+var drink = null
+
+@onready var bubble_sprite = $OrderLabel/Sprite3D
+@onready var drink_label = $OrderLabel/SubViewport/Panel/Label
+@onready var bubble_viewport = $OrderLabel/SubViewport
 
 func _ready() -> void:
 	# Wait for the first physics frame so the NavigationServer is ready
 	await get_tree().physics_frame
+	
+	# Initially hide the bubble
+	bubble_sprite.visible = false
+	# Link the Sprite3D to the Viewport
+	bubble_sprite.texture = bubble_viewport.get_texture()
+	
 	if !isGroup:
 		type = ChairType.CHAIR
 		start_looking_for_seat()
@@ -61,12 +74,12 @@ func start_looking_for_bar_space():
 
 func dispatch_group_to_table():
 	# 1. Find a table large enough for the whole group
-	var table = find_free_table_for_size(group_members.size())
+	target_table = find_free_table_for_size(group_members.size())
 
-	if table:
-		table.is_occupied = true
+	if target_table:
+		target_table.is_occupied = true
 		var chairs = get_tree().get_nodes_in_group("seats").filter(
-			func(node): return table.is_ancestor_of(node)
+			func(node): return target_table.is_ancestor_of(node)
 		)
 		# 2. Assign members one by one with a small delay
 		for i in range(group_members.size()):
@@ -99,7 +112,13 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
 
 func _on_navigation_agent_3d_target_reached() -> void:
 	# Snap to the exact marker position
-	var final_pos = target_wait_area.global_position if target_wait_area else target_seat.global_position
+	var final_pos
+	if target_wait_area:
+		final_pos = target_wait_area.global_position 
+	elif target_seat:
+		final_pos = target_seat.global_position
+	else:
+		final_pos = exit_position
 	global_position = final_pos
 	is_moving = false
 	# Stop moving
@@ -120,6 +139,8 @@ func _on_navigation_agent_3d_target_reached() -> void:
 							break # Someone is still moving, keep waiting
 							
 			# TODO: change wait time -> Order()
+			
+			order()
 			await get_tree().create_timer(5.0).timeout
 			# After order served: move to table
 			if group_members.size() == 2:
@@ -136,10 +157,40 @@ func sit():
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", target_seat.sit_marker.global_position, 1)
 	tween.parallel().tween_property(self, "global_basis", target_seat.sit_marker.global_basis, 1)
-	
 	# if at the bar:
+	if type == ChairType.CHAIR:
 	#TODO: order()
+		tween.finished.connect(func():
+			order()
+		)
 	#TODO: be served()
-	#if at table: just drink it
+	#if at table: just drink it (this func shouldnt be called in this case, but check in case
+	else:
+		await get_tree().create_timer(5.0).timeout
+	
 	
 	# then leave
+
+func order():
+	if is_leader:
+		var orders = OrderGen.repick(group_members.size())
+		for i in range(orders.size()):
+			group_members[i].drink = orders[i]
+			group_members[i].print_orders_per_member()
+		
+func print_orders_per_member():
+	if drink.is_empty():
+		return
+	
+	# Get the name using your static helper
+	var drink_name = OrderGen.get_name_drink(drink)
+
+	# Update the UI
+	drink_label.text = drink_name
+	
+	# Show the bubble
+	bubble_sprite.visible = true
+	
+	# Optional: Hide it after a few seconds
+	await get_tree().create_timer(5.0).timeout
+	bubble_sprite.visible = false

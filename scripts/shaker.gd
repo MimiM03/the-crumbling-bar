@@ -28,7 +28,6 @@ func pour(delta):
 		
 
 func normalized_fill() -> float:
-	#print(clamp(current_ml / max_liquid_ml, 0.0, 1.0))
 	return clamp(current_ml / max_liquid_ml, 0.0, 1.0)
 
 func update_visual() -> void:
@@ -38,6 +37,5 @@ func update_visual() -> void:
 		
 func get_liquid(amount) -> void:
 	if current_ml < max_liquid_ml:
-		print("adding")
 		current_ml += amount
 		update_visual()

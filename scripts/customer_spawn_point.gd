@@ -8,7 +8,7 @@ func _ready():
 	# For testing: spawn something every 5 seconds
 	while true:
 		spawn_random_arrival()
-		await get_tree().create_timer(3.0).timeout
+		await get_tree().create_timer(5.0).timeout
 		
 
 func spawn_random_arrival():
@@ -79,6 +79,7 @@ func spawn_group(size: int, available_areas: Array):
 		# Set their position at the entrance with a tiny bit of random offset
 		# so they don't spawn inside each other
 		customer.global_position = global_position + Vector3(randf_range(0.4,0.6), 0, randf_range(0.4,0.6))
+		customer.exit_position = global_position + Vector3(9.88, 0, 0)
 		
 		if isGroup:
 			# Assign a specific wait spot to each member immediately
@@ -88,7 +89,9 @@ func spawn_group(size: int, available_areas: Array):
 		else:
 			if available_areas.size() > 0:
 				# Pick a random seat
-				customer.target_seat = available_areas[randi() % available_areas.size()]
+				var seat = available_areas[randi() % available_areas.size()]
+				seat.is_occupied = true
+				customer.target_seat = seat
 		
 		if i == 0: customer.is_leader = true
 		members.append(customer)
