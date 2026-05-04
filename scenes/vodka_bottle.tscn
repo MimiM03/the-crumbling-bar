@@ -66,15 +66,15 @@ roughness = 0.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xyvc4"]
 render_priority = 0
 shader = ExtResource("5_sxqlt")
-shader_parameter/fill_percent = 0.5
+shader_parameter/fill_percent = 0.834000039615
 shader_parameter/liquid_surface_color = Color(0.7, 0.5, 1, 1)
 shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
 shader_parameter/wobble = Vector2(0, 0)
-shader_parameter/world_bottom_y = -0.4988349
-shader_parameter/world_vertical_length = 0.5671743452548981
+shader_parameter/world_bottom_y = -0.4988366
+shader_parameter/world_vertical_length = 0.5671763
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_agooq"]
 resource_name = "Silver"
@@ -159,7 +159,8 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_fvgfv")
 
 [node name="Vodka Bottle" unique_id=811362861 groups=["pickables", "vodka"] instance=ExtResource("1_hjujr")]
-transform = Transform3D(0.99999636, 0.0026878037, 0, -0.0026878037, 0.99999636, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+liquid_mesh_path = NodePath("Absolut Vodka/Absolut_Vodka/Object_35/liquid")
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=2080982735]
 transform = Transform3D(0.027314609, 0, 0, 0, -1.1939595e-09, 0.027314609, 0, -0.027314609, -1.1939595e-09, 0, -0.5321976, 0)
@@ -201,3 +202,8 @@ mesh = SubResource("ArrayMesh_g42uv")
 
 [node name="SnapPoint" parent="." index="2" unique_id=1474468336]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5321976, 0)
+
+[node name="RayCast3D" parent="." index="3" unique_id=226302505]
+transform = Transform3D(1, 0, 0, 0, 0.98318803, -0.18259591, 0, 0.18259591, 0.98318803, 0, 0.17035663, 0)
+target_position = Vector3(0, 1, 0)
+collision_mask = 3

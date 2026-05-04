@@ -106,7 +106,7 @@ shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
-shader_parameter/wobble = Vector2(-0.0004800283, 0.00010753694)
+shader_parameter/wobble = Vector2(0, 0)
 shader_parameter/world_bottom_y = -0.5591515
 shader_parameter/world_vertical_length = 0.62242085
 
@@ -118,6 +118,7 @@ metallic_specular = 1.0
 roughness = 0.0
 
 [node name="Whiskey Bottle" unique_id=811362861 groups=["pickables", "whiskey"] instance=ExtResource("1_1x54e")]
+liquid_mesh_path = NodePath("Jack_Daniel\'s/liquid")
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=2080982735]
 transform = Transform3D(0.02731461, 0, 0, 0, -1.1939596e-09, 0.02731461, 0, -0.02731461, -1.1939596e-09, 0, -0.59191, 0)
@@ -142,3 +143,7 @@ script = ExtResource("6_68oq7")
 
 [node name="SnapPoint" parent="." index="2" unique_id=1474468336]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.59185106, 0)
+
+[node name="RayCast3D" parent="." index="3" unique_id=226302505]
+transform = Transform3D(1, 0, 0, 0, 0.98318803, -0.1825959, 0, 0.1825959, 0.98318803, 0, 0.17035663, 0)
+target_position = Vector3(0, 1, 0)
