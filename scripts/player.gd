@@ -12,7 +12,9 @@ var upright_quad = Quaternion(Vector3.UP, deg_to_rad(0))
 
 # "Pouring" position (60 on Y, 135 on Z)
 var pour_quat_right = Quaternion(Vector3.UP, deg_to_rad(-60)) * Quaternion(Vector3.LEFT, deg_to_rad(-135))
+var pour_juice_right = Quaternion(Vector3.UP, deg_to_rad(-60)) * Quaternion(Vector3.LEFT, deg_to_rad(-110))
 var pour_quat_left = Quaternion(Vector3.UP, deg_to_rad(60)) * Quaternion(Vector3.RIGHT, deg_to_rad(135))
+var pour_juice_left = Quaternion(Vector3.UP, deg_to_rad(60)) * Quaternion(Vector3.RIGHT, deg_to_rad(110))
 @onready var camera: Camera3D = $Camera3D
 var pitch := 0.0
 var yaw := 0.0
@@ -91,16 +93,35 @@ func _physics_process(delta: float) -> void:
 	var rotation_speed =  deg_to_rad(135) / 0.25
 		# Handle pouring (Q left hand/E right hand):
 	if pickedObjectRight:
-		var target_right = pour_quat_right if Input.is_action_pressed("pour_right") else upright_quad
+		var target_right
+		var target = pour_quat_right
+		if Input.is_action_pressed("pour_right"):
+			if pickedObjectRight.is_in_group("juice"):
+				target_right = pour_juice_right
+				target = pour_juice_right
+			else:
+				target_right = pour_quat_right
+		else:
+			target_right = upright_quad
 		
 		# Smoothly interpolate the entire rotation at once
 		# slerp handles all axes simultaneously for a "perfect" arc
 		pickedObjectRight.quaternion = pickedObjectRight.quaternion.slerp(target_right, rotation_speed * delta)
-		can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), pour_quat_right, delta)
+		can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), target, delta)
 	if pickedObjectLeft:
-		var target_left = pour_quat_left if Input.is_action_pressed("pour_left") else upright_quad
+		var target_left
+		var target = pour_quat_left
+		if Input.is_action_pressed("pour_left"):
+			if pickedObjectLeft.is_in_group("juice"):
+				target_left = pour_juice_left
+				target = pour_juice_left
+			else:
+				target_left = pour_quat_left
+		else:
+			target_left = upright_quad
+			
 		pickedObjectLeft.quaternion = pickedObjectLeft.quaternion.slerp(target_left, rotation_speed * delta)
-		can_pour(pickedObjectLeft, Input.is_action_pressed("pour_left"), pour_quat_left, delta)
+		can_pour(pickedObjectLeft, Input.is_action_pressed("pour_left"), target, delta)
 	
 	
 	
@@ -280,4 +301,3 @@ func can_pour(object, is_pouring, target_quat, _delta):
 		return
 		
 	object.pour(_delta)
-	pass
