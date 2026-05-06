@@ -26,6 +26,10 @@ seats=""
 wait_area=""
 TABLE4=""
 TABLE2=""
+juice=""
+juiceBlue=""
+juiceRed=""
+juiceYellow=""
 
 [input]
 
