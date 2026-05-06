@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dr12wcjko4jta" path="res://scenes/base_bottle.tscn" id="1_772xq"]
 [ext_resource type="ArrayMesh" uid="uid://bmw4nyjbhuvfj" path="res://assets/new_array_mesh.tres" id="2_oi5rd"]
 [ext_resource type="Shader" uid="uid://lr08g6cctxlc" path="res://shaders/liquidShader.gdshader" id="3_8y0fe"]
+[ext_resource type="ArrayMesh" uid="uid://4viw7v0uojyd" path="res://assets/juice_liquid.tres" id="4_j007e"]
 [ext_resource type="Script" uid="uid://n7eik74jsiex" path="res://scripts/LiquidWobble.gd" id="4_trhbi"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_oi5rd"]
@@ -11,15 +12,15 @@ data = PackedVector3Array(0, 0.118599996, -0.0975, 0.019399999, 0.16929999, -0.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j007e"]
 render_priority = 0
 shader = ExtResource("3_8y0fe")
-shader_parameter/fill_percent = 0.834000039615
+shader_parameter/fill_percent = 1.0
 shader_parameter/liquid_surface_color = Color(0.7, 0.5, 1, 1)
 shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
-shader_parameter/wobble = Vector2(0, 0)
-shader_parameter/world_bottom_y = -0.54907185
-shader_parameter/world_vertical_length = 0.70558023
+shader_parameter/wobble = Vector2(1.8657434e-35, -4.938041e-35)
+shader_parameter/world_bottom_y = -0.5302647
+shader_parameter/world_vertical_length = 0.5595870316028595
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cpygh"]
 transparency = 1
@@ -29,6 +30,7 @@ metallic_specular = 1.0
 roughness = 0.0
 
 [node name="juice" unique_id=811362861 groups=["juice", "pickables"] instance=ExtResource("1_772xq")]
+liquid_mesh_path = NodePath("liquid")
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=2080982735]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.36134845, 0)
@@ -48,6 +50,6 @@ mesh = ExtResource("2_oi5rd")
 [node name="liquid" type="MeshInstance3D" parent="." index="4" unique_id=1110653821]
 transform = Transform3D(-0.9000001, -6.2117624e-22, -7.868052e-08, 1.5146129e-28, 0.8999999, -1.4210855e-14, 7.868052e-08, -7.1054274e-15, -0.9000001, 0, -0.361, 0)
 material_override = SubResource("ShaderMaterial_j007e")
-mesh = ExtResource("2_oi5rd")
+mesh = ExtResource("4_j007e")
 surface_material_override/0 = SubResource("StandardMaterial3D_cpygh")
 script = ExtResource("4_trhbi")
