@@ -28,13 +28,22 @@ func _update_liquid_bounds() -> void:
 
 	var aabb := mesh.get_aabb()
 	var center := aabb.get_center()
-	var axis := Vector3.RIGHT
-	var axis_length := aabb.size.x
+	# Pick the local mesh axis that spans most along world-up.
+	# This avoids near-zero vertical length on meshes whose longest axis is horizontal.
+	var world_basis: Basis = global_transform.basis
+	var x_world_y: float = abs(world_basis.x.normalized().dot(Vector3.UP))
+	var y_world_y: float = abs(world_basis.y.normalized().dot(Vector3.UP))
+	var z_world_y: float = abs(world_basis.z.normalized().dot(Vector3.UP))
 
-	if aabb.size.y > axis_length:
-		axis = Vector3.UP
-		axis_length = aabb.size.y
-	if aabb.size.z > axis_length:
+	var axis := Vector3.UP
+	var axis_length := aabb.size.y
+	var best_up_alignment: float = y_world_y
+
+	if x_world_y > best_up_alignment:
+		axis = Vector3.RIGHT
+		axis_length = aabb.size.x
+		best_up_alignment = x_world_y
+	if z_world_y > best_up_alignment:
 		axis = Vector3.BACK
 		axis_length = aabb.size.z
 

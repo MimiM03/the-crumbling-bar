@@ -175,7 +175,7 @@ transform = Transform3D(0.027314603, 0, 0, 0, -1.1939592e-09, 0.02731461, 0, -0.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5244863e-06, 0, -0.021566391)
 
 [node name="Absolut_Vodka_Atlas_0" type="MeshInstance3D" parent="Absolut Vodka/Absolut_Vodka/Object_35" index="0" unique_id=883412211]
-transform = Transform3D(1, 0, 3.5527137e-15, 0, 1, 7.2164497e-16, -1.4210855e-14, 4.159867e-15, 1, 2.526745e-06, 3.330669e-16, 0)
+transform = Transform3D(1, 5.9115264e-29, 1.4210855e-14, 0, 1, -4.159867e-15, -1.4210855e-14, 4.159867e-15, 1, 2.526745e-06, 3.330669e-16, 0)
 mesh = SubResource("ArrayMesh_njvio")
 surface_material_override/0 = SubResource("StandardMaterial3D_57eis")
 

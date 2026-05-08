@@ -18,7 +18,7 @@ shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
-shader_parameter/wobble = Vector2(1.8657434e-35, -4.938041e-35)
+shader_parameter/wobble = Vector2(0, 0)
 shader_parameter/world_bottom_y = -0.5302647
 shader_parameter/world_vertical_length = 0.5595870316028595
 

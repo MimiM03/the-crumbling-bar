@@ -2,16 +2,19 @@
 extends Area3D
 
 @export var required_group: String = ""
-var is_occupied: bool = true
+@export var is_occupied: bool = true
 var current_object: Area3D
 
+func _physics_process(_delta: float) -> void:
+	if is_occupied:
+		$CollisionShape3D.disabled = true
+	else:
+		$CollisionShape3D.disabled = false
 # Returns true only if the zone is empty AND the object is acceptable
 func can_accept(object: Area3D) -> bool:
 	if !object:
 		return false
 	# `required_group` acts as a simple type filter for zone compatibility.
-	print(!is_occupied)
-	print(object.is_in_group(required_group))
 	return !is_occupied and object.is_in_group(required_group)
 
 # Places object on it's marker

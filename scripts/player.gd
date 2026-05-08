@@ -1,10 +1,15 @@
 # Player.gd
 extends CharacterBody3D
 
+var highGlassScene: PackedScene = preload("res://scenes/high_glass.tscn")
+var shotGlassScene: PackedScene = preload("res://scenes/shot_glass.tscn")
+var rocksGlassScene: PackedScene = preload("res://scenes/rocks_glass.tscn")
+
+var glassContainer: NodePath = "../Glasses"
 
 const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.1
-enum Target {ZONE, PICKABLE}
+enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS}
 
 # Define the Target Orientations
 # This creates a rotation of 0 on Y
@@ -38,17 +43,20 @@ func _input(event):
 	# Handle mouse interaction (left button)
 	if event.is_action_pressed("pick") and !is_in_cutscene:
 		#if clicked - check if zone vs pickable
-		var target = ZoneOrPickable()
+		var target = ZonePickableOrGlass()
 		# if zone - check if holding smth
 		if target == Target.ZONE:
 			if pickedObjectRight or pickedObjectLeft:
 				drop_object()
+		#if glass - pick up a glass
+		elif target == Target.HIGH_GLASS or target == Target.SHOT_GLASS or target == Target.ROCKS_GLASS:
+			pick_glass(target)
 		#if pickable - check if u can pick up
 		elif target == Target.PICKABLE:
 			var object = get_pointed_object()
 			
 			if object:
-				if object.is_in_group("shaker") and (pickedObjectLeft or pickedObjectRight):
+				if (object.is_in_group("shaker") or object.is_in_group("glass")) and (pickedObjectLeft or pickedObjectRight):
 					start_pouring(object)
 				else:
 					pick_up_object(object)
@@ -96,7 +104,7 @@ func _physics_process(delta: float) -> void:
 		var target_right
 		var target = pour_quat_right
 		if Input.is_action_pressed("pour_right"):
-			if pickedObjectRight.is_in_group("juice"):
+			if pickedObjectRight.is_in_group("juice") or pickedObjectRight.is_in_group("shaker") or pickedObjectRight.is_in_group("glass"):
 				target_right = pour_juice_right
 				target = pour_juice_right
 			else:
@@ -112,7 +120,7 @@ func _physics_process(delta: float) -> void:
 		var target_left
 		var target = pour_quat_left
 		if Input.is_action_pressed("pour_left"):
-			if pickedObjectLeft.is_in_group("juice"):
+			if pickedObjectLeft.is_in_group("juice") or pickedObjectLeft.is_in_group("shaker") or pickedObjectLeft.is_in_group("glass"):
 				target_left = pour_juice_left
 				target = pour_juice_left
 			else:
@@ -205,6 +213,7 @@ func drop_object():
 		
 		pickedObjectLeft = null
 	else:
+		#print(zone.can_accept(pickedObjectRight))
 		# If the raycast isn't hitting a valid zone, do nothing 
 		print("No valid zone in sight!")
 
@@ -218,12 +227,19 @@ func get_nearby_zone():
 			return hit_collider
 	return null
 
-func ZoneOrPickable():
+func ZonePickableOrGlass():
 	if $Camera3D/RayCast3D.is_colliding():
 		var hit_collider = $Camera3D/RayCast3D.get_collider()
 		
 		if hit_collider.is_in_group("pickables"):
 			return Target.PICKABLE
+		elif hit_collider.is_in_group("glass"):
+			if hit_collider.is_in_group("highGlass"):
+				return Target.HIGH_GLASS
+			elif hit_collider.is_in_group("shotGlass"):
+				return Target.SHOT_GLASS
+			elif hit_collider.is_in_group("rocksGlass"):
+				return Target.ROCKS_GLASS
 		elif hit_collider.has_method("can_accept"):
 			return Target.ZONE
 		
@@ -301,3 +317,20 @@ func can_pour(object, is_pouring, target_quat, _delta):
 		return
 		
 	object.pour(_delta)
+
+func pick_glass(target):
+	var glass
+	var location
+	if target == Target.HIGH_GLASS:
+		glass = highGlassScene.instantiate()
+		location = $"../Glasses/high_glasses".global_position + Vector3(0,0.45,0)
+	elif target == Target.SHOT_GLASS:
+		glass = shotGlassScene.instantiate()
+		location = $"../Glasses/shot_glasses".global_position + Vector3(0,0.3,0)
+	elif target == Target.ROCKS_GLASS:
+		glass = rocksGlassScene.instantiate()
+		location = $"../Glasses/rocks_glasses".global_position + Vector3(0,0.1,0)
+	get_node(glassContainer).add_child(glass, true)
+	
+	glass.global_position = location
+	pick_up_object(glass)
