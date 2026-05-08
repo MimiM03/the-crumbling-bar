@@ -30,6 +30,10 @@ juice=""
 juiceBlue=""
 juiceRed=""
 juiceYellow=""
+glass=""
+highGlass=""
+rocksGlass=""
+shotGlass=""
 
 [input]
 

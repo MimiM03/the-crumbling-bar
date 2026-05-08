@@ -4,14 +4,16 @@
 [ext_resource type="Script" uid="uid://bkl01n12uerp4" path="res://scripts/order_gen.gd" id="2_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cnmb3r1hin7wo" path="res://scenes/player.tscn" id="2_yqjtg"]
 [ext_resource type="Script" uid="uid://cn551v7xq4onb" path="res://scripts/customer_spawn_point.gd" id="3_kvpfn"]
-[ext_resource type="PackedScene" uid="uid://bclwag1i8b420" path="res://scenes/glass_wine.tscn" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c8elryja5bcqu" path="res://scenes/whiskey_bottle.tscn" id="4_gee14"]
 [ext_resource type="Script" uid="uid://bdj4b56gc40g3" path="res://scripts/wait_area.gd" id="4_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://cs3ysn4i4b6uv" path="res://scenes/vodka_bottle.tscn" id="5_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://md3siaqjarrn" path="res://scenes/base_zone.tscn" id="5_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://bn7kukftnjmaq" path="res://scenes/tequila_bottle.tscn" id="6_vtaks"]
+[ext_resource type="PackedScene" uid="uid://cr8pf4vs7dgcb" path="res://scenes/shot_glasses.tscn" id="9_ir15t"]
+[ext_resource type="PackedScene" uid="uid://x1x1erqoih77" path="res://scenes/rocks_glasses.tscn" id="10_ca42v"]
 [ext_resource type="PackedScene" uid="uid://bn7evjvrvuttf" path="res://scenes/shaker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bisn8xgga7o26" path="res://scenes/juice.tscn" id="11_dinhu"]
+[ext_resource type="PackedScene" uid="uid://2colgofre6ph" path="res://scenes/high_glasses.tscn" id="11_rysoc"]
 
 [sub_resource type="GDScript" id="GDScript_vtaks"]
 
@@ -67,7 +69,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.007936)
 script = ExtResource("2_dinhu")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=988907710]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008371353, 0, 0.9989114)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013046265, 0, 0.9984517)
 navigation_mesh = SubResource("NavigationMesh_0tnpc")
 navigation_layers = 3
 
@@ -100,31 +102,40 @@ script = ExtResource("4_kvpfn")
 
 [node name="Glasses" type="Node" parent="." unique_id=755452356]
 
-[node name="Wine" type="Node" parent="Glasses" unique_id=2045416380]
+[node name="Glass Zone" parent="Glasses" unique_id=2109655507 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -1.7328984, 1, 1.077)
+required_group = "glass"
+is_occupied = false
 
-[node name="Wineglass" parent="Glasses/Wine" unique_id=1207764400 instance=ExtResource("3_lnu2h")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -2.14322, 1.001759, 0.7481369)
+[node name="Glass Zone2" parent="Glasses" unique_id=1417148210 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -1.454127, 1, 1.077)
+required_group = "glass"
+is_occupied = false
 
-[node name="Shot" type="Node" parent="Glasses" unique_id=711110547]
+[node name="Glass Zone3" parent="Glasses" unique_id=1555104228 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -1.1764698, 1, 1.077)
+required_group = "glass"
+is_occupied = false
 
-[node name="Wineglass2" parent="Glasses/Shot" unique_id=1835176468 instance=ExtResource("3_lnu2h")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.934895, 1.0017592, 0.7481369)
+[node name="Glass Zone4" parent="Glasses" unique_id=102096211 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -0.90674645, 1, 1.077)
+required_group = "glass"
+is_occupied = false
 
-[node name="Single" type="Node" parent="Glasses" unique_id=99096499]
+[node name="shot_glasses" parent="Glasses" unique_id=1706965131 instance=ExtResource("9_ir15t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1738899, 1, 1.077)
 
-[node name="Wineglass3" parent="Glasses" unique_id=1730627341 instance=ExtResource("3_lnu2h")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.7353828, 1.001759, 0.7481369)
+[node name="rocks_glasses" parent="Glasses" unique_id=1083527089 instance=ExtResource("10_ca42v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.389899, 1, 1.077)
 
-[node name="Double" type="Node" parent="Glasses" unique_id=63614432]
-
-[node name="Wineglass4" parent="Glasses/Double" unique_id=40169690 instance=ExtResource("3_lnu2h")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.507, 1.002, 0.748)
+[node name="high_glasses" parent="Glasses" unique_id=1234337386 instance=ExtResource("11_rysoc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6431136, 1, 1.077)
 
 [node name="Drinks" type="Node" parent="." unique_id=890893839]
 
 [node name="Spirit" type="Node" parent="Drinks" unique_id=982895525]
 
-[node name="Whiskey Zone" parent="Drinks/Spirit" unique_id=2109655507 instance=ExtResource("5_u5sy4")]
+[node name="Whiskey Zone" parent="Drinks/Spirit" unique_id=1538180638 instance=ExtResource("5_u5sy4")]
 transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 2.179, 1.0003128, 1)
 required_group = "whiskey"
 

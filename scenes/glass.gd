@@ -1,10 +1,7 @@
 extends Area3D
 
-@onready var markerLeft := $LeftBottleMarker
-@onready var markerRight := $RightBottleMarker
-
 @export var liquid_mesh_path: NodePath
-@export var max_liquid_ml := 750.0
+@export var max_liquid_ml := 375.0
 var current_ml := 0.0
 var pour_rate = 15.0 # ~~ ml per sec
 var amount_per_drink_type = {}
