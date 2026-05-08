@@ -110,6 +110,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8ci8x")
 
 [node name="HighGlass" type="Area3D" unique_id=895374330 groups=["glass", "highGlass", "pickables"]]
+collision_layer = 5
 script = ExtResource("1_icpff")
 liquid_mesh_path = NodePath("liquid")
 
@@ -129,3 +130,14 @@ mesh = SubResource("ArrayMesh_1gu7l")
 script = ExtResource("6_0wle5")
 
 [node name="SnapPoint" type="Marker3D" parent="." unique_id=566182796]
+
+[node name="LeftMarker" type="Marker3D" parent="." unique_id=416092450]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -0.278, 0.77, 0)
+
+[node name="RightMarker" type="Marker3D" parent="." unique_id=440851714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.278, 0.77, -0.10696162)
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1445187707]
+transform = Transform3D(1, 0, 0, 0, 0.7922896, -0.61014515, 0, 0.61014515, 0.7922896, 0, 0.3419593, 0.042583942)
+target_position = Vector3(0, 1, 0)
+collide_with_areas = true

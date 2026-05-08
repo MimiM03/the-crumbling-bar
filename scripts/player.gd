@@ -56,7 +56,7 @@ func _input(event):
 			var object = get_pointed_object()
 			
 			if object:
-				if object.is_in_group("shaker") and (pickedObjectLeft or pickedObjectRight):
+				if (object.is_in_group("shaker") or object.is_in_group("glass")) and (pickedObjectLeft or pickedObjectRight):
 					start_pouring(object)
 				else:
 					pick_up_object(object)
@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 		var target_right
 		var target = pour_quat_right
 		if Input.is_action_pressed("pour_right"):
-			if pickedObjectRight.is_in_group("juice"):
+			if pickedObjectRight.is_in_group("juice") or pickedObjectRight.is_in_group("shaker") or pickedObjectRight.is_in_group("glass"):
 				target_right = pour_juice_right
 				target = pour_juice_right
 			else:
@@ -120,7 +120,7 @@ func _physics_process(delta: float) -> void:
 		var target_left
 		var target = pour_quat_left
 		if Input.is_action_pressed("pour_left"):
-			if pickedObjectLeft.is_in_group("juice"):
+			if pickedObjectLeft.is_in_group("juice") or pickedObjectLeft.is_in_group("shaker") or pickedObjectLeft.is_in_group("glass"):
 				target_left = pour_juice_left
 				target = pour_juice_left
 			else:

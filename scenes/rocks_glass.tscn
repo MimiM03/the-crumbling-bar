@@ -110,8 +110,10 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_p0cud")
 
 [node name="RocksGlass" type="Area3D" unique_id=1642574373 groups=["glass", "pickables", "rocksGlass"]]
+collision_layer = 5
 script = ExtResource("1_i26c4")
 liquid_mesh_path = NodePath("liquid")
+max_liquid_ml = 300.0
 
 [node name="rocks_low_lambert1_0" type="MeshInstance3D" parent="." unique_id=743757062]
 transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, 0)
@@ -129,3 +131,14 @@ mesh = SubResource("ArrayMesh_se0og")
 script = ExtResource("5_p0cud")
 
 [node name="SnapPoint" type="Marker3D" parent="." unique_id=259043307]
+
+[node name="LeftMarker" type="Marker3D" parent="." unique_id=883393684]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -0.283, 0.617, -0.109)
+
+[node name="RightMarker" type="Marker3D" parent="." unique_id=1206321676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2829538, 0.61676455, -0.10882255)
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1377352355]
+transform = Transform3D(1, 0, 0, 0, 0.7922896, -0.61014515, 0, 0.61014515, 0.7922896, 0, 0.16688854, 0.06013231)
+target_position = Vector3(0, 1, 0)
+collide_with_areas = true

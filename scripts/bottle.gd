@@ -26,7 +26,7 @@ func pour(delta):
 		if raycast.is_colliding():
 			var hit = raycast.get_collider()
 			if hit.has_method("get_liquid"):
-				hit.get_liquid(amount, group)
+				hit.get_liquid(amount, group, null)
 		current_ml -= amount
 		update_visual()
 		
