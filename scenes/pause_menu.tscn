@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://bm3an7gpjkjos"]
+
+[ext_resource type="Script" uid="uid://cvojl5ba4wa0v" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+[ext_resource type="PackedScene" uid="uid://dp708n1jlya2f" path="res://scenes/options.tscn" id="2_myx47"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uahpa"]
+bg_color = Color(0.9144639, 0.9144638, 0.9144639, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 16
+shadow_color = Color(0, 0, 0, 0.32156864)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.27)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n87rw"]
+bg_color = Color(0.67275155, 0.67275155, 0.6727515, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 16
+shadow_color = Color(0, 0, 0, 0.32156864)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.27)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_myx47"]
+bg_color = Color(0.75398386, 0.75398386, 0.75398374, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 16
+shadow_color = Color(0, 0, 0, 0.32156864)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.27)
+
+[node name="Pause Menu" type="Control" unique_id=1176290145]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n87rw")
+
+[node name="Panel" type="Panel" parent="." unique_id=1330651745]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainButtons" type="VBoxContainer" parent="." unique_id=462423473]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -521.0
+offset_top = 47.0
+offset_right = -216.0
+offset_bottom = 257.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Button" type="Button" parent="MainButtons" unique_id=774935313]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.00069390074, 0.0006938965, 0.0006938975, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_uahpa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n87rw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_myx47")
+text = "Resume"
+
+[node name="Button2" type="Button" parent="MainButtons" unique_id=588960262]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.00069390074, 0.0006938965, 0.0006938975, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_uahpa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n87rw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_myx47")
+text = "Options
+"
+
+[node name="Button4" type="Button" parent="MainButtons" unique_id=1129865738]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.00069390074, 0.0006938965, 0.0006938975, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_uahpa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n87rw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_myx47")
+text = "Back to Menu"
+
+[node name="Button3" type="Button" parent="MainButtons" unique_id=249868009]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.00069390074, 0.0006938965, 0.0006938975, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_uahpa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n87rw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_myx47")
+text = "Quit"
+
+[node name="Label" type="Label" parent="." unique_id=685105072]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -251.0
+offset_right = 225.0
+offset_bottom = -171.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "The Crumbling Bar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Options" parent="." unique_id=11971694 instance=ExtResource("2_myx47")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="MainButtons/Button" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="MainButtons/Button2" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainButtons/Button4" to="." method="_on_back_to_menu_pressed"]
+[connection signal="pressed" from="MainButtons/Button3" to="." method="_on_exit_pressed"]
+[connection signal="back_pressed" from="Options" to="." method="_on_options_back_pressed"]

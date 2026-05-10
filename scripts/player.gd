@@ -8,7 +8,7 @@ var rocksGlassScene: PackedScene = preload("res://scenes/rocks_glass.tscn")
 var glassContainer: NodePath = "../Glasses"
 
 const SPEED = 5.0
-const MOUSE_SENSITIVITY = 0.1
+const MOUSE_SENSITIVITY = 0.5
 enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS}
 
 # Define the Target Orientations
@@ -60,26 +60,19 @@ func _input(event):
 					start_pouring(object)
 				else:
 					pick_up_object(object)
-	# Handle mouse visibility in game
-	if event.is_action_pressed("mouse_vis"):
-		if mouse_visible:
-			mouse_visible = false
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		else:
-			mouse_visible = true
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			
+	
 
 # Handle camera rotation with mouse movement
 func _unhandled_input(event: InputEvent) -> void:
 	if is_in_cutscene:
 		return
 	if event is InputEventMouseMotion:
+		var sens = Settings.mouse_sens
 		# Horizontal
-		rotation_degrees.y -= event.relative.x * MOUSE_SENSITIVITY
+		rotation_degrees.y -= event.relative.x * sens
 		
 		# Vertical
-		pitch -= event.relative.y * MOUSE_SENSITIVITY
+		pitch -= event.relative.y * sens
 		pitch = clamp(pitch, -90, 90)
 		camera.rotation_degrees.x = pitch
 
