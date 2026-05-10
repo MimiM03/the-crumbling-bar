@@ -15,6 +15,14 @@ run/main_scene="uid://s3nbmpxliyw6"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://bc4kvd1smcb17"
+
+[autoload]
+
+Settings="*uid://7nx0txjnftdw"
+
 [global_group]
 
 whiskey=""
@@ -34,6 +42,7 @@ glass=""
 highGlass=""
 rocksGlass=""
 shotGlass=""
+hotkey_button=""
 
 [input]
 
