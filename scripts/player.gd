@@ -145,7 +145,6 @@ func get_pointed_object():
 
 # Handles picking up an object
 func pick_up_object(object):
-	is_in_cutscene = true
 	var directionRight: bool
 	# if hands empty - pick up with right hand
 	if !pickedObjectRight and !pickedObjectLeft:
@@ -157,8 +156,10 @@ func pick_up_object(object):
 	elif !pickedObjectRight:
 		directionRight = true
 	else:
+		# Both hands full — do not set is_in_cutscene (would freeze movement with no tween to clear it).
 		return
-	
+
+	is_in_cutscene = true
 	# Make the zone empty
 	var parent = object.get_parent()
 	if parent.has_method("release_object"):
@@ -319,18 +320,19 @@ func can_pour(object, is_pouring, target_quat, _delta):
 	object.pour(_delta)
 
 func pick_glass(target):
-	var glass
-	var location
-	if target == Target.HIGH_GLASS:
-		glass = highGlassScene.instantiate()
-		location = $"../Glasses/high_glasses".global_position + Vector3(0,0.45,0)
-	elif target == Target.SHOT_GLASS:
-		glass = shotGlassScene.instantiate()
-		location = $"../Glasses/shot_glasses".global_position + Vector3(0,0.3,0)
-	elif target == Target.ROCKS_GLASS:
-		glass = rocksGlassScene.instantiate()
-		location = $"../Glasses/rocks_glasses".global_position + Vector3(0,0.1,0)
-	get_node(glassContainer).add_child(glass, true)
-	
-	glass.global_position = location
-	pick_up_object(glass)
+	if !pickedObjectLeft or !pickedObjectRight:
+		var glass
+		var location
+		if target == Target.HIGH_GLASS:
+			glass = highGlassScene.instantiate()
+			location = $"../Glasses/high_glasses".global_position + Vector3(0,0.45,0)
+		elif target == Target.SHOT_GLASS:
+			glass = shotGlassScene.instantiate()
+			location = $"../Glasses/shot_glasses".global_position + Vector3(0,0.3,0)
+		elif target == Target.ROCKS_GLASS:
+			glass = rocksGlassScene.instantiate()
+			location = $"../Glasses/rocks_glasses".global_position + Vector3(0,0.1,0)
+		get_node(glassContainer).add_child(glass, true)
+		
+		glass.global_position = location
+		pick_up_object(glass)
