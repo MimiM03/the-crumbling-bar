@@ -14,8 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bn7evjvrvuttf" path="res://scenes/shaker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bisn8xgga7o26" path="res://scenes/juice.tscn" id="11_dinhu"]
 [ext_resource type="PackedScene" uid="uid://2colgofre6ph" path="res://scenes/high_glasses.tscn" id="11_rysoc"]
-
-[sub_resource type="GDScript" id="GDScript_vtaks"]
+[ext_resource type="PackedScene" uid="uid://bm3an7gpjkjos" path="res://scenes/pause_menu.tscn" id="16_rysoc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lnu2h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -53,7 +52,6 @@ rim_enabled = true
 rim = 0.31
 
 [node name="Game" type="Node3D" unique_id=1941939539]
-script = SubResource("GDScript_vtaks")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=40969024]
 environment = SubResource("Environment_iywne")
@@ -191,6 +189,9 @@ required_group = "shaker"
 
 [node name="Shaker" parent="Shaker Zone" unique_id=2091606909 instance=ExtResource("10_vtaks")]
 transform = Transform3D(1.0101007, 0, 0, 0, 1.0101007, 0, 0, 0, 1.0101007, 0, 0.22698045, 0)
+
+[node name="Pause Menu" parent="." unique_id=1176290145 instance=ExtResource("16_rysoc")]
+visible = false
 
 [editable path="Drinks/Mixers/blue zone/juice BLUE"]
 [editable path="Drinks/Mixers/yellow zone/juice YELLOW"]
