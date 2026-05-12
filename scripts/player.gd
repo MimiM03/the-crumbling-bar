@@ -253,7 +253,7 @@ func start_pouring(shaker):
 	is_in_cutscene = true
 	
 	var tween = create_tween().set_parallel(true)
-
+	
 	var shaker_forward = shaker.global_transform.basis.z
 	shaker_forward.y = 0
 	shaker_forward = shaker_forward.normalized()
@@ -262,7 +262,7 @@ func start_pouring(shaker):
 	target_player_pos.y = self.global_position.y
 
 	tween.tween_property(self, "global_position", target_player_pos, 0.3)
-	tween.tween_property(self, "quaternion", Quaternion.IDENTITY, 0.3)
+	tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, PI), 0.3)
 	var tilt_angle = deg_to_rad(-20.0)
 	var target_tilt = Quaternion.from_euler(Vector3(tilt_angle, 0, 0))
 
