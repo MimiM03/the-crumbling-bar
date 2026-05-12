@@ -28,6 +28,7 @@ var pickedObjectLeft: Area3D
 var mouse_visible := false
 var is_in_cutscene: bool = false
 var cutscene_timer = 0.0
+var glass_spawn_location
 
 func _ready() -> void:
 	# Mouse invisible in game (only crosshair)
@@ -228,6 +229,11 @@ func ZonePickableOrGlass():
 		if hit_collider.is_in_group("pickables"):
 			return Target.PICKABLE
 		elif hit_collider.is_in_group("glass"):
+			# Future feat. maybe?: uncomment the following +
+			# give glasses.gd to '*_glasses'
+			#if hit_collider.has_method("decrease_num") and (!pickedObjectLeft or !pickedObjectRight):
+				#hit_collider.decrease_num()
+			glass_spawn_location = hit_collider.global_position
 			if hit_collider.is_in_group("highGlass"):
 				return Target.HIGH_GLASS
 			elif hit_collider.is_in_group("shotGlass"):
@@ -236,6 +242,9 @@ func ZonePickableOrGlass():
 				return Target.ROCKS_GLASS
 		elif hit_collider.has_method("can_accept"):
 			return Target.ZONE
+		elif hit_collider.is_in_group("trash"):
+			print("caught group")
+			trash_item()
 		
 	return null
 
@@ -315,17 +324,20 @@ func can_pour(object, is_pouring, target_quat, _delta):
 func pick_glass(target):
 	if !pickedObjectLeft or !pickedObjectRight:
 		var glass
-		var location
 		if target == Target.HIGH_GLASS:
 			glass = highGlassScene.instantiate()
-			location = $"../Glasses/high_glasses".global_position + Vector3(0,0.45,0)
 		elif target == Target.SHOT_GLASS:
 			glass = shotGlassScene.instantiate()
-			location = $"../Glasses/shot_glasses".global_position + Vector3(0,0.3,0)
 		elif target == Target.ROCKS_GLASS:
 			glass = rocksGlassScene.instantiate()
-			location = $"../Glasses/rocks_glasses".global_position + Vector3(0,0.1,0)
 		get_node(glassContainer).add_child(glass, true)
 		
-		glass.global_position = location
+		glass.global_position = glass_spawn_location
 		pick_up_object(glass)
+
+func trash_item():
+	print("trashing")
+	if pickedObjectRight:
+		pickedObjectRight.queue_free()
+	elif pickedObjectLeft:
+		pickedObjectLeft.queue_free()
