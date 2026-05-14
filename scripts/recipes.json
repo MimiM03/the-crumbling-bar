@@ -130,64 +130,134 @@
 				"amount": 10.0
 			},
 			{
-				"item": "juiceOrange",
+				"item": "juiceLime",
 				"amount": 10.0
 			}
 		]
 	},
 	{
-		"name": "Vodka Drink 1",
+		"name": "Cosmoopolitan",
 		"glass": "Glass",
 		"ingredients":[
 			{
 				"item": "vodka",
-				"amount": 2.5
+				"amount": 60.0
 			},
 			{
-				"item": "mixer",
-				"amount": 60
+				"item": "tripleSec",
+				"amount": 20.0
+			},
+			{
+				"item": "juiceLime",
+				"amount": 10.0
+			},
+						
+			{
+				"item": "juiceCranberry",
+				"amount": 90.0
 			}
 		]
 	},
 	{
-		"name": "Vodka Drink 2",
+		"name": "Screwdriver",
 		"glass": "Glass",
 		"ingredients":[
 			{
 				"item": "vodka",
-				"amount": 2.5
+				"amount": 60.0
 			},
 			{
-				"item": "mixer2",
-				"amount": 60
+				"item": "tripleSec",
+				"amount": 20.0
+			},
+			{
+				"item": "juiceOrange",
+				"amount": 100.0
 			}
 		]
 	},
 	{
-		"name": "Vodka Drink 3",
-		"glass": "Glass",
+		"name": "Cranberry Vodka Sour",
+		"glass": "Rocks",
 		"ingredients":[
 			{
 				"item": "vodka",
-				"amount": 2.5
+				"amount": 60.0
 			},
 			{
-				"item": "mixer3",
-				"amount": 60
+				"item": "sweetSour",
+				"amount": 20.0
+			},
+			{
+				"item": "juiceCranberry",
+				"amount": 40.0
 			}
 		]
 	},
 	{
-		"name": "Vodka Drink 4",
+		"name": "Sunset Delight",
 		"glass": "Glass",
 		"ingredients":[
 			{
-				"item": "vodka",
-				"amount": 2.5
+				"item": "tequila",
+				"amount": 60.0
 			},
 			{
-				"item": "mixer4",
-				"amount": 60
+				"item": "juiceOrange",
+				"amount": 40.0
+			},
+			{
+				"item": "juicePineapple",
+				"amount": 40.0
+			},
+			{
+				"item": "juiceCranberry",
+				"amount": 40.0
+			}
+		]
+	},
+	{
+		"name": "Margarita",
+		"glass": "Rocks",
+		"ingredients":[
+			{
+				"item": "tequila",
+				"amount": 60.0
+			},
+			{
+				"item": "juiceLime",
+				"amount": 30.0
+			},
+			{
+				"item": "tripleSec",
+				"amount": 20.0
+			},
+			{
+				"item": "sweetSour",
+				"amount": 10.0
+			}
+		]
+	},
+	{
+		"name": "Sunset Delight",
+		"glass": "Glass",
+		"ingredients":[
+			{
+				"item": "tequila",
+				"amount": 60.0
+			},
+			{
+				"item": "juiceOrange",
+				"amount": 60.0
+			},
+			{
+				"item": "juicePineapple",
+				"amount": 60.0
+			},
+						
+			{
+				"item": "juiceCranberry",
+				"amount": 60.0
 			}
 		]
 	},
