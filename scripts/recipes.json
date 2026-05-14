@@ -5,7 +5,53 @@
 		"ingredients":[
 			{
 				"item": "vodka",
-				"amount": 2.5
+				"amount": 45.0
+			}
+		]
+	},
+	{
+		"name": "Vodka Double Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 60.0
+			}
+		]
+	},
+	{
+		"name": "Screwdriver Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 30.0
+			},
+			{
+				"item": "juiceOrange",
+				"amount": 30.0
+			}
+		]
+	},
+	{
+		"name": "Cherry Blossom Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "vodka",
+				"amount": 30.0
+			},
+			{
+				"item": "juiceCranberry",
+				"amount": 10.0
+			},
+			{
+				"item": "juiceGrapefruit",
+				"amount": 10.0
+			},
+			{
+				"item": "tripleSec",
+				"amount": 10.0
 			}
 		]
 	},
@@ -15,7 +61,35 @@
 		"ingredients":[
 			{
 				"item": "whiskey",
-				"amount": 2.5
+				"amount": 45.0
+			}
+		]
+	},
+	{
+		"name": "Whiskey Double Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "whiskey",
+				"amount": 60.0
+			}
+		]
+	},
+	{
+		"name": "Sidecar Twist Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "whiskey",
+				"amount": 30.0
+			},
+			{
+				"item": "tripleSec",
+				"amount": 10.0
+			},
+			{
+				"item": "sweetSour",
+				"amount": 20.0
 			}
 		]
 	},
@@ -25,7 +99,39 @@
 		"ingredients":[
 			{
 				"item": "tequila",
-				"amount": 2.5
+				"amount": 45.0
+			}
+		]
+	},
+	{
+		"name": "Tequila Double Shot",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "tequila",
+				"amount": 60.0
+			}
+		]
+	},
+	{
+		"name": "Mini Margarita",
+		"glass": "Shot Glass",
+		"ingredients":[
+			{
+				"item": "tequila",
+				"amount": 30.0 
+			},
+			{
+				"item": "triplSec",
+				"amount": 10.0
+			},
+			{
+				"item": "sweetSour",
+				"amount": 10.0
+			},
+			{
+				"item": "juiceOrange",
+				"amount": 10.0
 			}
 		]
 	},
