@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cs3ysn4i4b6uv" path="res://scenes/vodka_bottle.tscn" id="5_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://md3siaqjarrn" path="res://scenes/base_zone.tscn" id="5_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://bn7kukftnjmaq" path="res://scenes/tequila_bottle.tscn" id="6_vtaks"]
+[ext_resource type="PackedScene" uid="uid://cg877e1tepubk" path="res://scenes/tripleSec_bottle.tscn" id="7_kvuet"]
 [ext_resource type="PackedScene" uid="uid://bn7evjvrvuttf" path="res://scenes/shaker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bisn8xgga7o26" path="res://scenes/juice.tscn" id="11_dinhu"]
 [ext_resource type="PackedScene" uid="uid://bm3an7gpjkjos" path="res://scenes/pause_menu.tscn" id="16_rysoc"]
@@ -37,16 +38,48 @@ agent_radius = 0.3
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dinhu"]
 resource_name = "color"
 cull_mode = 2
-albedo_color = Color(0.06393679, 0.44690293, 0.99999994, 1)
+albedo_color = Color(0.17266786, 0.5847578, 0.0981547, 1)
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvuet"]
 resource_name = "color"
 cull_mode = 2
-albedo_color = Color(0.9529412, 0.8627451, 0.1254902, 1)
+albedo_color = Color(0.8516427, 0.40904608, 0.10281194, 1)
 roughness = 0.3
 rim_enabled = true
 rim = 0.31
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trtic"]
+resource_name = "color"
+cull_mode = 2
+albedo_color = Color(0.8901961, 0.8039216, 0.11764706, 1)
+roughness = 0.3
+rim_enabled = true
+rim = 0.31
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir15t"]
+resource_name = "color"
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(1, 1, 1, 0.5921569)
+roughness = 0.2
+rim_enabled = true
+rim = 0.31
+refraction_enabled = true
+refraction_scale = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ca42v"]
+resource_name = "color"
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.9990317, 0.94001174, 5.390644e-06, 0.4745098)
+roughness = 0.2
+rim_enabled = true
+rim = 0.31
+refraction_enabled = true
+refraction_scale = 0.01
 
 [node name="Game" type="Node3D" unique_id=1941939539]
 
@@ -141,22 +174,29 @@ is_occupied = false
 
 [node name="Spirit" type="Node" parent="Drinks" unique_id=982895525]
 
-[node name="Whiskey Zone" parent="Drinks/Spirit" unique_id=1538180638 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 2.179, 0.9558779, 4.214361)
+[node name="TripleSec Zone" parent="Drinks/Spirit" unique_id=1538180638 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 2.5, 0.956, 4.214)
+required_group = "tripleSec"
+
+[node name="TripleSec Bottle" parent="Drinks/Spirit/TripleSec Zone" unique_id=811362861 instance=ExtResource("7_kvuet")]
+transform = Transform3D(1.0100999, 0, 2.842171e-14, 0, 1.0100999, 0, -2.842171e-14, 0, 1.0101, 0, 0.46231085, 0)
+
+[node name="Whiskey Zone" parent="Drinks/Spirit" unique_id=726861110 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 2.2, 0.956, 4.214)
 required_group = "whiskey"
 
-[node name="Whiskey Bottle" parent="Drinks/Spirit/Whiskey Zone" unique_id=811362861 instance=ExtResource("4_gee14")]
+[node name="Whiskey Bottle" parent="Drinks/Spirit/Whiskey Zone" unique_id=1598510743 instance=ExtResource("4_gee14")]
 transform = Transform3D(1.0101, 0, 2.8421708e-14, 0, 1.0101, 0, -2.8421708e-14, 0, 1.0101, 0, 0.6026981, 0)
 
 [node name="Vodka Zone" parent="Drinks/Spirit" unique_id=609688481 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 1.901, 0.9555651, 4.214361)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 1.9, 0.956, 4.214)
 required_group = "vodka"
 
 [node name="Vodka Bottle" parent="Drinks/Spirit/Vodka Zone" unique_id=643159259 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1.0101004, 0, 1.7763567e-14, 0, 1.0101004, 0, -1.7763567e-14, 0, 1.0101004, 0, 0.54378843, 0)
 
 [node name="Tequila Zone" parent="Drinks/Spirit" unique_id=2011654135 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 1.623, 0.9555651, 4.214361)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 1.6, 0.956, 4.214)
 required_group = "tequila"
 
 [node name="Tequila Bottle" parent="Drinks/Spirit/Tequila Zone" unique_id=1713008491 instance=ExtResource("6_vtaks")]
@@ -164,32 +204,62 @@ transform = Transform3D(1.0101001, 0, 2.4868996e-14, 0, 1.0101001, 0, -2.4868996
 
 [node name="Mixers" type="Node" parent="Drinks" unique_id=1974900512]
 
-[node name="red zone" parent="Drinks/Mixers" unique_id=70176692 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.1032808, 1.0003128, 4.214)
-required_group = "juiceRed"
+[node name="cranberry zone" parent="Drinks/Mixers" unique_id=70176692 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.1, 1, 4.214)
+required_group = "juiceCranberry"
 
-[node name="juice RED" parent="Drinks/Mixers/red zone" unique_id=1071985547 groups=["juiceRed"] instance=ExtResource("11_dinhu")]
+[node name="juice CRANBERRY" parent="Drinks/Mixers/cranberry zone" unique_id=1071985547 groups=["juiceCranberry"] instance=ExtResource("11_dinhu")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.57706463, 0)
 
-[node name="blue zone" parent="Drinks/Mixers" unique_id=1449576367 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.395776, 1.0003128, 4.214)
-required_group = "juiceBlue"
+[node name="lime zone" parent="Drinks/Mixers" unique_id=1449576367 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.4, 1, 4.214)
+required_group = "juiceLime"
 
-[node name="juice BLUE" parent="Drinks/Mixers/blue zone" unique_id=1450975509 groups=["juiceBlue"] instance=ExtResource("11_dinhu")]
+[node name="juice LIME" parent="Drinks/Mixers/lime zone" unique_id=1450975509 groups=["juiceLime"] instance=ExtResource("11_dinhu")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.57706463, 0)
 
-[node name="Cylinder" parent="Drinks/Mixers/blue zone/juice BLUE" index="3" unique_id=1975119981]
+[node name="Cylinder" parent="Drinks/Mixers/lime zone/juice LIME" index="3" unique_id=1975119981]
 surface_material_override/1 = SubResource("StandardMaterial3D_dinhu")
 
-[node name="yellow zone" parent="Drinks/Mixers" unique_id=1137812143 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.70698, 1.0003128, 4.214)
-required_group = "juiceYellow"
+[node name="orange zone" parent="Drinks/Mixers" unique_id=1137812143 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.7, 1, 4.214)
+required_group = "juiceOrange"
 
-[node name="juice YELLOW" parent="Drinks/Mixers/yellow zone" unique_id=1438102852 groups=["juiceYellow"] instance=ExtResource("11_dinhu")]
+[node name="juice Orange" parent="Drinks/Mixers/orange zone" unique_id=1438102852 groups=["juiceOrange"] instance=ExtResource("11_dinhu")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.57706463, 0)
 
-[node name="Cylinder" parent="Drinks/Mixers/yellow zone/juice YELLOW" index="3" unique_id=1975119981]
+[node name="Cylinder" parent="Drinks/Mixers/orange zone/juice Orange" index="3" unique_id=1975119981]
 surface_material_override/1 = SubResource("StandardMaterial3D_kvuet")
+
+[node name="pineapple zone" parent="Drinks/Mixers" unique_id=161560692 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4, 1, 4.214)
+required_group = "juicePineapple"
+
+[node name="juice Pineapple" parent="Drinks/Mixers/pineapple zone" unique_id=848715657 groups=["juicePineapple"] instance=ExtResource("11_dinhu")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.57706463, 0)
+
+[node name="Cylinder" parent="Drinks/Mixers/pineapple zone/juice Pineapple" index="3" unique_id=1975119981]
+surface_material_override/1 = SubResource("StandardMaterial3D_trtic")
+
+[node name="grapefruit zone" parent="Drinks/Mixers" unique_id=1750319507 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4.3, 1, 4.214)
+required_group = "juiceGrapefruit"
+
+[node name="juice GRAPEFRUIT" parent="Drinks/Mixers/grapefruit zone" unique_id=1399887468 groups=["juiceGrapefruit"] instance=ExtResource("11_dinhu")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.57706463, 0)
+
+[node name="Cylinder" parent="Drinks/Mixers/grapefruit zone/juice GRAPEFRUIT" index="3" unique_id=1975119981]
+surface_material_override/1 = SubResource("StandardMaterial3D_ir15t")
+
+[node name="sweetSour zone" parent="Drinks/Mixers" unique_id=301024444 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4.6, 1, 4.214)
+required_group = "sweetSour"
+
+[node name="sweetSour" parent="Drinks/Mixers/sweetSour zone" unique_id=1014853157 groups=["sweetSour"] instance=ExtResource("11_dinhu")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.57706463, 0)
+
+[node name="Cylinder" parent="Drinks/Mixers/sweetSour zone/sweetSour" index="3" unique_id=1975119981]
+surface_material_override/1 = SubResource("StandardMaterial3D_ca42v")
 
 [node name="Shaker Zone" parent="." unique_id=1067120921 instance=ExtResource("5_u5sy4")]
 transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 0, 0.9583852, 4.2142067)
@@ -201,5 +271,8 @@ transform = Transform3D(1.0101007, 0, 0, 0, 1.0101007, 0, 0, 0, 1.0101007, 0, 0.
 [node name="Pause Menu" parent="." unique_id=1176290145 instance=ExtResource("16_rysoc")]
 visible = false
 
-[editable path="Drinks/Mixers/blue zone/juice BLUE"]
-[editable path="Drinks/Mixers/yellow zone/juice YELLOW"]
+[editable path="Drinks/Mixers/lime zone/juice LIME"]
+[editable path="Drinks/Mixers/orange zone/juice Orange"]
+[editable path="Drinks/Mixers/pineapple zone/juice Pineapple"]
+[editable path="Drinks/Mixers/grapefruit zone/juice GRAPEFRUIT"]
+[editable path="Drinks/Mixers/sweetSour zone/sweetSour"]

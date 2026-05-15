@@ -54,9 +54,6 @@ _subresources={
 "PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Chivas": {
 "import/skip_import": true
 },
-"PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Cointreau": {
-"import/skip_import": true
-},
 "PATH:Sketchfab_model/e103e87b6f1747cd8501a8337c3bf1cf_fbx/RootNode/Crema_di_Limoncino": {
 "import/skip_import": true
 },
