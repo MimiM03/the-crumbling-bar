@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://c3ld47q08qvva"]
+
+[ext_resource type="Texture2D" uid="uid://b7efq6wiby3ps" path="res://assets/book.png" id="1_4iit1"]
+[ext_resource type="Script" uid="uid://dd77dniqku5bb" path="res://scenes/recipe_book.gd" id="1_jfus2"]
+
+[node name="RecipeBook" type="Control" unique_id=1298598325]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jfus2")
+
+[node name="Panel" type="Panel" parent="." unique_id=313804534]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel" unique_id=494908185]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -299.0
+offset_right = 301.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4iit1")
+
+[node name="Label" type="Label" parent="Panel" unique_id=993527336]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 132.0
+offset_right = 693.0
+offset_bottom = 164.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Secret Recipe Book"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Panel" unique_id=1052230685]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 548.0
+offset_right = 693.0
+offset_bottom = 580.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Press 'T' to Close"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=194318680]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -134.0
+offset_top = -162.0
+offset_right = 134.0
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=809727423]
+layout_mode = 2

@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cg877e1tepubk" path="res://scenes/tripleSec_bottle.tscn" id="7_kvuet"]
 [ext_resource type="PackedScene" uid="uid://bn7evjvrvuttf" path="res://scenes/shaker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bisn8xgga7o26" path="res://scenes/juice.tscn" id="11_dinhu"]
+[ext_resource type="PackedScene" uid="uid://c3ld47q08qvva" path="res://scenes/recipe_book.tscn" id="14_trtic"]
 [ext_resource type="PackedScene" uid="uid://bm3an7gpjkjos" path="res://scenes/pause_menu.tscn" id="16_rysoc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lnu2h"]
@@ -205,14 +206,14 @@ transform = Transform3D(1.0101001, 0, 2.4868996e-14, 0, 1.0101001, 0, -2.4868996
 [node name="Mixers" type="Node" parent="Drinks" unique_id=1974900512]
 
 [node name="cranberry zone" parent="Drinks/Mixers" unique_id=70176692 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.1, 1, 4.214)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.1, 0.95788085, 4.214)
 required_group = "juiceCranberry"
 
 [node name="juice CRANBERRY" parent="Drinks/Mixers/cranberry zone" unique_id=1071985547 groups=["juiceCranberry"] instance=ExtResource("11_dinhu")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.57706463, 0)
 
 [node name="lime zone" parent="Drinks/Mixers" unique_id=1449576367 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.4, 1, 4.214)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.4, 0.95788085, 4.214)
 required_group = "juiceLime"
 
 [node name="juice LIME" parent="Drinks/Mixers/lime zone" unique_id=1450975509 groups=["juiceLime"] instance=ExtResource("11_dinhu")]
@@ -222,7 +223,7 @@ transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.
 surface_material_override/1 = SubResource("StandardMaterial3D_dinhu")
 
 [node name="orange zone" parent="Drinks/Mixers" unique_id=1137812143 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.7, 1, 4.214)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 3.7, 0.95788085, 4.214)
 required_group = "juiceOrange"
 
 [node name="juice Orange" parent="Drinks/Mixers/orange zone" unique_id=1438102852 groups=["juiceOrange"] instance=ExtResource("11_dinhu")]
@@ -232,7 +233,7 @@ transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.
 surface_material_override/1 = SubResource("StandardMaterial3D_kvuet")
 
 [node name="pineapple zone" parent="Drinks/Mixers" unique_id=161560692 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4, 1, 4.214)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4, 0.95788085, 4.214)
 required_group = "juicePineapple"
 
 [node name="juice Pineapple" parent="Drinks/Mixers/pineapple zone" unique_id=848715657 groups=["juicePineapple"] instance=ExtResource("11_dinhu")]
@@ -242,7 +243,7 @@ transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.
 surface_material_override/1 = SubResource("StandardMaterial3D_trtic")
 
 [node name="grapefruit zone" parent="Drinks/Mixers" unique_id=1750319507 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4.3, 1, 4.214)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4.3, 0.95788085, 4.214)
 required_group = "juiceGrapefruit"
 
 [node name="juice GRAPEFRUIT" parent="Drinks/Mixers/grapefruit zone" unique_id=1399887468 groups=["juiceGrapefruit"] instance=ExtResource("11_dinhu")]
@@ -252,7 +253,7 @@ transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.
 surface_material_override/1 = SubResource("StandardMaterial3D_ir15t")
 
 [node name="sweetSour zone" parent="Drinks/Mixers" unique_id=301024444 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4.6, 1, 4.214)
+transform = Transform3D(-0.99, 0, -8.6548546e-08, 0, 0.99, 0, 8.6548546e-08, 0, -0.99, 4.6, 0.95788085, 4.214)
 required_group = "sweetSour"
 
 [node name="sweetSour" parent="Drinks/Mixers/sweetSour zone" unique_id=1014853157 groups=["sweetSour"] instance=ExtResource("11_dinhu")]
@@ -267,6 +268,9 @@ required_group = "shaker"
 
 [node name="Shaker" parent="Shaker Zone" unique_id=2091606909 instance=ExtResource("10_vtaks")]
 transform = Transform3D(1.0101007, 0, 0, 0, 1.0101007, 0, 0, 0, 1.0101007, 0, 0.22698045, 0)
+
+[node name="RecipeBook" parent="." unique_id=1298598325 instance=ExtResource("14_trtic")]
+visible = false
 
 [node name="Pause Menu" parent="." unique_id=1176290145 instance=ExtResource("16_rysoc")]
 visible = false

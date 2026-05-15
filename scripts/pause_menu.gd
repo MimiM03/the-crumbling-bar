@@ -10,9 +10,10 @@ func _ready() -> void:
 func _input(event):
 	# Handle mouse visibility in game
 	if event.is_action_pressed("mouse_vis"):
-		if get_tree().paused:
+		if visible:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			get_tree().paused = false
+			if !$"../RecipeBook".visible:
+				get_tree().paused = false
 			visible = false
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -21,7 +22,8 @@ func _input(event):
 			
 func _on_resume_pressed() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	get_tree().paused = false
+	if !$"../RecipeBook".visible:
+		get_tree().paused = false
 	visible = false
 
 
