@@ -27,9 +27,21 @@ func place_object(object: Area3D):
 		var bottle_snap_point = current_object.get_node("SnapPoint")
 		var offset = - bottle_snap_point.position	
 		
+		var end_pos = $SnapPoint.global_position + offset
+		var from_q: Quaternion = current_object.global_transform.basis.get_rotation_quaternion()
+		var to_q: Quaternion = $SnapPoint.global_transform.basis.get_rotation_quaternion()
+		# Same orientation as -to_q; pick the hemisphere so slerp takes the short arc (~≤180°).
+		if from_q.dot(to_q) < 0.0:
+			to_q = -to_q
+
 		var tween = create_tween().set_parallel(true)
-		tween.tween_property(current_object, "global_position", $SnapPoint.global_position + offset, 0.3)
-		tween.tween_property(current_object, "global_rotation", $SnapPoint.global_rotation, 0.3)
+		tween.tween_property(current_object, "global_position", end_pos, 0.3)
+		var bottle := current_object
+		tween.tween_method(
+			func(t: float) -> void:
+				bottle.global_basis = Basis(from_q.slerp(to_q, t)),
+			0.0, 1.0, 0.3
+		)
 
 func release_object():
 	is_occupied = false

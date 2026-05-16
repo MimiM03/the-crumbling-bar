@@ -28,6 +28,7 @@ var pickedObjectLeft: Area3D
 var mouse_visible := false
 var is_in_cutscene: bool = false
 var cutscene_timer = 0.0
+var glass_spawn_location
 
 func _ready() -> void:
 	# Mouse invisible in game (only crosshair)
@@ -228,6 +229,11 @@ func ZonePickableOrGlass():
 		if hit_collider.is_in_group("pickables"):
 			return Target.PICKABLE
 		elif hit_collider.is_in_group("glass"):
+			# Future feat. maybe?: uncomment the following +
+			# give glasses.gd to '*_glasses'
+			#if hit_collider.has_method("decrease_num") and (!pickedObjectLeft or !pickedObjectRight):
+				#hit_collider.decrease_num()
+			glass_spawn_location = hit_collider.global_position
 			if hit_collider.is_in_group("highGlass"):
 				return Target.HIGH_GLASS
 			elif hit_collider.is_in_group("shotGlass"):
@@ -236,6 +242,9 @@ func ZonePickableOrGlass():
 				return Target.ROCKS_GLASS
 		elif hit_collider.has_method("can_accept"):
 			return Target.ZONE
+		elif hit_collider.is_in_group("trash"):
+			print("caught group")
+			trash_item()
 		
 	return null
 
@@ -244,7 +253,7 @@ func start_pouring(shaker):
 	is_in_cutscene = true
 	
 	var tween = create_tween().set_parallel(true)
-
+	
 	var shaker_forward = shaker.global_transform.basis.z
 	shaker_forward.y = 0
 	shaker_forward = shaker_forward.normalized()
@@ -253,7 +262,7 @@ func start_pouring(shaker):
 	target_player_pos.y = self.global_position.y
 
 	tween.tween_property(self, "global_position", target_player_pos, 0.3)
-	tween.tween_property(self, "quaternion", Quaternion.IDENTITY, 0.3)
+	tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, PI), 0.3)
 	var tilt_angle = deg_to_rad(-20.0)
 	var target_tilt = Quaternion.from_euler(Vector3(tilt_angle, 0, 0))
 
@@ -315,17 +324,20 @@ func can_pour(object, is_pouring, target_quat, _delta):
 func pick_glass(target):
 	if !pickedObjectLeft or !pickedObjectRight:
 		var glass
-		var location
 		if target == Target.HIGH_GLASS:
 			glass = highGlassScene.instantiate()
-			location = $"../Glasses/high_glasses".global_position + Vector3(0,0.45,0)
 		elif target == Target.SHOT_GLASS:
 			glass = shotGlassScene.instantiate()
-			location = $"../Glasses/shot_glasses".global_position + Vector3(0,0.3,0)
 		elif target == Target.ROCKS_GLASS:
 			glass = rocksGlassScene.instantiate()
-			location = $"../Glasses/rocks_glasses".global_position + Vector3(0,0.1,0)
 		get_node(glassContainer).add_child(glass, true)
 		
-		glass.global_position = location
+		glass.global_position = glass_spawn_location
 		pick_up_object(glass)
+
+func trash_item():
+	print("trashing")
+	if pickedObjectRight:
+		pickedObjectRight.queue_free()
+	elif pickedObjectLeft:
+		pickedObjectLeft.queue_free()

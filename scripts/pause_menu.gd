@@ -4,6 +4,9 @@ extends Control
 @onready var label: Label = $Label
 @onready var options: Control = $Options
 
+func _ready() -> void:
+	visible = false
+
 func _input(event):
 	# Handle mouse visibility in game
 	if event.is_action_pressed("mouse_vis"):
