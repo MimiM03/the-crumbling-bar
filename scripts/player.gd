@@ -262,7 +262,10 @@ func start_pouring(shaker):
 	target_player_pos.y = self.global_position.y
 
 	tween.tween_property(self, "global_position", target_player_pos, 0.3)
-	tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, PI), 0.3)
+	if shaker.is_in_group("shaker"):
+		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, PI), 0.3)
+	else:
+		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, 0), 0.3)
 	var tilt_angle = deg_to_rad(-20.0)
 	var target_tilt = Quaternion.from_euler(Vector3(tilt_angle, 0, 0))
 
