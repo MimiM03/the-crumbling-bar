@@ -65,15 +65,15 @@ data = PackedVector3Array(0.022, 0.0011, 0, 0.0198, 0, 0.0029, 0.021399999, 0.00
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i26c4"]
 render_priority = 0
 shader = ExtResource("4_r5ym5")
-shader_parameter/fill_percent = 0.59200002812
+shader_parameter/fill_percent = 0.5
 shader_parameter/liquid_surface_color = Color(0.7, 0.5, 1, 1)
 shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
-shader_parameter/wobble = Vector2(0, 0)
-shader_parameter/world_bottom_y = 0.022056488
-shader_parameter/world_vertical_length = 0.1709702778607607
+shader_parameter/wobble = Vector2(7.816478e-10, 1.1723823e-10)
+shader_parameter/world_bottom_y = 0.02561075
+shader_parameter/world_vertical_length = 0.17097028531134129
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_p0cud"]
 _surfaces = [{
@@ -125,7 +125,7 @@ transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_r5ym5")
 
 [node name="liquid" type="MeshInstance3D" parent="." unique_id=1592842547]
-transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, 0)
+transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0.0035542622, 0)
 material_override = SubResource("ShaderMaterial_i26c4")
 mesh = SubResource("ArrayMesh_se0og")
 script = ExtResource("5_p0cud")
