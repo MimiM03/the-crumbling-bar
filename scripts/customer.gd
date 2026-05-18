@@ -31,6 +31,8 @@ func _ready() -> void:
 	# Link the Sprite3D to the Viewport
 	bubble_sprite.texture = bubble_viewport.get_texture()
 	
+	add_to_group("customers")
+	
 	if !isGroup:
 		type = ChairType.CHAIR
 		start_looking_for_seat()
@@ -173,6 +175,7 @@ func sit():
 
 func order():
 	if is_leader:
+		has_ordered = true
 		var orders = OrderGen.repick(group_members.size())
 		for i in range(orders.size()):
 			group_members[i].drink = orders[i]
@@ -194,3 +197,53 @@ func print_orders_per_member():
 	# Optional: Hide it after a few seconds
 	await get_tree().create_timer(5.0).timeout
 	bubble_sprite.visible = false
+	
+
+
+const POUR_TOLERANCE := 0.20  # allow ±20% on each ingredient
+
+func try_accept_drink(glass: Area3D) -> bool:
+	# Build the list of unserved members to check against.
+	# For solo customers, group_members contains just themselves.
+	# For groups, it contains all members assigned by the leader.
+	var candidates: Array = group_members.filter(
+		func(m): return m.has_ordered and not m.has_been_served and not m.drink.is_empty()
+	)
+	
+	if candidates.is_empty():
+		print("No unserved members with orders.")
+		return false
+
+	for member in candidates:
+		if _drink_matches(glass, member.drink):
+			# Mark this member as served
+			member.has_been_served = true
+			member.has_ordered = false
+			member.bubble_sprite.visible = false
+			glass.queue_free()
+			print("Served %s their drink!" % member.name)
+			return true
+
+	print("Glass contents don't match any pending order.")
+	return false
+
+func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
+	var required: Array = drink.get("ingredients", [])
+	if required.is_empty():
+		return false
+
+	var contents: Dictionary = glass.amount_per_drink_type
+
+	for ingredient in required:
+		var item: String = ingredient.get("item", "")
+		var needed: float = ingredient.get("amount", 0.0)
+		var tolerance: float = needed * POUR_TOLERANCE
+
+		if item not in contents:
+			return false
+
+		if abs(contents[item] - needed) > tolerance:
+			return false
+	
+	return true
+	

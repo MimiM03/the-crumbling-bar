@@ -9,7 +9,7 @@ var glassContainer: NodePath = "../Glasses"
 
 const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.5
-enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS}
+enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS, CUSTOMER}
 
 # Define the Target Orientations
 # This creates a rotation of 0 on Y
@@ -61,6 +61,18 @@ func _input(event):
 					start_pouring(object)
 				else:
 					pick_up_object(object)
+		elif target == Target.CUSTOMER:
+			var customer = get_pointed_object_customer()
+			print(customer)
+			var held_glass = pickedObjectRight if pickedObjectRight else pickedObjectLeft
+			if held_glass and held_glass.is_in_group("glass") and customer.has_method("try_accept_drink"):
+				var accepted = customer.try_accept_drink(held_glass)
+				if accepted:
+					if pickedObjectRight == held_glass:
+						pickedObjectRight = null
+					else:
+						pickedObjectLeft = null
+			
 	
 
 # Handle camera rotation with mouse movement
@@ -242,6 +254,8 @@ func ZonePickableOrGlass():
 				return Target.ROCKS_GLASS
 		elif hit_collider.has_method("can_accept"):
 			return Target.ZONE
+		elif hit_collider.is_in_group("customers"):
+			return Target.CUSTOMER
 		elif hit_collider.is_in_group("trash"):
 			print("caught group")
 			trash_item()
@@ -344,3 +358,10 @@ func trash_item():
 		pickedObjectRight.queue_free()
 	elif pickedObjectLeft:
 		pickedObjectLeft.queue_free()
+		
+func get_pointed_object_customer():
+	if $Camera3D/RayCast3D.is_colliding():
+		var hit = $Camera3D/RayCast3D.get_collider()
+		if hit.is_in_group("customers"):
+			return hit
+	return null

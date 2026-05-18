@@ -21,7 +21,7 @@ buses/default_bus_layout="uid://bc4kvd1smcb17"
 
 [autoload]
 
-Settings="*uid://7nx0txjnftdw"
+Settings="*res://scripts/settings.gd"
 
 [display]
 
