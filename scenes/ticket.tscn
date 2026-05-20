@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://cxeane6qh03bg"]
+
+[ext_resource type="Shader" uid="uid://byypoxdcseex2" path="res://shaders/ticket_bend.gdshader" id="1_krxyo"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_krxyo"]
+viewport_path = NodePath("MeshInstance3D/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7yqn5"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_krxyo")
+shader_parameter/ticket_texture = SubResource("ViewportTexture_krxyo")
+shader_parameter/curvature = 0.13400010136499985
+shader_parameter/curl_direction = 0.882000041895
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rn5ye"]
+material = SubResource("ShaderMaterial_7yqn5")
+size = Vector2(0.5, 1)
+subdivide_width = 16
+subdivide_depth = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krxyo"]
+bg_color = Color(0.8560673, 0.8560673, 0.856067, 1)
+
+[node name="Ticket" type="Node3D" unique_id=1535169875]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=546778712]
+mesh = SubResource("PlaneMesh_rn5ye")
+
+[node name="SubViewport" type="SubViewport" parent="MeshInstance3D" unique_id=1245265395]
+size = Vector2i(512, 1024)
+render_target_update_mode = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="MeshInstance3D/SubViewport" unique_id=640700576]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_krxyo")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MeshInstance3D/SubViewport/PanelContainer" unique_id=921837041]
+layout_mode = 2
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_bottom = 900
+
+[node name="Label" type="Label" parent="MeshInstance3D/SubViewport/PanelContainer/MarginContainer2" unique_id=436164326]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "Table"
+
+[node name="MarginContainer" type="MarginContainer" parent="MeshInstance3D/SubViewport/PanelContainer" unique_id=650383468]
+layout_mode = 2
+theme_override_constants/margin_left = 76
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 76
+theme_override_constants/margin_bottom = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MeshInstance3D/SubViewport/PanelContainer/MarginContainer" unique_id=313662087]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MeshInstance3D/SubViewport/PanelContainer/MarginContainer/VBoxContainer" unique_id=514764634]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 44
+text = "hahsahf
+asuakfa
+afda"

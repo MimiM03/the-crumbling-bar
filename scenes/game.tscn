@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bn7evjvrvuttf" path="res://scenes/shaker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bisn8xgga7o26" path="res://scenes/juice.tscn" id="11_dinhu"]
 [ext_resource type="PackedScene" uid="uid://c3ld47q08qvva" path="res://scenes/recipe_book.tscn" id="14_trtic"]
+[ext_resource type="PackedScene" uid="uid://cxeane6qh03bg" path="res://scenes/ticket.tscn" id="15_ir15t"]
 [ext_resource type="PackedScene" uid="uid://bm3an7gpjkjos" path="res://scenes/pause_menu.tscn" id="16_rysoc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lnu2h"]
@@ -296,6 +297,12 @@ visible = false
 
 [node name="Pause Menu" parent="." unique_id=1176290145 instance=ExtResource("16_rysoc")]
 visible = false
+
+[node name="Ticket" parent="." unique_id=1535169875 instance=ExtResource("15_ir15t")]
+transform = Transform3D(-0.33, 0, -2.8849517e-08, 7.773393e-10, 0.3298802, -0.008891726, 2.8839043e-08, -0.008891726, -0.3298802, -4.7, 0.9591248, 4.402)
+
+[node name="Ticket2" parent="." unique_id=1542126417 instance=ExtResource("15_ir15t")]
+transform = Transform3D(-0.33, 0, -2.8849517e-08, 7.773393e-10, 0.3298802, -0.008891726, 2.8839043e-08, -0.008891726, -0.3298802, -4.500195, 0.9591248, 4.402)
 
 [editable path="Drinks/Mixers/lime zone/juice LIME"]
 [editable path="Drinks/Mixers/orange zone/juice Orange"]
