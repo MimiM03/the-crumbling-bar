@@ -88,6 +88,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		pitch -= event.relative.y * sens
 		pitch = clamp(pitch, -90, 90)
 		camera.rotation_degrees.x = pitch
+		
+	if event.is_action_pressed("debug_spawn_drink"):
+		debug_spawn_matching_drink()
 
 func _physics_process(delta: float) -> void:
 	if is_in_cutscene:
@@ -365,3 +368,54 @@ func get_pointed_object_customer():
 		if hit.is_in_group("customers"):
 			return hit
 	return null
+	
+func debug_spawn_matching_drink() -> void:
+	# Find the nearest customer with a pending order
+	var customers = get_tree().get_nodes_in_group("customers")
+	var target_customer = null
+	var closest_dist = INF
+
+	for c in customers:
+		if c.has_ordered and not c.has_been_served and c.drink and not c.drink.is_empty():
+			var d = global_position.distance_to(c.global_position)
+			if d < closest_dist:
+				closest_dist = d
+				target_customer = c
+
+	if not target_customer:
+		print("[DEBUG] No customer with a pending order found.")
+		return
+
+	var order: Dictionary = target_customer.drink
+	var glass_type: String = order.get("glass", "Glass")
+	print("[DEBUG] Spawning '%s' for order: %s" % [glass_type, order.get("name", "?")])
+
+	# Pick the right glass scene
+	var glass_scene: PackedScene
+	match glass_type:
+		"Shot Glass":
+			glass_scene = shotGlassScene
+		"Rocks":
+			glass_scene = rocksGlassScene
+		_:
+			glass_scene = highGlassScene
+
+	# Instantiate and add to scene
+	var glass = glass_scene.instantiate()
+	get_node(glassContainer).add_child(glass, true)
+	glass.global_position = camera.global_position + camera.global_transform.basis.z * -0.5
+
+	# Pre-fill the glass with exact ingredient amounts
+	var ingredients: Array = order.get("ingredients", [])
+	for ing in ingredients:
+		var item: String = ing.get("item", "")
+		var amount: float = ing.get("amount", 0.0)
+		# Directly write into amount_per_drink_type, bypassing pour physics
+		glass.amount_per_drink_type[item] = amount
+		glass.current_ml += amount
+
+	glass.update_visual()
+
+	# Put it in whichever hand is free
+	pick_up_object(glass)
+	print("[DEBUG] Glass ready — walk up to %s and click them." % target_customer.name)

@@ -195,8 +195,8 @@ func print_orders_per_member():
 	bubble_sprite.visible = true
 	
 	# Optional: Hide it after a few seconds
-	await get_tree().create_timer(5.0).timeout
-	bubble_sprite.visible = false
+	#await get_tree().create_timer(5.0).timeout
+	#bubble_sprite.visible = false
 	
 
 
@@ -222,6 +222,12 @@ func try_accept_drink(glass: Area3D) -> bool:
 			member.bubble_sprite.visible = false
 			glass.queue_free()
 			print("Served %s their drink!" % member.name)
+			
+			# Check if the whole group is now served
+			var all_served = group_members.all(func(m): return m.has_been_served)
+			if all_served:
+				_dismiss_group()
+			
 			return true
 
 	print("Glass contents don't match any pending order.")
@@ -239,6 +245,8 @@ func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
 		var needed: float = ingredient.get("amount", 0.0)
 		var tolerance: float = needed * POUR_TOLERANCE
 
+		print(contents)
+		
 		if item not in contents:
 			return false
 
@@ -247,3 +255,37 @@ func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
 	
 	return true
 	
+	
+func _dismiss_group() -> void:
+	for member in group_members:
+		member._float_and_vanish()
+	
+	
+func _float_and_vanish() -> void:
+	# Disable physics so they don't slide/collide during the animation
+	set_physics_process(false)
+	if nav_agent:
+		nav_agent.set_physics_process(false)
+
+	var tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE)
+
+	# Rise up 2 units over 1.2 seconds
+	tween.tween_property(self, "global_position", global_position + Vector3(0, 2.0, 0), 1.2)
+
+	# Fade out — requires the character mesh to use a material with alpha
+	# Works if your customer model uses a StandardMaterial3D with transparency enabled
+	for child in find_children("*", "MeshInstance3D", true, false):
+		var mat = child.get_active_material(0)
+		if mat:
+			var unique_mat = mat.duplicate() as Material
+			child.set_surface_override_material(0, unique_mat)
+			tween.tween_property(unique_mat, "albedo_color:a", 0.0, 1.0)
+
+		tween.finished.connect(func():
+			# Free seat/wait_area so new customers can use them
+			if target_seat:
+				target_seat.is_occupied = false
+			if target_wait_area:
+				target_wait_area.is_occupied = false
+			queue_free()
+		)
