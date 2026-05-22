@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://s3nbmpxliyw6"]
+[gd_scene format=4 uid="uid://s3nbmpxliyw6"]
 
 [ext_resource type="PackedScene" uid="uid://c1631ywoykip3" path="res://scenes/bar.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://bkl01n12uerp4" path="res://scripts/order_gen.gd" id="2_dinhu"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bn7evjvrvuttf" path="res://scenes/shaker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bisn8xgga7o26" path="res://scenes/juice.tscn" id="11_dinhu"]
 [ext_resource type="PackedScene" uid="uid://c3ld47q08qvva" path="res://scenes/recipe_book.tscn" id="14_trtic"]
-[ext_resource type="PackedScene" uid="uid://cxeane6qh03bg" path="res://scenes/ticket.tscn" id="15_ir15t"]
+[ext_resource type="Texture2D" uid="uid://ddtos7ipnl4rs" path="res://assets/single-bar_Image_1.png" id="15_ir15t"]
 [ext_resource type="PackedScene" uid="uid://bm3an7gpjkjos" path="res://scenes/pause_menu.tscn" id="16_rysoc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lnu2h"]
@@ -82,6 +82,44 @@ rim_enabled = true
 rim = 0.31
 refraction_enabled = true
 refraction_scale = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01af3"]
+resource_name = "wood_material"
+cull_mode = 2
+albedo_texture = ExtResource("15_ir15t")
+roughness = 0.82111454
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jxrum"]
+_surfaces = [{
+"aabb": AABB(-1.8869133, -1, 0, 3.7738266, 2, 0.083486654),
+"format": 34359742465,
+"index_count": 108,
+"index_data": PackedByteArray("AAABAAIAAAADAAEAAQAEAAIAAgAFAAAAAgAEAAUAAQAGAAQAAwAGAAEAAAAHAAMAAwAHAAYAAAAFAAcABgAIAAQABAAJAAUABAAIAAkABQAKAAcABQAJAAoABwALAAYABgALAAgABwAKAAsACAAMAAkACQANAAoACQAMAA0ACgAOAAsACgANAA4ACwAPAAgACAAPAAwACwAOAA8ADAAQAA0ADgARAA8ADwASAAwADAASABAADwARABIADQAQABMADQATAA4AEgATABAADgATABEAEgARABMA"),
+"name": "wood_material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray("YIbxvwAAgL8AAAAAYIbxPwAAgD8AAAAAYIbxvwAAgD8AAAAAYIbxPwAAgL8AAAAAYIbxvwAAgD+Lxi49YIbxvwAAgL+Lxi49YIbxPwAAgD+Lxi49YIbxPwAAgL+Lxi49MNPwv6CZfj8pL4E9MNPwv6CZfr8pL4E9MNPwP6CZfr8pL4E9MNPwP6CZfj8pL4E9ounuv4TGer8GyJ89ounuP4TGer8GyJ89ounuP4TGej8GyJ89ounuv4TGej8GyJ895EzsPweNdb8N+6o95EzsvweNdT8N+6o95EzsvweNdb8N+6o95EzsPweNdT8N+6o9")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ca42v"]
+resource_name = "single-bar_Plane_003_wood_material_0"
+_surfaces = [{
+"aabb": AABB(-1.8869133, -1, 0, 3.7738266, 2, 0.083486654),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA/AACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAAAAkDQxPIAvpzwtO30/g8Z6Py07fT+AL6c8kDQxPIPGej8AAAAAAAAAAAAAgD8AAAAAAACAPwAAAAAAAAAAAAAAAAAAAAAAAIA/NO09OgAwszoAAAAAAAAAADTtPTpopn8/NO09Omimfz+RNLE7gC8nPDTtPToAMLM6kTSxO0JjfT+RNLE7QmN9P5A0MTyAL6c8kTSxO4AvJzyQNDE8g8Z6PwAAAAAAAAAAhNB/PwAwszoAAIA/AAAAADTtPToAMLM6NO09OgAwszqXnX4/gC8nPITQfz8AMLM6kTSxO4AvJzyRNLE7gC8nPC07fT+AL6c8l51+P4AvJzyQNDE8gC+nPAAAgD8AAAAAhNB/P2imfz8AAIA/AACAP4TQfz8AMLM6hNB/PwAwszqXnX4/QmN9P4TQfz9opn8/l51+P4AvJzyXnX4/gC8nPC07fT+Dxno/l51+P0JjfT8tO30/gC+nPAAAgD8AAIA/NO09Omimfz8AAAAAAACAP4TQfz9opn8/hNB/P2imfz+RNLE7QmN9PzTtPTpopn8/l51+P0JjfT+XnX4/QmN9P5A0MTyDxno/kTSxO0JjfT8tO30/g8Z6PwAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/"),
+"format": 34359742487,
+"index_count": 108,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAPAA9AD4APAA/AD0AQABBAEIAQABDAEEARABFAEYARABHAEUA"),
+"material": SubResource("StandardMaterial3D_01af3"),
+"name": "wood_material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 72,
+"vertex_data": PackedByteArray("YIbxvwAAgL8AAAAAYIbxPwAAgD8AAAAAYIbxvwAAgD8AAAAAYIbxPwAAgL8AAAAAYIbxPwAAgD8AAAAAYIbxvwAAgD+Lxi49YIbxvwAAgD8AAAAAYIbxPwAAgD+Lxi49YIbxPwAAgL8AAAAAYIbxPwAAgD+Lxi49YIbxPwAAgD8AAAAAYIbxPwAAgL+Lxi495EzsvweNdb8N+6o95EzsPweNdT8N+6o95EzsPweNdb8N+6o95EzsvweNdT8N+6o9YIbxvwAAgL8AAAAAYIbxPwAAgL+Lxi49YIbxPwAAgL8AAAAAYIbxvwAAgL+Lxi49YIbxvwAAgD+Lxi49MNPwv6CZfr8pL4E9YIbxvwAAgL+Lxi49MNPwv6CZfj8pL4E9MNPwv6CZfj8pL4E9ounuv4TGer8GyJ89MNPwv6CZfr8pL4E9ounuv4TGej8GyJ89ounuv4TGej8GyJ895EzsvweNdb8N+6o9ounuv4TGer8GyJ895EzsvweNdT8N+6o9YIbxvwAAgL+Lxi49MNPwP6CZfr8pL4E9YIbxPwAAgL+Lxi49MNPwv6CZfr8pL4E9MNPwv6CZfr8pL4E9ounuP4TGer8GyJ89MNPwP6CZfr8pL4E9ounuv4TGer8GyJ89ounuv4TGer8GyJ895EzsPweNdb8N+6o9ounuP4TGer8GyJ895EzsvweNdb8N+6o9YIbxPwAAgL+Lxi49MNPwP6CZfj8pL4E9YIbxPwAAgD+Lxi49MNPwP6CZfr8pL4E9MNPwP6CZfr8pL4E9ounuP4TGej8GyJ89MNPwP6CZfj8pL4E9ounuP4TGer8GyJ89ounuP4TGer8GyJ895EzsPweNdT8N+6o9ounuP4TGej8GyJ895EzsPweNdb8N+6o9YIbxPwAAgD+Lxi49MNPwv6CZfj8pL4E9YIbxvwAAgD+Lxi49MNPwP6CZfj8pL4E9MNPwP6CZfj8pL4E9ounuv4TGej8GyJ89MNPwv6CZfj8pL4E9ounuP4TGej8GyJ89ounuP4TGej8GyJ895EzsvweNdT8N+6o9ounuv4TGej8GyJ895EzsPweNdT8N+6o9YIbxvwAAgD8AAAAAYIbxvwAAgL+Lxi49YIbxvwAAgL8AAAAAYIbxvwAAgD+Lxi49/////////7//////////v/////////+//////////7//f///////v/9///////+//3///////7//f///////v////3////+/////f////7////9/////v////3////+//3//f////z//f/9/////P/9//3////8//3//f////z//fwAA////v/9/AAD///+//38AAP///7//fwAA////vwwb/39+mApGDBv/f32Y8jkMG/9/dpjiOQwb/390mCFG/z//f726vjr/P/9/xLo6Rf8//3+4ukZF/z//f6G6ojrzZP9/8uT/P/Nk/3/y5P8/82T/f/Lk/z/zZP9/8uT/P/9/DBv///8//38MG////z//fwwb////P/9/DBv///8//3//P////z//f/8/////P/9//z////8//3//P////z//f/Nk////P/9/82T///8//3/zZP///z//f/Nk////P/Lk/3/p88Bz8uT/f+TzPgzy5P9/w/M7DPLk/3+788Vz/7//f3v1Xx3/v/9/ifWdYv+//39w9aNi/7//f0P1UR0Lm/9//v+FTQub/3/+/4VNC5v/f/7/hU0Lm/9//v+FTf9/8uT///8//3/y5P///z//f/Lk////P/9/8uT///8//3//v////z//f/+/////P/9//7////8//3//v////z//fwub////P/9/C5v///8//38Lm////z//fwub////PwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_jxrum")
 
 [node name="Game" type="Node3D" unique_id=1941939539]
 
@@ -298,11 +336,60 @@ visible = false
 [node name="Pause Menu" parent="." unique_id=1176290145 instance=ExtResource("16_rysoc")]
 visible = false
 
-[node name="Ticket" parent="." unique_id=1535169875 instance=ExtResource("15_ir15t")]
-transform = Transform3D(-0.33, 0, -2.8849517e-08, 7.773393e-10, 0.3298802, -0.008891726, 2.8839043e-08, -0.008891726, -0.3298802, -4.7, 0.9591248, 4.402)
+[node name="OrderTicketRail" type="Node3D" parent="." unique_id=1535169875]
 
-[node name="Ticket2" parent="." unique_id=1542126417 instance=ExtResource("15_ir15t")]
-transform = Transform3D(-0.33, 0, -2.8849517e-08, 7.773393e-10, 0.3298802, -0.008891726, 2.8839043e-08, -0.008891726, -0.3298802, -4.500195, 0.9591248, 4.402)
+[node name="Ticket Zone1" parent="OrderTicketRail" unique_id=1641912043 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -4.5938888, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone2" parent="OrderTicketRail" unique_id=35325704 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -4.393889, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone3" parent="OrderTicketRail" unique_id=1898985455 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -4.193889, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone4" parent="OrderTicketRail" unique_id=217778730 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -3.9938889, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone5" parent="OrderTicketRail" unique_id=706899622 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -3.7938888, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone6" parent="OrderTicketRail" unique_id=98566770 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -3.593889, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone7" parent="OrderTicketRail" unique_id=1874819416 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -3.393889, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone8" parent="OrderTicketRail" unique_id=1588903106 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -3.193889, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="Ticket Zone9" parent="OrderTicketRail" unique_id=153657600 groups=["ticket_zone"] instance=ExtResource("5_u5sy4")]
+transform = Transform3D(-0.3267, 0, -2.856102e-08, 7.695659e-10, 0.3265814, -0.008802809, 2.855067e-08, -0.008802809, -0.3265814, -2.9938889, 1, 4.138)
+required_group = "ticket"
+is_occupied = false
+
+[node name="mat3" type="MeshInstance3D" parent="OrderTicketRail" unique_id=1666278339]
+transform = Transform3D(0.26729998, -6.372927e-08, -2.6965294e-15, -1.7171595e-09, -0.007202301, 0.26720282, -6.370613e-08, -0.26720282, -0.007202301, -4.2729263, 0.9631306, 4.1511855)
+mesh = SubResource("ArrayMesh_ca42v")
+
+[node name="mat4" type="MeshInstance3D" parent="OrderTicketRail" unique_id=1561816215]
+transform = Transform3D(0.26729998, -6.372926e-08, -2.5548583e-15, -1.717159e-09, -0.0072022974, 0.26720276, -6.370613e-08, -0.26720276, -0.0072022974, -3.2952552, 0.9631306, 4.1511855)
+mesh = SubResource("ArrayMesh_ca42v")
 
 [editable path="Drinks/Mixers/lime zone/juice LIME"]
 [editable path="Drinks/Mixers/orange zone/juice Orange"]

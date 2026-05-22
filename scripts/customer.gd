@@ -7,6 +7,11 @@ var target_seat = null
 var target_wait_area = null
 var target_table = null
 const SPEED := 3.0
+const TICKET_SCENE := preload("res://scenes/ticket.tscn")
+
+static var _ticket_zones: Array = []
+static var _next_ticket_slot: int = 0
+
 var isGroup: bool = false
 var group_members: Array = [] # To keep track of who is in the group
 var is_leader: bool = false
@@ -174,9 +179,9 @@ func sit():
 	# then leave
 
 func order():
-	if not is_leader:
+	if !is_leader:
 		return
-	
+
 	# Wait until all members are in group_members (spawn_group assigns after all await)
 	while group_members.size() < 1 or group_members.any(func(m): return m == null):
 		await get_tree().process_frame
@@ -185,9 +190,75 @@ func order():
 	for i in range(orders.size()):
 		group_members[i].drink = orders[i]
 		group_members[i].has_ordered = true
-		group_members[i].print_orders_per_member()
-		
-func print_orders_per_member():
+		group_members[i].show_order_bubble()
+	_spawn_order_ticket(orders)
+
+
+func _spawn_order_ticket(orders: Array) -> void:
+	if orders.is_empty():
+		return
+	var zone: Area3D = _find_free_ticket_zone(get_tree())
+	if zone == null:
+		return
+	var ticket := TICKET_SCENE.instantiate()
+	zone.add_child(ticket)
+	if ticket.has_method("set_orders"):
+		ticket.set_orders(_ticket_header(), orders)
+	zone.place_object(ticket)
+
+
+static func _find_free_ticket_zone(tree: SceneTree) -> Area3D:
+	_ensure_ticket_zones(tree)
+	var count := _ticket_zones.size()
+	if count == 0:
+		return null
+	for i in count:
+		var zone: Area3D = _ticket_zones[(_next_ticket_slot + i) % count]
+		if !zone.is_occupied:
+			_next_ticket_slot = (_next_ticket_slot + i + 1) % count
+			return zone
+	return null
+
+
+static func _ensure_ticket_zones(tree: SceneTree) -> void:
+	if not _ticket_zones.is_empty():
+		return
+	for node in tree.get_nodes_in_group("ticket_zone"):
+		if node.has_method("place_object"):
+			_ticket_zones.append(node)
+	_ticket_zones.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
+	if _ticket_zones.is_empty():
+		push_warning("Customer: no nodes in group 'ticket_zone'.")
+
+
+func _ticket_header() -> String:
+	if isGroup:
+		return "Table2" if group_members.size() == 2 else "Table4"
+	return _bar_chair_header()
+
+
+func _bar_chair_header() -> String:
+	var chair_num := _bar_chair_number()
+	if chair_num > 0:
+		return "Bar %d" % chair_num
+	return "Bar"
+
+
+func _bar_chair_number() -> int:
+	if target_seat == null:
+		return 0
+	var bar_chairs: Array = []
+	for node in get_tree().get_nodes_in_group("seats"):
+		if node.get_parent() and node.get_parent().name == "Bar chairs":
+			bar_chairs.append(node)
+	bar_chairs.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
+	for i in bar_chairs.size():
+		if bar_chairs[i] == target_seat:
+			return i + 1
+	return 0
+
+
+func show_order_bubble():
 	if drink.is_empty():
 		return
 	

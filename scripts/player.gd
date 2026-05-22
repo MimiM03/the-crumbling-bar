@@ -108,8 +108,8 @@ func _physics_process(delta: float) -> void:
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		move_and_slide()
 	var rotation_speed =  deg_to_rad(135) / 0.25
-		# Handle pouring (Q left hand/E right hand):
-	if pickedObjectRight:
+	# Handle pouring (Q left hand/E right hand):
+	if pickedObjectRight and !pickedObjectRight.is_in_group("ticket"):
 		var target_right
 		var target = pour_quat_right
 		if Input.is_action_pressed("pour_right"):
@@ -125,7 +125,7 @@ func _physics_process(delta: float) -> void:
 		# slerp handles all axes simultaneously for a "perfect" arc
 		pickedObjectRight.quaternion = pickedObjectRight.quaternion.slerp(target_right, rotation_speed * delta)
 		can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), target, delta)
-	if pickedObjectLeft:
+	if pickedObjectLeft and !pickedObjectLeft.is_in_group("ticket"):
 		var target_left
 		var target = pour_quat_left
 		if Input.is_action_pressed("pour_left"):
@@ -176,17 +176,20 @@ func pick_up_object(object):
 	
 	
 	# Fix position and parent
-	var tween = create_tween()
+	var tween = create_tween().parallel()
 	$Camera3D/RayCast3D.add_exception(object)
 	if directionRight:
 		object.reparent(%CarryObjectRightMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectRightMarker.global_transform, 0.2)
+		
 		pickedObjectRight = object
 	else:
 		object.reparent(%CarryObjectLeftMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectLeftMarker.global_transform, 0.2)
 		pickedObjectLeft = object
-	
+		
+	if object.is_in_group("ticket"):
+			tween.parallel().tween_property(object, "quaternion", Quaternion(Vector3.RIGHT, deg_to_rad(90)), 0.2)
 	tween.finished.connect(func():
 		is_in_cutscene = false
 	)
