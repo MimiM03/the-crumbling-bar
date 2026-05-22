@@ -101,3 +101,7 @@ func spawn_group(size: int, available_areas: Array):
 			member.isGroup = isGroup
 		
 		await get_tree().create_timer(0.8).timeout		
+		
+	for member in members:
+			member.group_members = members
+			member.isGroup = isGroup

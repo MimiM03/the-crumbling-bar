@@ -234,7 +234,7 @@ func try_accept_drink(glass: Area3D) -> bool:
 	return false
 
 func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
-	var required: Array = drink.get("ingredients", [])
+	var required: Array = order.get("ingredients", [])
 	if required.is_empty():
 		return false
 

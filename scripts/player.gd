@@ -262,6 +262,12 @@ func ZonePickableOrGlass():
 		elif hit_collider.is_in_group("trash"):
 			print("caught group")
 			trash_item()
+		else:
+			# Could be a chair with a seated customer inside
+			var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+			for c in get_tree().get_nodes_in_group("customers"):
+				if c.global_position.distance_to(hit_pos) < 1.2:
+					return Target.CUSTOMER
 		
 	return null
 
@@ -365,32 +371,51 @@ func trash_item():
 func get_pointed_object_customer():
 	if $Camera3D/RayCast3D.is_colliding():
 		var hit = $Camera3D/RayCast3D.get_collider()
+		var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+		
 		if hit.is_in_group("customers"):
 			return hit
+		
+		# Raycast hit a chair — find seated customer nearby
+		var closest_dist = 1.2
+		var closest = null
+		for c in get_tree().get_nodes_in_group("customers"):
+			var d = c.global_position.distance_to(hit_pos)
+			if d < closest_dist:
+				closest_dist = d
+				closest = c
+		return closest
 	return null
 	
 func debug_spawn_matching_drink() -> void:
-	# Find the nearest customer with a pending order
-	var customers = get_tree().get_nodes_in_group("customers")
-	var target_customer = null
-	var closest_dist = INF
+	var target_member = null
+	
+	if $Camera3D/RayCast3D.is_colliding():
+		var hit = $Camera3D/RayCast3D.get_collider()
+		var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+		
+		# Direct hit on a customer
+		if hit.is_in_group("customers"):
+			target_member = hit
+		else:
+			# Might be hitting a chair — look for a seated customer nearby
+			var closest_dist = 1.2 # max radius to search around hit point
+			for c in get_tree().get_nodes_in_group("customers"):
+				var d = c.global_position.distance_to(hit_pos)
+				if d < closest_dist and c.has_ordered and not c.has_been_served and c.drink != null:
+					closest_dist = d
+					target_member = c
 
-	for c in customers:
-		if c.has_ordered and not c.has_been_served and c.drink and not c.drink.is_empty():
-			var d = global_position.distance_to(c.global_position)
-			if d < closest_dist:
-				closest_dist = d
-				target_customer = c
-
-	if not target_customer:
-		print("[DEBUG] No customer with a pending order found.")
+	if target_member == null:
+		print("[DEBUG] Not looking at an unserved customer with an order.")
 		return
 
-	var order: Dictionary = target_customer.drink
-	var glass_type: String = order.get("glass", "Glass")
-	print("[DEBUG] Spawning '%s' for order: %s" % [glass_type, order.get("name", "?")])
+	print("[DEBUG] Target: %s" % target_member.name)
 
-	# Pick the right glass scene
+	var order: Dictionary = target_member.drink
+	var glass_type: String = order.get("glass", "Glass")
+	print("[DEBUG] Spawning '%s' for: %s" % [glass_type, order.get("name", "?")])
+
 	var glass_scene: PackedScene
 	match glass_type:
 		"Shot Glass":
@@ -400,22 +425,16 @@ func debug_spawn_matching_drink() -> void:
 		_:
 			glass_scene = highGlassScene
 
-	# Instantiate and add to scene
 	var glass = glass_scene.instantiate()
 	get_node(glassContainer).add_child(glass, true)
 	glass.global_position = camera.global_position + camera.global_transform.basis.z * -0.5
 
-	# Pre-fill the glass with exact ingredient amounts
-	var ingredients: Array = order.get("ingredients", [])
-	for ing in ingredients:
+	for ing in order.get("ingredients", []):
 		var item: String = ing.get("item", "")
 		var amount: float = ing.get("amount", 0.0)
-		# Directly write into amount_per_drink_type, bypassing pour physics
 		glass.amount_per_drink_type[item] = amount
 		glass.current_ml += amount
 
 	glass.update_visual()
-
-	# Put it in whichever hand is free
 	pick_up_object(glass)
-	print("[DEBUG] Glass ready — walk up to %s and click them." % target_customer.name)
+	print("[DEBUG] Glass ready — now click them to serve.")
