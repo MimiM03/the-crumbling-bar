@@ -174,12 +174,18 @@ func sit():
 	# then leave
 
 func order():
-	if is_leader:
-		has_ordered = true
-		var orders = OrderGen.repick(group_members.size())
-		for i in range(orders.size()):
-			group_members[i].drink = orders[i]
-			group_members[i].print_orders_per_member()
+	if not is_leader:
+		return
+	
+	# Wait until all members are in group_members (spawn_group assigns after all await)
+	while group_members.size() < 1 or group_members.any(func(m): return m == null):
+		await get_tree().process_frame
+	
+	var orders = OrderGen.repick(group_members.size())
+	for i in range(orders.size()):
+		group_members[i].drink = orders[i]
+		group_members[i].has_ordered = true
+		group_members[i].print_orders_per_member()
 		
 func print_orders_per_member():
 	if drink.is_empty():
@@ -239,13 +245,14 @@ func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
 		return false
 
 	var contents: Dictionary = glass.amount_per_drink_type
+	
+	print("[MATCH] Glass contents: ", contents)
+	print("[MATCH] Required: ", required)
 
 	for ingredient in required:
 		var item: String = ingredient.get("item", "")
 		var needed: float = ingredient.get("amount", 0.0)
 		var tolerance: float = needed * POUR_TOLERANCE
-
-		print(contents)
 		
 		if item not in contents:
 			return false
