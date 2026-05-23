@@ -170,43 +170,43 @@ script = ExtResource("4_kvpfn")
 
 [node name="Glasses" type="Node" parent="." unique_id=755452356]
 
-[node name="Glass Zone9" parent="Glasses" unique_id=2109655507 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0.085336626, 0.9678514, 0.76983404)
+[node name="Glass Zone" parent="Glasses" unique_id=1531329575 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.982534, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
-[node name="Glass Zone10" parent="Glasses" unique_id=447939032 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0.36410803, 0.9678514, 0.76983404)
+[node name="Glass Zone2" parent="Glasses" unique_id=563240296 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7037626, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
-[node name="Glass Zone11" parent="Glasses" unique_id=459538792 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0.6417652, 0.9678514, 0.76983404)
+[node name="Glass Zone3" parent="Glasses" unique_id=1358520411 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42610544, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
-[node name="Glass Zone12" parent="Glasses" unique_id=1852485521 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0.91148853, 0.9678514, 0.76983404)
+[node name="Glass Zone4" parent="Glasses" unique_id=1601285341 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15638208, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
-[node name="Glass Zone13" parent="Glasses" unique_id=1531329575 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -0.982534, 0.9678514, 0.76983404)
+[node name="Glass Zone5" parent="Glasses" unique_id=2109655507 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.085336626, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
-[node name="Glass Zone14" parent="Glasses" unique_id=563240296 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -0.7037626, 0.9678514, 0.76983404)
+[node name="Glass Zone6" parent="Glasses" unique_id=447939032 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36410803, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
-[node name="Glass Zone15" parent="Glasses" unique_id=1358520411 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -0.42610544, 0.9678514, 0.76983404)
+[node name="Glass Zone7" parent="Glasses" unique_id=459538792 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6417652, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
-[node name="Glass Zone16" parent="Glasses" unique_id=1601285341 instance=ExtResource("5_u5sy4")]
-transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -0.15638208, 0.9678514, 0.76983404)
+[node name="Glass Zone8" parent="Glasses" unique_id=1852485521 instance=ExtResource("5_u5sy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.91148853, 0.9678514, 0.76983404)
 required_group = "glass"
 is_occupied = false
 
@@ -328,7 +328,6 @@ required_group = "shaker"
 
 [node name="Shaker" parent="Shaker Zone" unique_id=2091606909 instance=ExtResource("10_vtaks")]
 transform = Transform3D(1.0101007, 0, 0, 0, 1.0101007, 0, 0, 0, 1.0101007, 0, 0.22698045, 0)
-max_liquid_ml = null
 
 [node name="RecipeBook" parent="." unique_id=1298598325 instance=ExtResource("14_trtic")]
 visible = false
