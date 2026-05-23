@@ -432,12 +432,14 @@ func debug_spawn_matching_drink() -> void:
 	get_node(glassContainer).add_child(glass, true)
 	glass.global_position = camera.global_position + camera.global_transform.basis.z * -0.5
 
+	var composition := {}
+	var total_ml := 0.0
 	for ing in order.get("ingredients", []):
 		var item: String = ing.get("item", "")
-		var amount: float = ing.get("amount", 0.0)
-		glass.amount_per_drink_type[item] = amount
-		glass.current_ml += amount
-
-	glass.update_visual()
+		var amount: float = float(ing.get("amount", 0.0))
+		composition[item] = amount
+		total_ml += amount
+	if glass.has_method("get_liquid"):
+		glass.get_liquid(total_ml, composition)
 	pick_up_object(glass)
 	print("[DEBUG] Glass ready — now click them to serve.")

@@ -11,6 +11,7 @@ const TICKET_SCENE := preload("res://scenes/ticket.tscn")
 
 static var _ticket_zones: Array = []
 static var _next_ticket_slot: int = 0
+static var _ticket_zones_scene: Node = null
 
 var isGroup: bool = false
 var group_members: Array = [] # To keep track of who is in the group
@@ -22,6 +23,7 @@ var is_sitting: bool = false
 var has_ordered: bool = false
 var has_been_served = false
 var drink = null
+var order_ticket: Area3D = null
 
 @onready var bubble_sprite = $OrderLabel/Sprite3D
 @onready var drink_label = $OrderLabel/SubViewport/Panel/Label
@@ -205,6 +207,8 @@ func _spawn_order_ticket(orders: Array) -> void:
 	if ticket.has_method("set_orders"):
 		ticket.set_orders(_ticket_header(), orders)
 	zone.place_object(ticket)
+	for member in group_members:
+		member.order_ticket = ticket
 
 
 static func _find_free_ticket_zone(tree: SceneTree) -> Area3D:
@@ -214,6 +218,8 @@ static func _find_free_ticket_zone(tree: SceneTree) -> Area3D:
 		return null
 	for i in count:
 		var zone: Area3D = _ticket_zones[(_next_ticket_slot + i) % count]
+		if not is_instance_valid(zone):
+			continue
 		if !zone.is_occupied:
 			_next_ticket_slot = (_next_ticket_slot + i + 1) % count
 			return zone
@@ -221,10 +227,21 @@ static func _find_free_ticket_zone(tree: SceneTree) -> Area3D:
 
 
 static func _ensure_ticket_zones(tree: SceneTree) -> void:
-	if not _ticket_zones.is_empty():
+	var scene_root := tree.current_scene
+	var stale := _ticket_zones_scene != scene_root
+	if not stale:
+		for zone in _ticket_zones:
+			if not is_instance_valid(zone):
+				stale = true
+				break
+	if not stale and not _ticket_zones.is_empty():
 		return
+
+	_ticket_zones_scene = scene_root
+	_next_ticket_slot = 0
+	_ticket_zones.clear()
 	for node in tree.get_nodes_in_group("ticket_zone"):
-		if node.has_method("place_object"):
+		if node is Area3D and node.has_method("place_object"):
 			_ticket_zones.append(node)
 	_ticket_zones.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
 	if _ticket_zones.is_empty():
@@ -303,6 +320,7 @@ func try_accept_drink(glass: Area3D) -> bool:
 			# Check if the whole group is now served
 			var all_served = group_members.all(func(m): return m.has_been_served)
 			if all_served:
+				_clear_order_ticket()
 				_dismiss_group()
 			
 			return true
@@ -315,7 +333,7 @@ func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
 	if required.is_empty():
 		return false
 
-	var contents: Dictionary = glass.amount_per_drink_type
+	var contents: Dictionary = glass.liquid.amount_per_drink_type
 	
 	print("[MATCH] Glass contents: ", contents)
 	print("[MATCH] Required: ", required)
@@ -334,6 +352,21 @@ func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
 	return true
 	
 	
+func _clear_order_ticket() -> void:
+	var ticket := order_ticket
+	if ticket == null or not is_instance_valid(ticket):
+		for member in group_members:
+			member.order_ticket = null
+		return
+	order_ticket = null
+	for member in group_members:
+		member.order_ticket = null
+	var zone := ticket.get_parent()
+	if zone != null and zone.has_method("release_object") and zone.current_object == ticket:
+		zone.release_object()
+	ticket.queue_free()
+
+
 func _dismiss_group() -> void:
 	for member in group_members:
 		member._float_and_vanish()
