@@ -9,7 +9,7 @@ var glassContainer: NodePath = "../Glasses"
 
 const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.5
-enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS}
+enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS, CUSTOMER}
 
 # Define the Target Orientations
 # This creates a rotation of 0 on Y
@@ -61,6 +61,18 @@ func _input(event):
 					start_pouring(object)
 				else:
 					pick_up_object(object)
+		elif target == Target.CUSTOMER:
+			var customer = get_pointed_object_customer()
+			print(customer)
+			var held_glass = pickedObjectRight if pickedObjectRight else pickedObjectLeft
+			if held_glass and held_glass.is_in_group("glass") and customer.has_method("try_accept_drink"):
+				var accepted = customer.try_accept_drink(held_glass)
+				if accepted:
+					if pickedObjectRight == held_glass:
+						pickedObjectRight = null
+					else:
+						pickedObjectLeft = null
+			
 	
 
 # Handle camera rotation with mouse movement
@@ -76,6 +88,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		pitch -= event.relative.y * sens
 		pitch = clamp(pitch, -90, 90)
 		camera.rotation_degrees.x = pitch
+		
+	if event.is_action_pressed("debug_spawn_drink"):
+		debug_spawn_matching_drink()
 
 func _physics_process(delta: float) -> void:
 	if is_in_cutscene:
@@ -242,9 +257,17 @@ func ZonePickableOrGlass():
 				return Target.ROCKS_GLASS
 		elif hit_collider.has_method("can_accept"):
 			return Target.ZONE
+		elif hit_collider.is_in_group("customers"):
+			return Target.CUSTOMER
 		elif hit_collider.is_in_group("trash"):
 			print("caught group")
 			trash_item()
+		else:
+			# Could be a chair with a seated customer inside
+			var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+			for c in get_tree().get_nodes_in_group("customers"):
+				if c.global_position.distance_to(hit_pos) < 1.2:
+					return Target.CUSTOMER
 		
 	return null
 
@@ -344,3 +367,74 @@ func trash_item():
 		pickedObjectRight.queue_free()
 	elif pickedObjectLeft:
 		pickedObjectLeft.queue_free()
+		
+func get_pointed_object_customer():
+	if $Camera3D/RayCast3D.is_colliding():
+		var hit = $Camera3D/RayCast3D.get_collider()
+		var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+		
+		if hit.is_in_group("customers"):
+			return hit
+		
+		# Raycast hit a chair — find seated customer nearby
+		var closest_dist = 1.2
+		var closest = null
+		for c in get_tree().get_nodes_in_group("customers"):
+			var d = c.global_position.distance_to(hit_pos)
+			if d < closest_dist:
+				closest_dist = d
+				closest = c
+		return closest
+	return null
+	
+func debug_spawn_matching_drink() -> void:
+	var target_member = null
+	
+	if $Camera3D/RayCast3D.is_colliding():
+		var hit = $Camera3D/RayCast3D.get_collider()
+		var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+		
+		# Direct hit on a customer
+		if hit.is_in_group("customers"):
+			target_member = hit
+		else:
+			# Might be hitting a chair — look for a seated customer nearby
+			var closest_dist = 1.2 # max radius to search around hit point
+			for c in get_tree().get_nodes_in_group("customers"):
+				var d = c.global_position.distance_to(hit_pos)
+				if d < closest_dist and c.has_ordered and not c.has_been_served and c.drink != null:
+					closest_dist = d
+					target_member = c
+
+	if target_member == null:
+		print("[DEBUG] Not looking at an unserved customer with an order.")
+		return
+
+	print("[DEBUG] Target: %s" % target_member.name)
+
+	var order: Dictionary = target_member.drink
+	var glass_type: String = order.get("glass", "Glass")
+	print("[DEBUG] Spawning '%s' for: %s" % [glass_type, order.get("name", "?")])
+
+	var glass_scene: PackedScene
+	match glass_type:
+		"Shot Glass":
+			glass_scene = shotGlassScene
+		"Rocks":
+			glass_scene = rocksGlassScene
+		_:
+			glass_scene = highGlassScene
+
+	var glass = glass_scene.instantiate()
+	get_node(glassContainer).add_child(glass, true)
+	glass.global_position = camera.global_position + camera.global_transform.basis.z * -0.5
+
+	for ing in order.get("ingredients", []):
+		var item: String = ing.get("item", "")
+		var amount: float = ing.get("amount", 0.0)
+		glass.amount_per_drink_type[item] = amount
+		glass.current_ml += amount
+
+	glass.update_visual()
+	pick_up_object(glass)
+	print("[DEBUG] Glass ready — now click them to serve.")

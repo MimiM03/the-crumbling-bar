@@ -31,6 +31,8 @@ func _ready() -> void:
 	# Link the Sprite3D to the Viewport
 	bubble_sprite.texture = bubble_viewport.get_texture()
 	
+	add_to_group("customers")
+	
 	if !isGroup:
 		type = ChairType.CHAIR
 		start_looking_for_seat()
@@ -172,11 +174,18 @@ func sit():
 	# then leave
 
 func order():
-	if is_leader:
-		var orders = OrderGen.repick(group_members.size())
-		for i in range(orders.size()):
-			group_members[i].drink = orders[i]
-			group_members[i].print_orders_per_member()
+	if not is_leader:
+		return
+	
+	# Wait until all members are in group_members (spawn_group assigns after all await)
+	while group_members.size() < 1 or group_members.any(func(m): return m == null):
+		await get_tree().process_frame
+	
+	var orders = OrderGen.repick(group_members.size())
+	for i in range(orders.size()):
+		group_members[i].drink = orders[i]
+		group_members[i].has_ordered = true
+		group_members[i].print_orders_per_member()
 		
 func print_orders_per_member():
 	if drink.is_empty():
@@ -192,5 +201,98 @@ func print_orders_per_member():
 	bubble_sprite.visible = true
 	
 	# Optional: Hide it after a few seconds
-	await get_tree().create_timer(5.0).timeout
-	bubble_sprite.visible = false
+	#await get_tree().create_timer(5.0).timeout
+	#bubble_sprite.visible = false
+	
+
+
+const POUR_TOLERANCE := 0.20  # allow ±20% on each ingredient
+
+func try_accept_drink(glass: Area3D) -> bool:
+	# Build the list of unserved members to check against.
+	# For solo customers, group_members contains just themselves.
+	# For groups, it contains all members assigned by the leader.
+	var candidates: Array = group_members.filter(
+		func(m): return m.has_ordered and not m.has_been_served and not m.drink.is_empty()
+	)
+	
+	if candidates.is_empty():
+		print("No unserved members with orders.")
+		return false
+
+	for member in candidates:
+		if _drink_matches(glass, member.drink):
+			# Mark this member as served
+			member.has_been_served = true
+			member.has_ordered = false
+			member.bubble_sprite.visible = false
+			glass.queue_free()
+			print("Served %s their drink!" % member.name)
+			
+			# Check if the whole group is now served
+			var all_served = group_members.all(func(m): return m.has_been_served)
+			if all_served:
+				_dismiss_group()
+			
+			return true
+
+	print("Glass contents don't match any pending order.")
+	return false
+
+func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
+	var required: Array = order.get("ingredients", [])
+	if required.is_empty():
+		return false
+
+	var contents: Dictionary = glass.amount_per_drink_type
+	
+	print("[MATCH] Glass contents: ", contents)
+	print("[MATCH] Required: ", required)
+
+	for ingredient in required:
+		var item: String = ingredient.get("item", "")
+		var needed: float = ingredient.get("amount", 0.0)
+		var tolerance: float = needed * POUR_TOLERANCE
+		
+		if item not in contents:
+			return false
+
+		if abs(contents[item] - needed) > tolerance:
+			return false
+	
+	return true
+	
+	
+func _dismiss_group() -> void:
+	for member in group_members:
+		member._float_and_vanish()
+	
+	
+func _float_and_vanish() -> void:
+	# Disable physics so they don't slide/collide during the animation
+	set_physics_process(false)
+	if nav_agent:
+		nav_agent.set_physics_process(false)
+
+	var tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE)
+
+	# Rise up 2 units over 1.2 seconds
+	tween.tween_property(self, "global_position", global_position + Vector3(0, 2.0, 0), 1.2)
+
+	# Fade out — requires the character mesh to use a material with alpha
+	# Works if your customer model uses a StandardMaterial3D with transparency enabled
+	for child in find_children("*", "MeshInstance3D", true, false):
+		var mat = child.get_active_material(0)
+		if mat:
+			var unique_mat = mat.duplicate() as Material
+			child.set_surface_override_material(0, unique_mat)
+			tween.tween_property(unique_mat, "albedo_color:a", 0.0, 1.0)
+
+		tween.finished.connect(func():
+			# Free seat/wait_area so new customers can use them
+			if target_seat:
+				target_seat.is_occupied = false
+			if target_wait_area:
+				target_wait_area.is_occupied = false
+			queue_free()
+		)
