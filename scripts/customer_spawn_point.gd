@@ -1,6 +1,6 @@
 extends Marker3D
 
-var customerScene: PackedScene = preload("res://scenes/customer.tscn")
+var customerScene: PackedScene = preload("res://scenes/customer.scn")
 var customerContainer: NodePath = "../Customers"
 
 

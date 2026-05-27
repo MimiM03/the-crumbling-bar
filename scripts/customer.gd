@@ -2,6 +2,10 @@ extends CharacterBody3D
 
 @onready var nav_agent = $NavigationAgent3D
 
+enum {IDLE, WALK, SIT}
+var curAnim = IDLE
+@export var blend_speed = 15
+@export var turn_speed := 8.0
 var exit_position = null
 var target_seat = null
 var target_wait_area = null
@@ -24,10 +28,13 @@ var has_ordered: bool = false
 var has_been_served = false
 var drink = null
 var order_ticket: Area3D = null
+var walk_value_anim := 0.0
+var sit_value_anim := 0.0
 
 @onready var bubble_sprite = $OrderLabel/Sprite3D
 @onready var drink_label = $OrderLabel/SubViewport/Panel/Label
 @onready var bubble_viewport = $OrderLabel/SubViewport
+@onready var animation_tree: AnimationTree = $fox/Armature/Skeleton3D/Thisle_Sketchfab_Clothing_Thistle_Clothing_0/AnimationTree
 
 func _ready() -> void:
 	# Wait for the first physics frame so the NavigationServer is ready
@@ -37,6 +44,8 @@ func _ready() -> void:
 	bubble_sprite.visible = false
 	# Link the Sprite3D to the Viewport
 	bubble_sprite.texture = bubble_viewport.get_texture()
+	animation_tree.active = true
+	curAnim = IDLE
 	
 	add_to_group("customers")
 	
@@ -48,6 +57,8 @@ func _ready() -> void:
 		start_looking_for_bar_space()
 
 func _physics_process(_delta):
+	handle_animation(_delta)
+	_update_facing(_delta)
 	if target_seat or target_wait_area:
 		# Get the next point in the path
 		var current_pos = global_position
@@ -66,19 +77,33 @@ func _physics_process(_delta):
 				is_sitting = true
 				is_moving = false
 				sit()
-				
-				
-		nav_agent.set_velocity(new_velocity)
+				return
+			
+			nav_agent.set_velocity(new_velocity)
+
+
+func _update_facing(delta: float) -> void:
+	if is_sitting:
+		return
+
+	var flat_velocity := Vector3(velocity.x, 0.0, velocity.z)
+	if flat_velocity.length_squared() < 0.0001:
+		return
+
+	var target_yaw := atan2(flat_velocity.x, flat_velocity.z)
+	rotation.y = lerp_angle(rotation.y, target_yaw, minf(1.0, turn_speed * delta))
 
 func start_looking_for_seat():
 	if target_seat:
 		target_seat.is_occupied = true # Claim the seat immediately
 		is_moving = true
+		curAnim = WALK
 		nav_agent.target_position = target_seat.global_position
 
 func start_looking_for_bar_space():
 	if target_wait_area:
 		is_moving = true
+		curAnim = WALK
 		nav_agent.target_position = target_wait_area.global_position
 
 func dispatch_group_to_table():
@@ -113,6 +138,8 @@ func move_to_assigned_seat(seat_marker: StaticBody3D):
 	target_wait_area.is_occupied = false
 	target_wait_area = null # Clear the old bar target
 
+	is_moving = true
+	curAnim = WALK
 	nav_agent.target_position = target_seat.global_position
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
@@ -120,6 +147,11 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
 	move_and_slide()
 
 func _on_navigation_agent_3d_target_reached() -> void:
+	# If we're already in the sit sequence, don't overwrite position/anim with
+	# "arrived at seat center" logic.
+	if is_sitting:
+		return
+
 	# Snap to the exact marker position
 	var final_pos
 	if target_wait_area:
@@ -129,7 +161,11 @@ func _on_navigation_agent_3d_target_reached() -> void:
 	else:
 		final_pos = exit_position
 	global_position = final_pos
+	if target_wait_area:
+		# Lock facing to the wait area's authored rotation (toward bar).
+		global_rotation = target_wait_area.global_rotation
 	is_moving = false
+	curAnim = IDLE
 	# Stop moving
 	velocity = Vector3.ZERO
 	# TODO: Rotate them to face the bar/counter
@@ -162,9 +198,10 @@ func _on_navigation_agent_3d_target_reached() -> void:
 func sit():
 	# Disable nav agent so it doesn't try to keep walking
 	nav_agent.target_position = global_position 
+	curAnim = SIT
 	# Smoothly move them into the chair over 1 seconds
 	var tween = create_tween()
-	tween.tween_property(self, "global_position", target_seat.sit_marker.global_position, 1)
+	tween.tween_property(self, "global_position", target_seat.sit_marker.global_position - Vector3(0, 0.248, 0), 1)
 	tween.parallel().tween_property(self, "global_basis", target_seat.sit_marker.global_basis, 1)
 	# if at the bar:
 	if type == ChairType.CHAIR:
@@ -400,3 +437,22 @@ func _float_and_vanish() -> void:
 				target_wait_area.is_occupied = false
 			queue_free()
 		)
+
+func handle_animation(delta:float):
+	match curAnim:
+		IDLE:
+			walk_value_anim = lerpf(walk_value_anim, 0, delta * blend_speed)
+			sit_value_anim = lerpf(sit_value_anim, 0, delta * blend_speed)
+		WALK:
+			walk_value_anim = lerpf(walk_value_anim, 1, delta * blend_speed)
+			sit_value_anim = lerpf(sit_value_anim, 0, delta * blend_speed)
+		SIT:
+			walk_value_anim = lerpf(walk_value_anim, 0, delta * blend_speed)
+			sit_value_anim = lerpf(sit_value_anim, 1, delta * blend_speed / 5)
+	update_tree()
+
+func update_tree():
+	if not is_instance_valid(animation_tree):
+		return
+	animation_tree["parameters/Walk/blend_amount"] = walk_value_anim
+	animation_tree["parameters/Sit/blend_amount"] = sit_value_anim
