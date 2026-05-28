@@ -151,7 +151,6 @@
 				"item": "juiceLime",
 				"amount": 10.0
 			},
-						
 			{
 				"item": "juiceCranberry",
 				"amount": 90.0
@@ -235,29 +234,6 @@
 			{
 				"item": "sweetSour",
 				"amount": 10.0
-			}
-		]
-	},
-	{
-		"name": "Sunset Delight",
-		"glass": "Glass",
-		"ingredients":[
-			{
-				"item": "tequila",
-				"amount": 60.0
-			},
-			{
-				"item": "juiceOrange",
-				"amount": 60.0
-			},
-			{
-				"item": "juicePineapple",
-				"amount": 60.0
-			},
-						
-			{
-				"item": "juiceCranberry",
-				"amount": 60.0
 			}
 		]
 	},

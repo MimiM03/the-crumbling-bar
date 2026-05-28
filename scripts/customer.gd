@@ -10,7 +10,7 @@ var exit_position = null
 var target_seat = null
 var target_wait_area = null
 var target_table = null
-const SPEED := 3.0
+const SPEED := 2.0
 const TICKET_SCENE := preload("res://scenes/ticket.tscn")
 
 static var _ticket_zones: Array = []
@@ -30,6 +30,9 @@ var drink = null
 var order_ticket: Area3D = null
 var walk_value_anim := 0.0
 var sit_value_anim := 0.0
+var _at_wait_area := false
+var _bar_wait_handled := false
+const WAIT_AREA_ARRIVE_DISTANCE := 0.45
 
 @onready var bubble_sprite = $OrderLabel/Sprite3D
 @onready var drink_label = $OrderLabel/SubViewport/Panel/Label
@@ -45,18 +48,14 @@ func _ready() -> void:
 	# Link the Sprite3D to the Viewport
 	bubble_sprite.texture = bubble_viewport.get_texture()
 	animation_tree.active = true
-	curAnim = IDLE
+	# spawn_group() may already have set curAnim = WALK before this _ready() resumes.
+	if not is_moving:
+		curAnim = IDLE
 	
 	add_to_group("customers")
-	
-	if !isGroup:
-		type = ChairType.CHAIR
-		start_looking_for_seat()
-	else:
-		type = ChairType.BAR
-		start_looking_for_bar_space()
 
 func _physics_process(_delta):
+	_update_locomotion_anim()
 	handle_animation(_delta)
 	_update_facing(_delta)
 	if target_seat or target_wait_area:
@@ -73,7 +72,12 @@ func _physics_process(_delta):
 		# Calculate velocity and move
 		var new_velocity = (next_pos - current_pos).normalized() * current_speed
 		if !is_sitting:
-			if distance < 1 and type != ChairType.BAR and target_seat:
+			if target_wait_area and type == ChairType.BAR:
+				var wait_dist := global_position.distance_to(target_wait_area.global_position)
+				if wait_dist <= WAIT_AREA_ARRIVE_DISTANCE:
+					_arrive_at_wait_area()
+					return
+			if distance < 1 and _can_sit_in_target_seat():
 				is_sitting = true
 				is_moving = false
 				sit()
@@ -82,8 +86,17 @@ func _physics_process(_delta):
 			nav_agent.set_velocity(new_velocity)
 
 
+func _update_locomotion_anim() -> void:
+	if is_sitting or _at_wait_area:
+		return
+	if is_moving and (target_seat != null or target_wait_area != null):
+		curAnim = WALK
+	elif not is_moving and not is_sitting:
+		curAnim = IDLE
+
+
 func _update_facing(delta: float) -> void:
-	if is_sitting:
+	if is_sitting or _at_wait_area:
 		return
 
 	var flat_velocity := Vector3(velocity.x, 0.0, velocity.z)
@@ -99,6 +112,14 @@ func start_looking_for_seat():
 		is_moving = true
 		curAnim = WALK
 		nav_agent.target_position = target_seat.global_position
+
+func _can_sit_in_target_seat() -> bool:
+	return (
+		type != ChairType.BAR
+		and target_seat != null
+		and target_seat.has_node("sitMarker")
+	)
+
 
 func start_looking_for_bar_space():
 	if target_wait_area:
@@ -137,6 +158,8 @@ func move_to_assigned_seat(seat_marker: StaticBody3D):
 	target_seat = seat_marker
 	target_wait_area.is_occupied = false
 	target_wait_area = null # Clear the old bar target
+	_at_wait_area = false
+	_bar_wait_handled = false
 
 	is_moving = true
 	curAnim = WALK
@@ -152,57 +175,79 @@ func _on_navigation_agent_3d_target_reached() -> void:
 	if is_sitting:
 		return
 
+	if target_wait_area:
+		_arrive_at_wait_area()
+		_handle_bar_wait_arrived()
+		return
+
 	# Snap to the exact marker position
 	var final_pos
-	if target_wait_area:
-		final_pos = target_wait_area.global_position 
-	elif target_seat:
+	if target_seat:
 		final_pos = target_seat.global_position
 	else:
 		final_pos = exit_position
 	global_position = final_pos
-	if target_wait_area:
-		# Lock facing to the wait area's authored rotation (toward bar).
-		global_rotation = target_wait_area.global_rotation
 	is_moving = false
 	curAnim = IDLE
-	# Stop moving
 	velocity = Vector3.ZERO
-	# TODO: Rotate them to face the bar/counter
-	
-	match type:
-		ChairType.BAR:
-			# If I'm the leader, I manage the group timing
-			var all_arrived := false
-			if is_leader:
-				while !all_arrived:
-					await get_tree().process_frame
-					all_arrived = true
-					for m in group_members:
-						if m.is_moving:
-							all_arrived = false
-							break # Someone is still moving, keep waiting
-							
-			# TODO: change wait time -> Order()
-			
-			order()
-			await get_tree().create_timer(5.0).timeout
-			# After order served: move to table
-			if group_members.size() == 2:
-				type = ChairType.TABLE2
-			else:
-				type = ChairType.TABLE4
-			# Only the leader dispatches to avoid duplicate seat assignments.
-			if is_leader: dispatch_group_to_table()
+
+
+func _arrive_at_wait_area() -> void:
+	if _at_wait_area or target_wait_area == null:
+		return
+	_at_wait_area = true
+	is_moving = false
+	curAnim = IDLE
+	velocity = Vector3.ZERO
+	nav_agent.set_velocity(Vector3.ZERO)
+	nav_agent.target_position = target_wait_area.global_position
+	global_position = target_wait_area.global_position
+	scale = Vector3.ONE
+	_face_bar_counter()
+
+
+func _face_bar_counter() -> void:
+	# Match walk facing convention: yaw 0 = world +Z.
+	rotation.y = 0.0
+
+
+func _handle_bar_wait_arrived() -> void:
+	if type != ChairType.BAR or _bar_wait_handled:
+		return
+	_bar_wait_handled = true
+	# If I'm the leader, I manage the group timing
+	var all_arrived := false
+	if is_leader:
+		while !all_arrived:
+			await get_tree().process_frame
+			all_arrived = true
+			for m in group_members:
+				if m.is_moving:
+					all_arrived = false
+					break # Someone is still moving, keep waiting
+
+	order()
+	await get_tree().create_timer(5.0).timeout
+	# After order served: move to table
+	if group_members.size() == 2:
+		type = ChairType.TABLE2
+	else:
+		type = ChairType.TABLE4
+	# Only the leader dispatches to avoid duplicate seat assignments.
+	if is_leader:
+		dispatch_group_to_table()
 
 func sit():
+	if not _can_sit_in_target_seat():
+		return
+	var seat_marker := target_seat.get_node("sitMarker") as Marker3D
 	# Disable nav agent so it doesn't try to keep walking
-	nav_agent.target_position = global_position 
+	nav_agent.target_position = global_position
 	curAnim = SIT
 	# Smoothly move them into the chair over 1 seconds
 	var tween = create_tween()
-	tween.tween_property(self, "global_position", target_seat.sit_marker.global_position - Vector3(0, 0.248, 0), 1)
-	tween.parallel().tween_property(self, "global_basis", target_seat.sit_marker.global_basis, 1)
+	tween.tween_property(self, "global_position", seat_marker.global_position - Vector3(0, 0.248, 0), 1)
+	tween.parallel().tween_property(self, "global_rotation", seat_marker.global_rotation, 1)
 	# if at the bar:
 	if type == ChairType.CHAIR:
 	#TODO: order()

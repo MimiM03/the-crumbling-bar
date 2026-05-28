@@ -71,7 +71,7 @@ shader_parameter/rim_emission_intensity = 0.2
 shader_parameter/rim_exponent = 3.0
 shader_parameter/emission_intensity = 0.1
 shader_parameter/liquid_surface_gradient_size = 3.0
-shader_parameter/wobble = Vector2(7.816478e-10, 1.1723823e-10)
+shader_parameter/wobble = Vector2(0, 0)
 shader_parameter/world_bottom_y = 0.02561075
 shader_parameter/world_vertical_length = 0.17097028531134129
 
@@ -113,7 +113,7 @@ shadow_mesh = SubResource("ArrayMesh_p0cud")
 collision_layer = 5
 script = ExtResource("1_i26c4")
 liquid_mesh_path = NodePath("liquid")
-max_liquid_ml = 300.0
+max_liquid_ml = 125.0
 
 [node name="rocks_low_lambert1_0" type="MeshInstance3D" parent="." unique_id=743757062]
 transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, 0)
