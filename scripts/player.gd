@@ -29,6 +29,7 @@ var mouse_visible := false
 var is_in_cutscene: bool = false
 var cutscene_timer = 0.0
 var glass_spawn_location
+var _pour_station: Node = null
 
 func _ready() -> void:
 	# Mouse invisible in game (only crosshair)
@@ -107,6 +108,8 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		move_and_slide()
+	if is_in_cutscene and _pour_station != null and _pour_station.has_method("refresh_pour_meter"):
+		_pour_station.refresh_pour_meter()
 	var rotation_speed =  deg_to_rad(135) / 0.25
 	# Handle pouring (Q left hand/E right hand):
 	if pickedObjectRight and !pickedObjectRight.is_in_group("ticket"):
@@ -275,20 +278,24 @@ func ZonePickableOrGlass():
 	return null
 
 # Pour feature
-func start_pouring(shaker):
+func start_pouring(station):
 	is_in_cutscene = true
-	
+	_pour_station = station
+	if station.has_method("show_pour_meter"):
+		station.show_pour_meter()
+
 	var tween = create_tween().set_parallel(true)
+
+	var shaker_forward = station.global_transform.basis.z
 	
-	var shaker_forward = shaker.global_transform.basis.z
 	shaker_forward.y = 0
 	shaker_forward = shaker_forward.normalized()
 
-	var target_player_pos = shaker.global_position + (shaker_forward * 1.1)
+	var target_player_pos = station.global_position + (shaker_forward * 1.1)
 	target_player_pos.y = self.global_position.y
 
 	tween.tween_property(self, "global_position", target_player_pos, 0.3)
-	if shaker.is_in_group("shaker"):
+	if station.is_in_group("shaker"):
 		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, PI), 0.3)
 	else:
 		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, 0), 0.3)
@@ -299,21 +306,25 @@ func start_pouring(shaker):
 	tween.tween_property(camera, "fov", 60, 0.3).set_trans(Tween.TRANS_SINE)
 
 	if pickedObjectRight:
-		var target_transform = shaker.markerRight.global_transform
+		var target_transform = station.markerRight.global_transform
 
-		pickedObjectRight.reparent(shaker.markerRight)
+		pickedObjectRight.reparent(station.markerRight)
 		# Reparent first, then tween in global space so bottles keep world alignment.
 		tween.tween_property(pickedObjectRight, "global_transform", target_transform, 0.3)
 		#pickedObjectRight = null
 	if pickedObjectLeft:
-		var target_transform = shaker.markerLeft.global_transform
+		var target_transform = station.markerLeft.global_transform
 
-		pickedObjectLeft.reparent(shaker.markerLeft)
+		pickedObjectLeft.reparent(station.markerLeft)
 		# Same for left hand: preserve world-space snap after reparenting.
 		tween.tween_property(pickedObjectLeft, "global_transform", target_transform, 0.3)
 		#pickedObjectLeft = null
 
 func reset_pour():
+	if _pour_station != null and _pour_station.has_method("hide_pour_meter"):
+		_pour_station.hide_pour_meter()
+	_pour_station = null
+
 	var tween = create_tween().set_parallel(true).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	if pickedObjectRight:
 		pickedObjectRight.reparent(%CarryObjectRightMarker)
