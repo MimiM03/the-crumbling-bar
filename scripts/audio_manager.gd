@@ -2,6 +2,7 @@ extends Node
 
 @export var bg_music_player: AudioStreamPlayer
 @onready var pouring_sfx: AudioStreamPlayer = $PouringSFX
+@onready var arrival_sfx: AudioStreamPlayer = $ArrivalSFX
 
 func start_pour():
 	if not pouring_sfx.playing:

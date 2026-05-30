@@ -22,14 +22,19 @@ var drink = null
 @onready var drink_label = $OrderLabel/SubViewport/Panel/Label
 @onready var bubble_viewport = $OrderLabel/SubViewport
 
+@onready var spawn_sfx = $SpawnSFX
+
 func _ready() -> void:
 	# Wait for the first physics frame so the NavigationServer is ready
+	print(get_children())
 	await get_tree().physics_frame
 	
 	# Initially hide the bubble
 	bubble_sprite.visible = false
 	# Link the Sprite3D to the Viewport
 	bubble_sprite.texture = bubble_viewport.get_texture()
+	
+	spawn_sfx.play()
 	
 	if !isGroup:
 		type = ChairType.CHAIR

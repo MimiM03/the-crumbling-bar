@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://rqvsmq0j8qw1"]
 
 [ext_resource type="Script" uid="uid://da2yrwy2axuoq" path="res://scripts/customer.gd" id="1_ktfjk"]
+[ext_resource type="AudioStream" uid="uid://ddvnhttk6ta3s" path="res://audio/sfx/roblox-hi-sound.mp3" id="2_xss0h"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fx2s6"]
 radius = 0.3
@@ -63,6 +64,9 @@ vertical_alignment = 1
 [node name="Sprite3D" type="Sprite3D" parent="OrderLabel" unique_id=985867410]
 billboard = 1
 texture = SubResource("ViewportTexture_ktfjk")
+
+[node name="SpawnSFX" type="AudioStreamPlayer3D" parent="." unique_id=125561938]
+stream = ExtResource("2_xss0h")
 
 [connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
