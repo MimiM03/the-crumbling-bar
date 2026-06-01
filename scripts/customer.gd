@@ -12,6 +12,9 @@ var target_wait_area = null
 var target_table = null
 const SPEED := 2.0
 const TICKET_SCENE := preload("res://scenes/ticket.tscn")
+const PATIENCE_SOLO_SEC := 45.0
+const PATIENCE_GROUP_BASE_SEC := 45.0
+const PATIENCE_GROUP_PER_MEMBER_SEC := 20.0
 
 static var _ticket_zones: Array = []
 static var _next_ticket_slot: int = 0
@@ -32,6 +35,8 @@ var walk_value_anim := 0.0
 var sit_value_anim := 0.0
 var _at_wait_area := false
 var _bar_wait_handled := false
+var _patience_timer_gen := 0
+var _is_vanishing := false
 const WAIT_AREA_ARRIVE_DISTANCE := 0.45
 
 @onready var bubble_sprite = $OrderLabel/Sprite3D
@@ -276,6 +281,58 @@ func order():
 		group_members[i].has_ordered = true
 		group_members[i].show_order_bubble()
 	_spawn_order_ticket(orders)
+	_start_patience_timer()
+
+
+func _patience_duration() -> float:
+	if not isGroup or group_members.size() <= 1:
+		return PATIENCE_SOLO_SEC
+	return PATIENCE_GROUP_BASE_SEC + PATIENCE_GROUP_PER_MEMBER_SEC * (group_members.size() - 1)
+
+
+func _party_leader() -> CharacterBody3D:
+	for member in group_members:
+		if is_instance_valid(member) and member.is_leader:
+			return member
+	return null
+
+
+func _start_patience_timer() -> void:
+	if not is_leader:
+		return
+	_patience_timer_gen += 1
+	var generation := _patience_timer_gen
+	var duration := _patience_duration()
+	await get_tree().create_timer(duration).timeout
+	if generation != _patience_timer_gen:
+		return
+	_on_patience_expired()
+
+
+func _stop_patience_timer() -> void:
+	var leader: CharacterBody3D = _party_leader()
+	if leader:
+		leader._patience_timer_gen += 1
+
+
+func _on_patience_expired() -> void:
+	if not is_leader or _is_vanishing:
+		return
+	if group_members.all(func(m): return is_instance_valid(m) and m.has_been_served):
+		return
+
+	print("Party left impatiently after %.0fs" % _patience_duration())
+	var unhappy_count := 0
+	for member in group_members:
+		if is_instance_valid(member):
+			unhappy_count += 1
+	GameState.register_unhappy_customers(unhappy_count)
+	for member in group_members:
+		if is_instance_valid(member):
+			member.has_ordered = false
+			member.bubble_sprite.visible = false
+	_clear_order_ticket()
+	_dismiss_group()
 
 
 func _spawn_order_ticket(orders: Array) -> void:
@@ -402,6 +459,7 @@ func try_accept_drink(glass: Area3D) -> bool:
 			# Check if the whole group is now served
 			var all_served = group_members.all(func(m): return m.has_been_served)
 			if all_served:
+				_stop_patience_timer()
 				_clear_order_ticket()
 				_dismiss_group()
 			
@@ -410,8 +468,8 @@ func try_accept_drink(glass: Area3D) -> bool:
 	print("Glass contents don't match any pending order.")
 	return false
 
-func _drink_matches(glass: Area3D, order: Dictionary) -> bool:
-	var required: Array = order.get("ingredients", [])
+func _drink_matches(glass: Area3D, orders: Dictionary) -> bool:
+	var required: Array = orders.get("ingredients", [])
 	if required.is_empty():
 		return false
 
@@ -450,11 +508,17 @@ func _clear_order_ticket() -> void:
 
 
 func _dismiss_group() -> void:
+	_stop_patience_timer()
 	for member in group_members:
-		member._float_and_vanish()
-	
-	
+		if is_instance_valid(member):
+			member._float_and_vanish()
+
+
 func _float_and_vanish() -> void:
+	if _is_vanishing:
+		return
+	_is_vanishing = true
+
 	# Disable physics so they don't slide/collide during the animation
 	set_physics_process(false)
 	if nav_agent:
@@ -480,6 +544,8 @@ func _float_and_vanish() -> void:
 				target_seat.is_occupied = false
 			if target_wait_area:
 				target_wait_area.is_occupied = false
+			if is_leader and target_table:
+				target_table.is_occupied = false
 			queue_free()
 		)
 

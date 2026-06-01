@@ -5,6 +5,7 @@ extends Control
 @onready var options: Control = $Options
 
 func _on_start_pressed() -> void:
+	GameState.reset()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 

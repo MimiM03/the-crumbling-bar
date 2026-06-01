@@ -4,7 +4,7 @@ var customerScene: PackedScene = preload("res://scenes/customer.scn")
 var customerContainer: NodePath = "../Customers"
 
 @export var max_customers := 6
-@export var spawn_interval_sec := 15.0
+@export var spawn_interval_sec := 25.0
 
 
 func _ready() -> void:

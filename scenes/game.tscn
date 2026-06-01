@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bn7evjvrvuttf" path="res://scenes/shaker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bisn8xgga7o26" path="res://scenes/juice.tscn" id="11_dinhu"]
 [ext_resource type="PackedScene" uid="uid://c3ld47q08qvva" path="res://scenes/recipe_book.tscn" id="14_trtic"]
+[ext_resource type="Script" uid="uid://2vpf0cqdhg5b" path="res://scenes/hud.gd" id="15_ca42v"]
 [ext_resource type="Texture2D" uid="uid://ddtos7ipnl4rs" path="res://assets/single-bar_Image_1.png" id="15_ir15t"]
 [ext_resource type="PackedScene" uid="uid://bm3an7gpjkjos" path="res://scenes/pause_menu.tscn" id="16_rysoc"]
 
@@ -334,6 +335,27 @@ visible = false
 
 [node name="Pause Menu" parent="." unique_id=1176290145 instance=ExtResource("16_rysoc")]
 visible = false
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2130766069]
+
+[node name="Control" type="Control" parent="HUD" unique_id=524841549]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_ca42v")
+
+[node name="UnhappyCustomers" type="Label" parent="HUD/Control" unique_id=1987287141]
+layout_mode = 1
+offset_left = 28.0
+offset_top = 26.0
+offset_right = 192.0
+offset_bottom = 86.0
+theme_override_font_sizes/font_size = 24
+text = "Unhappy Customers: 0 / 10"
 
 [node name="OrderTicketRail" type="Node3D" parent="." unique_id=1535169875]
 
