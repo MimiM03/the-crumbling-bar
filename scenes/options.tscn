@@ -162,13 +162,13 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=365294357]
+[node name="MasterVolume" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=365294357]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = -4
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer" unique_id=407629333]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/MasterVolume" unique_id=407629333]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -176,12 +176,12 @@ theme_override_font_sizes/font_size = 24
 text = "Master Volume"
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer/HBoxContainer" unique_id=657045234]
+[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer/MasterVolume" unique_id=657045234]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/HBoxContainer" unique_id=211633214]
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/MasterVolume" unique_id=211633214]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -190,15 +190,15 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_yjkok")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_yjkok")
 max_value = 1.0
 step = 0.05
-value = 1.0
+value = 0.8
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=575437974]
+[node name="MusicVolume" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=575437974]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = -4
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1110864944]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/MusicVolume" unique_id=1110864944]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -206,12 +206,12 @@ theme_override_font_sizes/font_size = 24
 text = "Music Volume"
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1087018296]
+[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer/MusicVolume" unique_id=1087018296]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1366913701]
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/MusicVolume" unique_id=1366913701]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -220,15 +220,15 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_yjkok")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_yjkok")
 max_value = 1.0
 step = 0.05
-value = 1.0
+value = 0.8
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=1388600383]
+[node name="SFXVolume" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=1388600383]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = -4
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer3" unique_id=1560953129]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SFXVolume" unique_id=1560953129]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -236,12 +236,12 @@ theme_override_font_sizes/font_size = 24
 text = "SFX Volume"
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer/HBoxContainer3" unique_id=765961039]
+[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer/SFXVolume" unique_id=765961039]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/HBoxContainer3" unique_id=942312671]
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/SFXVolume" unique_id=942312671]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -250,7 +250,7 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_yjkok")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_yjkok")
 max_value = 1.0
 step = 0.05
-value = 1.0
+value = 0.8
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer" unique_id=403865956]
 layout_mode = 2
@@ -422,6 +422,9 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ekxnf")
 text = "Back"
 
 [connection signal="pressed" from="Button3" to="." method="_on_back_pressed"]
+[connection signal="value_changed" from="VBoxContainer/VBoxContainer/MasterVolume/HSlider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/VBoxContainer/MusicVolume/HSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/VBoxContainer/SFXVolume/HSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/VBoxContainer2/HBoxContainer/HSlider" to="." method="_on_mouse_sens_changed"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer3/HBoxContainer/Button" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="Controls/Button3" to="." method="_on_back_controls_pressed"]
