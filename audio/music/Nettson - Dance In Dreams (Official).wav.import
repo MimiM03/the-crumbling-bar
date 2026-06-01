@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cqr8nf6tcd0sx"
+path="res://.godot/imported/Nettson - Dance In Dreams (Official).wav-1001b9111f020a2a680ca54ddaa9251c.sample"
+
+[deps]
+
+source_file="res://audio/music/Nettson - Dance In Dreams (Official).wav"
+dest_files=["res://.godot/imported/Nettson - Dance In Dreams (Official).wav-1001b9111f020a2a680ca54ddaa9251c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

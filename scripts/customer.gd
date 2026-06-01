@@ -36,8 +36,11 @@ var sit_value_anim := 0.0
 @onready var bubble_viewport = $OrderLabel/SubViewport
 @onready var animation_tree: AnimationTree = $fox/Armature/Skeleton3D/Thisle_Sketchfab_Clothing_Thistle_Clothing_0/AnimationTree
 
+@onready var spawn_sfx = $SpawnSFX
+
 func _ready() -> void:
 	# Wait for the first physics frame so the NavigationServer is ready
+	print(get_children())
 	await get_tree().physics_frame
 	
 	# Initially hide the bubble
@@ -48,6 +51,8 @@ func _ready() -> void:
 	curAnim = IDLE
 	
 	add_to_group("customers")
+	
+	spawn_sfx.play()
 	
 	if !isGroup:
 		type = ChairType.CHAIR

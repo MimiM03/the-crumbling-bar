@@ -30,6 +30,7 @@ var is_in_cutscene: bool = false
 var cutscene_timer = 0.0
 var glass_spawn_location
 var _pour_station: Node = null
+@onready var audio_manager = $"../AudioManager"
 
 func _ready() -> void:
 	# Mouse invisible in game (only crosshair)
@@ -112,6 +113,9 @@ func _physics_process(delta: float) -> void:
 		_pour_station.refresh_pour_meter()
 	var rotation_speed =  deg_to_rad(135) / 0.25
 	# Handle pouring (Q left hand/E right hand):
+		
+	var is_pouring_now = false
+	
 	if pickedObjectRight and !pickedObjectRight.is_in_group("ticket"):
 		var target_right
 		var target = pour_quat_right
@@ -127,7 +131,8 @@ func _physics_process(delta: float) -> void:
 		# Smoothly interpolate the entire rotation at once
 		# slerp handles all axes simultaneously for a "perfect" arc
 		pickedObjectRight.quaternion = pickedObjectRight.quaternion.slerp(target_right, rotation_speed * delta)
-		can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), target, delta)
+		if can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), target, delta):
+			is_pouring_now = true
 	if pickedObjectLeft and !pickedObjectLeft.is_in_group("ticket"):
 		var target_left
 		var target = pour_quat_left
@@ -141,8 +146,13 @@ func _physics_process(delta: float) -> void:
 			target_left = upright_quad
 			
 		pickedObjectLeft.quaternion = pickedObjectLeft.quaternion.slerp(target_left, rotation_speed * delta)
-		can_pour(pickedObjectLeft, Input.is_action_pressed("pour_left"), target, delta)
+		if can_pour(pickedObjectLeft, Input.is_action_pressed("pour_left"), target, delta):
+			is_pouring_now = true
 	
+	if is_pouring_now:
+		audio_manager.start_pour()
+	else:
+		audio_manager.stop_pour()
 	
 	
 # Gets the object on the crosshair
@@ -351,15 +361,16 @@ func reset_pour():
 
 func can_pour(object, is_pouring, target_quat, _delta):
 	if object == null or not is_pouring:
-		return
+		return false
 	
 	#Check if bottle is rotated
 	const ANGLE_TOLERANCE:= 10.0
 	var angle_diff_deg = rad_to_deg(object.quaternion.angle_to(target_quat))
 	if angle_diff_deg > ANGLE_TOLERANCE:
-		return
+		return false
 		
 	object.pour(_delta)
+	return true
 
 func pick_glass(target):
 	if !pickedObjectLeft or !pickedObjectRight:
