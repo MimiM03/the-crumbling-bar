@@ -37,6 +37,8 @@ var sit_value_anim := 0.0
 @onready var animation_tree: AnimationTree = $fox/Armature/Skeleton3D/Thisle_Sketchfab_Clothing_Thistle_Clothing_0/AnimationTree
 
 @onready var spawn_sfx = $SpawnSFX
+@onready var order_sfx = $OrderSFX
+@onready var accept_sfx = $AcceptSFX
 
 func _ready() -> void:
 	# Wait for the first physics frame so the NavigationServer is ready
@@ -235,6 +237,7 @@ func order():
 		group_members[i].drink = orders[i]
 		group_members[i].has_ordered = true
 		group_members[i].show_order_bubble()
+	order_sfx.play()
 	_spawn_order_ticket(orders)
 
 
@@ -358,6 +361,7 @@ func try_accept_drink(glass: Area3D) -> bool:
 			member.bubble_sprite.visible = false
 			glass.queue_free()
 			print("Served %s their drink!" % member.name)
+			accept_sfx.play()
 			
 			# Check if the whole group is now served
 			var all_served = group_members.all(func(m): return m.has_been_served)
