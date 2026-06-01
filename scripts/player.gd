@@ -9,7 +9,7 @@ var glassContainer: NodePath = "../Glasses"
 
 const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.5
-enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS}
+enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS, CUSTOMER}
 
 # Define the Target Orientations
 # This creates a rotation of 0 on Y
@@ -29,6 +29,7 @@ var mouse_visible := false
 var is_in_cutscene: bool = false
 var cutscene_timer = 0.0
 var glass_spawn_location
+var _pour_station: Node = null
 @onready var audio_manager = $"../AudioManager"
 
 func _ready() -> void:
@@ -62,6 +63,18 @@ func _input(event):
 					start_pouring(object)
 				else:
 					pick_up_object(object)
+		elif target == Target.CUSTOMER:
+			var customer = get_pointed_object_customer()
+			print(customer)
+			var held_glass = pickedObjectRight if pickedObjectRight else pickedObjectLeft
+			if held_glass and held_glass.is_in_group("glass") and customer.has_method("try_accept_drink"):
+				var accepted = customer.try_accept_drink(held_glass)
+				if accepted:
+					if pickedObjectRight == held_glass:
+						pickedObjectRight = null
+					else:
+						pickedObjectLeft = null
+			
 	
 
 # Handle camera rotation with mouse movement
@@ -77,6 +90,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		pitch -= event.relative.y * sens
 		pitch = clamp(pitch, -90, 90)
 		camera.rotation_degrees.x = pitch
+		
+	if event.is_action_pressed("debug_spawn_drink"):
+		debug_spawn_matching_drink()
 
 func _physics_process(delta: float) -> void:
 	if is_in_cutscene:
@@ -93,12 +109,14 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		move_and_slide()
+	if is_in_cutscene and _pour_station != null and _pour_station.has_method("refresh_pour_meter"):
+		_pour_station.refresh_pour_meter()
 	var rotation_speed =  deg_to_rad(135) / 0.25
-		# Handle pouring (Q left hand/E right hand):
+	# Handle pouring (Q left hand/E right hand):
 		
 	var is_pouring_now = false
 	
-	if pickedObjectRight:
+	if pickedObjectRight and !pickedObjectRight.is_in_group("ticket"):
 		var target_right
 		var target = pour_quat_right
 		if Input.is_action_pressed("pour_right"):
@@ -115,7 +133,7 @@ func _physics_process(delta: float) -> void:
 		pickedObjectRight.quaternion = pickedObjectRight.quaternion.slerp(target_right, rotation_speed * delta)
 		if can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), target, delta):
 			is_pouring_now = true
-	if pickedObjectLeft:
+	if pickedObjectLeft and !pickedObjectLeft.is_in_group("ticket"):
 		var target_left
 		var target = pour_quat_left
 		if Input.is_action_pressed("pour_left"):
@@ -171,17 +189,20 @@ func pick_up_object(object):
 	
 	
 	# Fix position and parent
-	var tween = create_tween()
+	var tween = create_tween().parallel()
 	$Camera3D/RayCast3D.add_exception(object)
 	if directionRight:
 		object.reparent(%CarryObjectRightMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectRightMarker.global_transform, 0.2)
+		
 		pickedObjectRight = object
 	else:
 		object.reparent(%CarryObjectLeftMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectLeftMarker.global_transform, 0.2)
 		pickedObjectLeft = object
-	
+		
+	if object.is_in_group("ticket"):
+			tween.parallel().tween_property(object, "quaternion", Quaternion(Vector3.RIGHT, deg_to_rad(90)), 0.2)
 	tween.finished.connect(func():
 		is_in_cutscene = false
 	)
@@ -252,27 +273,39 @@ func ZonePickableOrGlass():
 				return Target.ROCKS_GLASS
 		elif hit_collider.has_method("can_accept"):
 			return Target.ZONE
+		elif hit_collider.is_in_group("customers"):
+			return Target.CUSTOMER
 		elif hit_collider.is_in_group("trash"):
 			print("caught group")
 			trash_item()
+		else:
+			# Could be a chair with a seated customer inside
+			var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+			for c in get_tree().get_nodes_in_group("customers"):
+				if c.global_position.distance_to(hit_pos) < 1.2:
+					return Target.CUSTOMER
 		
 	return null
 
 # Pour feature
-func start_pouring(shaker):
+func start_pouring(station):
 	is_in_cutscene = true
-	
+	_pour_station = station
+	if station.has_method("show_pour_meter"):
+		station.show_pour_meter()
+
 	var tween = create_tween().set_parallel(true)
+
+	var shaker_forward = station.global_transform.basis.z
 	
-	var shaker_forward = shaker.global_transform.basis.z
 	shaker_forward.y = 0
 	shaker_forward = shaker_forward.normalized()
 
-	var target_player_pos = shaker.global_position + (shaker_forward * 1.1)
+	var target_player_pos = station.global_position + (shaker_forward * 1.1)
 	target_player_pos.y = self.global_position.y
 
 	tween.tween_property(self, "global_position", target_player_pos, 0.3)
-	if shaker.is_in_group("shaker"):
+	if station.is_in_group("shaker"):
 		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, PI), 0.3)
 	else:
 		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, 0), 0.3)
@@ -283,21 +316,25 @@ func start_pouring(shaker):
 	tween.tween_property(camera, "fov", 60, 0.3).set_trans(Tween.TRANS_SINE)
 
 	if pickedObjectRight:
-		var target_transform = shaker.markerRight.global_transform
+		var target_transform = station.markerRight.global_transform
 
-		pickedObjectRight.reparent(shaker.markerRight)
+		pickedObjectRight.reparent(station.markerRight)
 		# Reparent first, then tween in global space so bottles keep world alignment.
 		tween.tween_property(pickedObjectRight, "global_transform", target_transform, 0.3)
 		#pickedObjectRight = null
 	if pickedObjectLeft:
-		var target_transform = shaker.markerLeft.global_transform
+		var target_transform = station.markerLeft.global_transform
 
-		pickedObjectLeft.reparent(shaker.markerLeft)
+		pickedObjectLeft.reparent(station.markerLeft)
 		# Same for left hand: preserve world-space snap after reparenting.
 		tween.tween_property(pickedObjectLeft, "global_transform", target_transform, 0.3)
 		#pickedObjectLeft = null
 
 func reset_pour():
+	if _pour_station != null and _pour_station.has_method("hide_pour_meter"):
+		_pour_station.hide_pour_meter()
+	_pour_station = null
+
 	var tween = create_tween().set_parallel(true).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	if pickedObjectRight:
 		pickedObjectRight.reparent(%CarryObjectRightMarker)
@@ -355,3 +392,76 @@ func trash_item():
 		pickedObjectRight.queue_free()
 	elif pickedObjectLeft:
 		pickedObjectLeft.queue_free()
+		
+func get_pointed_object_customer():
+	if $Camera3D/RayCast3D.is_colliding():
+		var hit = $Camera3D/RayCast3D.get_collider()
+		var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+		
+		if hit.is_in_group("customers"):
+			return hit
+		
+		# Raycast hit a chair — find seated customer nearby
+		var closest_dist = 1.2
+		var closest = null
+		for c in get_tree().get_nodes_in_group("customers"):
+			var d = c.global_position.distance_to(hit_pos)
+			if d < closest_dist:
+				closest_dist = d
+				closest = c
+		return closest
+	return null
+	
+func debug_spawn_matching_drink() -> void:
+	var target_member = null
+	
+	if $Camera3D/RayCast3D.is_colliding():
+		var hit = $Camera3D/RayCast3D.get_collider()
+		var hit_pos = $Camera3D/RayCast3D.get_collision_point()
+		
+		# Direct hit on a customer
+		if hit.is_in_group("customers"):
+			target_member = hit
+		else:
+			# Might be hitting a chair — look for a seated customer nearby
+			var closest_dist = 1.2 # max radius to search around hit point
+			for c in get_tree().get_nodes_in_group("customers"):
+				var d = c.global_position.distance_to(hit_pos)
+				if d < closest_dist and c.has_ordered and not c.has_been_served and c.drink != null:
+					closest_dist = d
+					target_member = c
+
+	if target_member == null:
+		print("[DEBUG] Not looking at an unserved customer with an order.")
+		return
+
+	print("[DEBUG] Target: %s" % target_member.name)
+
+	var order: Dictionary = target_member.drink
+	var glass_type: String = order.get("glass", "Glass")
+	print("[DEBUG] Spawning '%s' for: %s" % [glass_type, order.get("name", "?")])
+
+	var glass_scene: PackedScene
+	match glass_type:
+		"Shot Glass":
+			glass_scene = shotGlassScene
+		"Rocks":
+			glass_scene = rocksGlassScene
+		_:
+			glass_scene = highGlassScene
+
+	var glass = glass_scene.instantiate()
+	get_node(glassContainer).add_child(glass, true)
+	glass.global_position = camera.global_position + camera.global_transform.basis.z * -0.5
+
+	var composition := {}
+	var total_ml := 0.0
+	for ing in order.get("ingredients", []):
+		var item: String = ing.get("item", "")
+		var amount: float = float(ing.get("amount", 0.0))
+		composition[item] = amount
+		total_ml += amount
+	if glass.has_method("get_liquid"):
+		glass.get_liquid(total_ml, composition)
+	pick_up_object(glass)
+	print("[DEBUG] Glass ready — now click them to serve.")
