@@ -34,6 +34,8 @@ func set_action_name() -> void:
 			label.text = "Pour - Left"
 		"pour_right":
 			label.text = "Pour - Right"
+		"jump":
+			label.text = "Jump"
 
 
 func set_text_for_key() -> void:

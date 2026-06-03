@@ -11,6 +11,9 @@ const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.5
 enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS, CUSTOMER}
 
+const JUMP_VELOCITY = 4.5
+const GRAVITY = 9.8
+
 # Define the Target Orientations
 # This creates a rotation of 0 on Y
 var upright_quad = Quaternion(Vector3.UP, deg_to_rad(0))
@@ -98,6 +101,13 @@ func _physics_process(delta: float) -> void:
 	if is_in_cutscene:
 		cutscene_timer += delta
 	if !is_in_cutscene:
+		# Apply gravity
+		if not is_on_floor():
+			velocity.y -= GRAVITY * delta
+		
+		# Jump
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 		# Get the input direction and handle the movement/deceleration.		
 		var input_dir := Input.get_vector("left", "right", "forward", "back")
 		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

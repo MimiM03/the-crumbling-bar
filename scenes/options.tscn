@@ -393,6 +393,10 @@ action_name = "pour_left"
 layout_mode = 2
 action_name = "pour_right"
 
+[node name="Hotkey8" parent="Controls/ScrollContainer/VBoxContainer" unique_id=259821658 instance=ExtResource("2_yjkok")]
+layout_mode = 2
+action_name = "jump"
+
 [node name="HSeparator2" type="HSeparator" parent="Controls/ScrollContainer/VBoxContainer" unique_id=1566756651]
 layout_mode = 2
 theme_override_constants/separation = 12
