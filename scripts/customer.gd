@@ -142,8 +142,13 @@ func find_free_table_for_size(size: int):
 
 func move_to_assigned_seat(seat_marker: StaticBody3D):
 	target_seat = seat_marker
-	target_wait_area.is_occupied = false
-	target_wait_area = null # Clear the old bar target
+	if target_wait_area:
+		target_wait_area.is_occupied = false
+		target_wait_area = null # Clear the old bar target
+		
+	is_sitting = false
+	is_moving = true
+	nav_agent.target_position = target_seat.global_position
 
 	is_moving = true
 	curAnim = WALK
@@ -201,6 +206,13 @@ func _on_navigation_agent_3d_target_reached() -> void:
 				type = ChairType.TABLE4
 			# Only the leader dispatches to avoid duplicate seat assignments.
 			if is_leader: dispatch_group_to_table()
+			
+		ChairType.TABLE2, ChairType.TABLE4:
+		# Arrived at table seat — sit down
+			if not is_sitting:
+				is_sitting = true
+				is_moving = false
+				sit()
 
 func sit():
 	# Disable nav agent so it doesn't try to keep walking
@@ -444,6 +456,8 @@ func _float_and_vanish() -> void:
 				target_seat.is_occupied = false
 			if target_wait_area:
 				target_wait_area.is_occupied = false
+			if target_table:
+				target_table.is_occupied = false
 			queue_free()
 		)
 
