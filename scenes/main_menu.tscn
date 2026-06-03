@@ -93,6 +93,18 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ekxnf")
 text = "Options
 "
 
+[node name="Button4" type="Button" parent="MainButtons" unique_id=395756743]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.00069390074, 0.0006938965, 0.0006938975, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l6cm7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ekxnf")
+text = "Credits"
+
 [node name="Button3" type="Button" parent="MainButtons" unique_id=1246765827]
 layout_mode = 2
 size_flags_vertical = 3
@@ -127,7 +139,115 @@ vertical_alignment = 1
 visible = false
 layout_mode = 1
 
+[node name="Credits" type="Panel" parent="." unique_id=1361948726]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button5" type="Button" parent="Credits" unique_id=1554653249]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 66.0
+offset_right = 193.0
+offset_bottom = 102.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.00069390074, 0.0006938965, 0.0006938975, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l6cm7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ekxnf")
+text = "Back"
+
+[node name="Label2" type="Label" parent="Credits" unique_id=743027383]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -251.0
+offset_right = 225.0
+offset_bottom = -171.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "Credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="Credits" unique_id=1097685281]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -104.0
+offset_bottom = -29.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "This game incorporates assets under multiple Creative Commons licenses.
+The overall game project is distributed under CC BY-NC-SA 4.0.
+Full license text for each can be found at creativecommons.org/licenses"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Credits" unique_id=1484600311]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 185.0
+offset_top = -131.0
+offset_right = -149.0
+offset_bottom = 255.97693
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Credits/ScrollContainer" unique_id=1266026205]
+layout_mode = 2
+theme_override_constants/separation = 17
+
+[node name="Label" type="Label" parent="Credits/ScrollContainer/VBoxContainer" unique_id=1416012916]
+layout_mode = 2
+text = "\"Trash Can\" by Yury Misiyuk is licensed under CC BY 4.0. 
+ Source: https://sketchfab.com/3d-models/trash-can-0ad3407cd8104ba58f71885c0e58ca9a"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Credits/ScrollContainer/VBoxContainer" unique_id=1947471575]
+layout_mode = 2
+text = "\"Bar Glasses\" by Saandy is licensed under CC BY 4.0. 
+Source: https://sketchfab.com/3d-models/bar-glasses-c466971661f04251b159319b7dcc50a5"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Credits/ScrollContainer/VBoxContainer" unique_id=131037736]
+layout_mode = 2
+text = "\"20 Liquor Bottles\" by Yannick Deharo is licensed under CC-SA BY 4.0. 
+Source: https://sketchfab.com/3d-models/20-liquor-bottles-4729b1cfa5b74db68924190242f8ac76"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Credits/ScrollContainer/VBoxContainer" unique_id=2053107366]
+layout_mode = 2
+text = "\"Bar Cabinet and Chairs\" by Drfreshdr  is licensed under CC BY 4.0. 
+Source: https://sketchfab.com/3d-models/bar-cabinet-and-chairs-60be2f954fb648d4aa5b8a244c972b8a"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="Credits/ScrollContainer/VBoxContainer" unique_id=1892970009]
+layout_mode = 2
+text = "\"Animal Squad\" by salmon97  is licensed under CC BY-NC 4.0 
+Source: https://sketchfab.com/3d-models/animal-squad-6a5b119af9804d7982e3ca029c017724"
+horizontal_alignment = 1
+
 [connection signal="pressed" from="MainButtons/Button" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MainButtons/Button2" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainButtons/Button4" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="MainButtons/Button3" to="." method="_on_exit_pressed"]
 [connection signal="back_pressed" from="Options" to="." method="_on_options_back_pressed"]
+[connection signal="pressed" from="Credits/Button5" to="." method="_on_back_pressed"]

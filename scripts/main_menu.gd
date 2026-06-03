@@ -3,6 +3,7 @@ extends Control
 @onready var main_buttons: VBoxContainer = $MainButtons
 @onready var label: Label = $Label
 @onready var options: Control = $Options
+@onready var credits: Panel = $Credits
 
 func _on_start_pressed() -> void:
 	GameState.reset()
@@ -26,3 +27,17 @@ func _on_options_back_pressed() -> void:
 	main_buttons.visible = true
 	label.visible = true
 	options.visible = false
+
+
+func _on_credits_pressed() -> void:
+	panel.visible = false
+	main_buttons.visible = false
+	label.visible = false
+	credits.visible = true
+
+
+func _on_back_pressed() -> void:
+	panel.visible = true
+	main_buttons.visible = true
+	label.visible = true
+	credits.visible = false

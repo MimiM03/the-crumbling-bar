@@ -30,8 +30,8 @@ sky = SubResource("Sky_lbhrr")
 tonemap_mode = 2
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_0tnpc"]
-vertices = PackedVector3Array(3.1500006, 0.43498397, -1.5499997, 3.1500006, 0.43498397, -0.7999997, 3.6000004, 0.43498397, -0.7999997, 3.75, 0.43498397, -1.6999998, -1.7999997, 0.43498397, -1.8499999, -1.6499996, 0.43498397, -0.7999997, 1.8000002, 0.43498397, -1.5499997, 2.1000004, 0.43498397, -1.8499999, 2.8500004, 0.43498397, -1.8499999, -3.75, 0.43498397, -0.7999997, -2.85, 0.43498397, -0.7999997, -3, 0.43498397, -1.3999996, -3.75, 0.43498397, -1.5499997, 4.5, 0.43498397, -6.5, 4.5, 0.43498397, -5.8999996, 5.4000006, 0.43498397, -0.6499996, 5.700001, 0.43498397, -7.7, 4.950001, 0.43498397, -1.5499997, 4.950001, 0.43498397, -0.7999997, 2.25, 0.43498397, -6.05, 3.1500006, 0.43498397, -5.8999996, 3.1500006, 0.43498397, -6.65, 2.1000004, 0.43498397, -6.8, 3.9000006, 0.43498397, -3.0499997, -2.6999998, 0.43498397, -1.8499999, -3, 0.43498397, -2.6, -4.05, 0.43498397, -1.8499999, 3.1500006, 0.43498397, -3.0499997, 2.8500004, 0.43498397, -3.6499996, 2.1000004, 0.43498397, -3.6499996, 1.8000002, 0.43498397, -3.0499997, -5.4, 0.43498397, -0.6499996, -5.1, 0.43498397, -0.7999997, -4.8, 0.43498397, -1.8499999, -5.7, 0.43498397, -7.7, 4.200001, 0.43498397, -5.6, 3.4500008, 0.43498397, -5.6, 3.6000004, 0.43498397, -4.3999996, -3.6, 0.43498397, -4.1, -3.75, 0.43498397, -5.1499996, 4.200001, 0.43498397, -4.25, -2.1, 0.43498397, -2.6, -1.3499999, 0.43498397, -4.25, -1.9499998, 0.43498397, -3.7999997, -1.7999997, 0.43498397, -2.8999996, 1.0500002, 0.43498397, -3.0499997, 0.7500005, 0.43498397, -3.35, -1.7999997, 0.43498397, -6.8, -1.9499998, 0.43498397, -5.8999996, -1.3499999, 0.43498397, -5.45, 0.9000001, 0.43498397, -5.75, 1.0500002, 0.43498397, -6.8, 1.3500004, 0.43498397, -4.3999996, 1.3500004, 0.43498397, -5.45, 0.7500005, 0.43498397, -4.1, -3, 0.43498397, -3.7999997, -5.7, 0.43498397, 3.7000008, 4.6500006, 0.43498397, -1.8499999, -3.1499999, 0.43498397, -5.8999996, -3.1499999, 0.43498397, -6.95, 4.05, 0.43498397, -6.95, -5.25, 0.43498397, 0.8500004, 5.700001, 0.43498397, 3.7000008, 5.4000006, 0.43498397, 0.70000076, 4.200001, 0.43498397, -3.35, -2.1, 0.43498397, -7.1, 1.8000002, 0.43498397, -0.7999997, -3, 1.184984, -4.3999996, -2.2499998, 1.184984, -4.25, -1.9499998, 1.184984, -4.55, -2.1, 1.184984, -5.3, -3, 1.184984, -5.3, 2.8500004, 1.184984, -5.3, 2.25, 1.184984, -5.45, 1.9500003, 1.184984, -5.1499996, 1.9500003, 1.184984, -4.3999996, 2.7000008, 1.184984, -4.25, 3, 1.184984, -4.55, -4.8, 1.434984, -0.19999981, -4.8, 1.434984, 0.25, 4.8, 1.434984, 0.25, 4.8, 1.434984, -0.19999981)
-polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(6, 5, 7), PackedInt32Array(7, 5, 4), PackedInt32Array(3, 0, 8), PackedInt32Array(12, 11, 9), PackedInt32Array(9, 11, 10), PackedInt32Array(13, 16, 14), PackedInt32Array(14, 16, 15), PackedInt32Array(17, 15, 18), PackedInt32Array(20, 19, 21), PackedInt32Array(21, 19, 22), PackedInt32Array(8, 7, 23), PackedInt32Array(12, 26, 11), PackedInt32Array(11, 26, 24), PackedInt32Array(24, 26, 25), PackedInt32Array(28, 27, 29), PackedInt32Array(29, 27, 30), PackedInt32Array(32, 31, 33), PackedInt32Array(33, 31, 34), PackedInt32Array(37, 36, 35), PackedInt32Array(38, 34, 39), PackedInt32Array(37, 35, 40), PackedInt32Array(40, 35, 14), PackedInt32Array(41, 30, 27), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 46), PackedInt32Array(44, 46, 45), PackedInt32Array(48, 47, 49), PackedInt32Array(49, 47, 50), PackedInt32Array(50, 47, 51), PackedInt32Array(53, 52, 50), PackedInt32Array(50, 52, 54), PackedInt32Array(50, 54, 49), PackedInt32Array(49, 54, 42), PackedInt32Array(38, 55, 25), PackedInt32Array(34, 31, 56), PackedInt32Array(23, 7, 27), PackedInt32Array(27, 7, 4), PackedInt32Array(27, 4, 41), PackedInt32Array(3, 8, 57), PackedInt32Array(57, 8, 23), PackedInt32Array(58, 39, 59), PackedInt32Array(59, 39, 34), PackedInt32Array(22, 60, 21), PackedInt32Array(42, 54, 46), PackedInt32Array(63, 62, 61), PackedInt32Array(61, 62, 56), PackedInt32Array(63, 15, 62), PackedInt32Array(62, 15, 16), PackedInt32Array(40, 14, 64), PackedInt32Array(64, 14, 17), PackedInt32Array(17, 14, 15), PackedInt32Array(13, 60, 16), PackedInt32Array(25, 41, 24), PackedInt32Array(24, 41, 4), PackedInt32Array(26, 33, 25), PackedInt32Array(25, 33, 38), PackedInt32Array(38, 33, 34), PackedInt32Array(23, 64, 57), PackedInt32Array(57, 64, 17), PackedInt32Array(65, 59, 34), PackedInt32Array(56, 31, 61), PackedInt32Array(22, 51, 60), PackedInt32Array(60, 51, 16), PackedInt32Array(16, 51, 65), PackedInt32Array(16, 65, 34), PackedInt32Array(65, 51, 47), PackedInt32Array(44, 45, 41), PackedInt32Array(41, 45, 30), PackedInt32Array(6, 66, 5), PackedInt32Array(69, 68, 70), PackedInt32Array(70, 68, 67), PackedInt32Array(70, 67, 71), PackedInt32Array(73, 72, 74), PackedInt32Array(74, 72, 77), PackedInt32Array(74, 77, 76), PackedInt32Array(74, 76, 75), PackedInt32Array(81, 80, 78), PackedInt32Array(78, 80, 79)]
+vertices = PackedVector3Array(-6.554253, 0.5, 3.6499996, -6.254253, 0.5, 3.6499996, -6.254253, 0.5, 2.8999996, 6.1957474, 0.5, 2.8999996, 6.1957474, 0.5, 3.6499996, 6.645748, 0.5, 3.6499996, -5.3542533, 0.5, -0.70000076, -5.054253, 0.5, -0.85000086, -5.054253, 0.5, -1.6000009, -6.554253, 0.5, -4.450001, 3.0457478, 0.5, -1.6000009, 3.0457478, 0.5, -0.85000086, 3.6457481, 0.5, -0.85000086, 3.6457481, 0.5, -1.6000009, -1.904253, 0.5, -2.8000011, -1.6042528, 0.5, -1.6000009, 1.6957474, 0.5, -1.4500008, 2.1457472, 0.5, -1.900001, 1.845747, 0.5, -3.1000009, 0.9457474, 0.5, -3.1000009, 4.9957466, 0.5, -1.6000009, 4.9957466, 0.5, -0.85000086, 5.4457474, 0.5, -0.70000076, -3.7042532, 0.5, -1.6000009, -3.7042532, 0.5, -0.85000086, -2.9542532, 0.5, -0.85000086, -2.9542532, 0.5, -1.6000009, 4.2457466, 0.5, -6.8500013, 4.395748, 0.5, -5.800001, 6.645748, 0.5, -7.6000013, 3.0457478, 0.5, -3.1000009, 2.8957472, 0.5, -3.7000008, 2.1457472, 0.5, -3.7000008, -2.2042532, 0.5, -7.150001, 1.095747, 0.5, -6.8500013, 1.9957476, 0.5, -6.8500013, -2.5042534, 0.5, -1.900001, 0.7957468, 0.5, -4.150001, 1.2457476, 0.5, -4.450001, 1.3957472, 0.5, -5.3500013, 0.9457474, 0.5, -5.800001, -1.3042526, 0.5, -5.3500013, -1.3042526, 0.5, -4.300001, -5.204253, 0.5, 2.2999992, -5.204253, 0.5, 0.94999886, 2.2957468, 0.5, -5.950001, 3.0457478, 0.5, -5.950001, 3.345747, 0.5, -6.8500013, 5.4457474, 0.5, 0.19999886, -3.2542534, 0.5, -2.9500008, -3.1042528, 0.5, -3.8500009, -3.7042532, 0.5, -4.300001, -3.7042532, 0.5, -5.3500013, -3.1042528, 0.5, -5.800001, -3.2542534, 0.5, -6.7000012, 4.5457478, 0.5, -1.900001, 3.9457474, 0.5, -3.1000009, 3.4957466, 0.5, -5.500001, 3.6457481, 0.5, -4.450001, 4.2457466, 0.5, -4.150001, -1.904253, 0.5, -3.8500009, -1.904253, 0.5, -6.8500013, -1.904253, 0.5, -5.800001, -2.8042526, 0.5, -2.500001, -4.604253, 0.5, -1.900001, 4.2457466, 0.5, -3.400001, 5.145748, 0.5, 0.94999886, 5.2957478, 0.5, 2.2999992, -2.8042526, 0.5, -7.150001, -6.554253, 0.5, -7.6000013, -6.704253, 0.5, -5.800001, -12.704253, 0.5, -5.950001, -12.704253, 0.5, -4.450001, -1.6042528, 0.5, -0.85000086, 1.6957474, 0.5, -0.85000086, -2.8042526, 1.25, -4.300001, -1.904253, 1.25, -4.6000013, -2.2042532, 1.25, -5.3500013, -3.1042528, 1.25, -5.050001, 2.1457472, 1.25, -4.300001, 3.0457478, 1.25, -4.6000013, 2.7457476, 1.25, -5.3500013, 1.845747, 1.25, -5.050001, -4.7542534, 1.25, 2.8999996, -4.904253, 1.25, 3.1999989, -4.7542534, 1.25, 3.499999, 4.9957466, 1.25, 3.499999, 4.845747, 1.25, 2.8999996)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(13, 12, 10), PackedInt32Array(10, 12, 11), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(19, 16, 15), PackedInt32Array(19, 15, 14), PackedInt32Array(22, 21, 20), PackedInt32Array(26, 25, 23), PackedInt32Array(23, 25, 24), PackedInt32Array(27, 29, 28), PackedInt32Array(28, 29, 22), PackedInt32Array(22, 29, 5), PackedInt32Array(31, 30, 32), PackedInt32Array(32, 30, 18), PackedInt32Array(18, 30, 17), PackedInt32Array(35, 34, 33), PackedInt32Array(36, 26, 23), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(40, 37, 41), PackedInt32Array(41, 37, 42), PackedInt32Array(43, 2, 44), PackedInt32Array(44, 2, 6), PackedInt32Array(45, 35, 46), PackedInt32Array(46, 35, 47), PackedInt32Array(3, 48, 5), PackedInt32Array(5, 48, 22), PackedInt32Array(50, 49, 51), PackedInt32Array(51, 49, 9), PackedInt32Array(53, 52, 54), PackedInt32Array(54, 52, 9), PackedInt32Array(13, 10, 55), PackedInt32Array(55, 10, 56), PackedInt32Array(56, 10, 30), PackedInt32Array(30, 10, 17), PackedInt32Array(58, 57, 59), PackedInt32Array(59, 57, 28), PackedInt32Array(60, 42, 14), PackedInt32Array(14, 42, 37), PackedInt32Array(14, 37, 19), PackedInt32Array(62, 61, 41), PackedInt32Array(41, 61, 40), PackedInt32Array(40, 61, 34), PackedInt32Array(2, 0, 6), PackedInt32Array(6, 0, 9), PackedInt32Array(63, 14, 36), PackedInt32Array(36, 14, 15), PackedInt32Array(63, 36, 49), PackedInt32Array(49, 36, 23), PackedInt32Array(49, 23, 64), PackedInt32Array(49, 64, 9), PackedInt32Array(56, 65, 55), PackedInt32Array(55, 65, 20), PackedInt32Array(59, 28, 65), PackedInt32Array(65, 28, 20), PackedInt32Array(20, 28, 22), PackedInt32Array(44, 66, 43), PackedInt32Array(43, 66, 67), PackedInt32Array(70, 69, 9), PackedInt32Array(9, 69, 54), PackedInt32Array(54, 69, 68), PackedInt32Array(27, 47, 29), PackedInt32Array(29, 47, 33), PackedInt32Array(29, 33, 69), PackedInt32Array(33, 68, 69), PackedInt32Array(9, 52, 51), PackedInt32Array(71, 70, 72), PackedInt32Array(72, 70, 9), PackedInt32Array(47, 35, 33), PackedInt32Array(34, 61, 33), PackedInt32Array(74, 73, 16), PackedInt32Array(16, 73, 15), PackedInt32Array(66, 48, 67), PackedInt32Array(67, 48, 3), PackedInt32Array(9, 64, 8), PackedInt32Array(78, 77, 75), PackedInt32Array(75, 77, 76), PackedInt32Array(80, 79, 81), PackedInt32Array(81, 79, 82), PackedInt32Array(84, 83, 85), PackedInt32Array(85, 83, 87), PackedInt32Array(85, 87, 86)]
 sample_partition_type = 2
 geometry_collision_mask = 4294901761
 cell_size = 0.15
@@ -128,7 +128,8 @@ shadow_mesh = SubResource("ArrayMesh_jxrum")
 environment = SubResource("Environment_iywne")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1256541479]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+transform = Transform3D(0.34421754, 0.7096578, -0.61473584, -0.19873409, 0.69498307, 0.69101614, 0.91761595, -0.115690894, 0.38025856, 0, 0, 0)
+light_energy = 0.06
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=22417174 instance=ExtResource("2_yqjtg")]
@@ -145,7 +146,7 @@ navigation_layers = 3
 [node name="Bar" parent="NavigationRegion3D" unique_id=1974740427 instance=ExtResource("1_uwrxv")]
 
 [node name="CustomerSpawnPoint" type="Marker3D" parent="." unique_id=643920096]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.946214, 0.6562581, -4.0369797)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3824043, 0.51153135, -4.037)
 script = ExtResource("3_kvpfn")
 
 [node name="WaitAreas" type="Node3D" parent="." unique_id=1490713742]
@@ -330,15 +331,9 @@ required_group = "shaker"
 [node name="Shaker" parent="Shaker Zone" unique_id=2091606909 instance=ExtResource("10_vtaks")]
 transform = Transform3D(1.0101007, 0, 0, 0, 1.0101007, 0, 0, 0, 1.0101007, 0, 0.22698045, 0)
 
-[node name="RecipeBook" parent="." unique_id=1298598325 instance=ExtResource("14_trtic")]
-visible = false
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2130766069]
 
-[node name="Pause Menu" parent="." unique_id=1176290145 instance=ExtResource("16_rysoc")]
-visible = false
-
-[node name="HUD" type="CanvasLayer" parent="." unique_id=2130766069]
-
-[node name="Control" type="Control" parent="HUD" unique_id=524841549]
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=524841549]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -348,14 +343,182 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("15_ca42v")
 
-[node name="UnhappyCustomers" type="Label" parent="HUD/Control" unique_id=1987287141]
+[node name="UnhappyCustomers" type="Label" parent="CanvasLayer/HUD" unique_id=1987287141]
 layout_mode = 1
-offset_left = 28.0
-offset_top = 26.0
-offset_right = 192.0
-offset_bottom = 86.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -235.0
+offset_top = 24.0
+offset_right = 78.0
+offset_bottom = 84.0
+grow_horizontal = 0
 theme_override_font_sizes/font_size = 24
-text = "Unhappy Customers: 0 / 10"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD" unique_id=1796181903]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -73.0
+offset_right = 289.0
+offset_bottom = -28.0
+grow_vertical = 0
+theme_override_constants/separation = 24
+
+[node name="Button" type="Button" parent="CanvasLayer/HUD/HBoxContainer" unique_id=1611764685]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "Tab"
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/HBoxContainer" unique_id=1174758508]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Show Controls"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HUD" unique_id=1308065318]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -445.0
+offset_right = 333.0
+offset_bottom = -34.0
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD/VBoxContainer" unique_id=534862269]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Button" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer" unique_id=1371610034]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "LMB"
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer" unique_id=421224699]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Interact "
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/HUD/VBoxContainer" unique_id=687127631]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Button" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer4" unique_id=963253011]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "T"
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer4" unique_id=2013225458]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Recipe Book "
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/HUD/VBoxContainer" unique_id=1153353066]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Button" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer3" unique_id=1106917387]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "Q"
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer3" unique_id=614728426]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "/"
+
+[node name="Button2" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer3" unique_id=1820195139]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "E"
+
+[node name="Label2" type="Label" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer3" unique_id=582322835]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "  Pour Left / Right"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/HUD/VBoxContainer" unique_id=788525867]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Button" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer2" unique_id=646331907]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "W"
+
+[node name="Button2" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer2" unique_id=2116133896]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "A"
+
+[node name="Button3" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer2" unique_id=1692860682]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "S"
+
+[node name="Button4" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer2" unique_id=859486427]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "D"
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer2" unique_id=804908386]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "   Move"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="CanvasLayer/HUD/VBoxContainer" unique_id=2071947911]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Button" type="Button" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer5" unique_id=182658307]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "Esc"
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/VBoxContainer/HBoxContainer5" unique_id=1940166728]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Pause"
+
+[node name="RecipeBook" parent="CanvasLayer" unique_id=1298598325 instance=ExtResource("14_trtic")]
+visible = false
+
+[node name="Pause Menu" parent="CanvasLayer" unique_id=1176290145 instance=ExtResource("16_rysoc")]
+visible = false
 
 [node name="OrderTicketRail" type="Node3D" parent="." unique_id=1535169875]
 
