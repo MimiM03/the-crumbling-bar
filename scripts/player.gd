@@ -11,6 +11,9 @@ const SPEED = 5.0
 const MOUSE_SENSITIVITY = 0.5
 enum Target {ZONE, PICKABLE, ROCKS_GLASS, HIGH_GLASS, SHOT_GLASS, CUSTOMER}
 
+const JUMP_VELOCITY = 4.5
+const GRAVITY = 9.8
+
 # Define the Target Orientations
 # This creates a rotation of 0 on Y
 var upright_quad = Quaternion(Vector3.UP, deg_to_rad(0))
@@ -29,6 +32,8 @@ var mouse_visible := false
 var is_in_cutscene: bool = false
 var cutscene_timer = 0.0
 var glass_spawn_location
+var _pour_station: Node = null
+@onready var audio_manager = $"../AudioManager"
 
 func _ready() -> void:
 	# Mouse invisible in game (only crosshair)
@@ -96,6 +101,13 @@ func _physics_process(delta: float) -> void:
 	if is_in_cutscene:
 		cutscene_timer += delta
 	if !is_in_cutscene:
+		# Apply gravity
+		if not is_on_floor():
+			velocity.y -= GRAVITY * delta
+		
+		# Jump
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 		# Get the input direction and handle the movement/deceleration.		
 		var input_dir := Input.get_vector("left", "right", "forward", "back")
 		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -107,9 +119,14 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		move_and_slide()
+	if is_in_cutscene and _pour_station != null and _pour_station.has_method("refresh_pour_meter"):
+		_pour_station.refresh_pour_meter()
 	var rotation_speed =  deg_to_rad(135) / 0.25
-		# Handle pouring (Q left hand/E right hand):
-	if pickedObjectRight:
+	# Handle pouring (Q left hand/E right hand):
+		
+	var is_pouring_now = false
+	
+	if pickedObjectRight and !pickedObjectRight.is_in_group("ticket"):
 		var target_right
 		var target = pour_quat_right
 		if Input.is_action_pressed("pour_right"):
@@ -124,8 +141,9 @@ func _physics_process(delta: float) -> void:
 		# Smoothly interpolate the entire rotation at once
 		# slerp handles all axes simultaneously for a "perfect" arc
 		pickedObjectRight.quaternion = pickedObjectRight.quaternion.slerp(target_right, rotation_speed * delta)
-		can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), target, delta)
-	if pickedObjectLeft:
+		if can_pour(pickedObjectRight, Input.is_action_pressed("pour_right"), target, delta):
+			is_pouring_now = true
+	if pickedObjectLeft and !pickedObjectLeft.is_in_group("ticket"):
 		var target_left
 		var target = pour_quat_left
 		if Input.is_action_pressed("pour_left"):
@@ -138,8 +156,13 @@ func _physics_process(delta: float) -> void:
 			target_left = upright_quad
 			
 		pickedObjectLeft.quaternion = pickedObjectLeft.quaternion.slerp(target_left, rotation_speed * delta)
-		can_pour(pickedObjectLeft, Input.is_action_pressed("pour_left"), target, delta)
+		if can_pour(pickedObjectLeft, Input.is_action_pressed("pour_left"), target, delta):
+			is_pouring_now = true
 	
+	if is_pouring_now:
+		audio_manager.start_pour()
+	else:
+		audio_manager.stop_pour()
 	
 	
 # Gets the object on the crosshair
@@ -176,17 +199,20 @@ func pick_up_object(object):
 	
 	
 	# Fix position and parent
-	var tween = create_tween()
+	var tween = create_tween().parallel()
 	$Camera3D/RayCast3D.add_exception(object)
 	if directionRight:
 		object.reparent(%CarryObjectRightMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectRightMarker.global_transform, 0.2)
+		
 		pickedObjectRight = object
 	else:
 		object.reparent(%CarryObjectLeftMarker)
 		tween.tween_property(object, "global_transform", %CarryObjectLeftMarker.global_transform, 0.2)
 		pickedObjectLeft = object
-	
+		
+	if object.is_in_group("ticket"):
+			tween.parallel().tween_property(object, "quaternion", Quaternion(Vector3.RIGHT, deg_to_rad(90)), 0.2)
 	tween.finished.connect(func():
 		is_in_cutscene = false
 	)
@@ -272,20 +298,24 @@ func ZonePickableOrGlass():
 	return null
 
 # Pour feature
-func start_pouring(shaker):
+func start_pouring(station):
 	is_in_cutscene = true
-	
+	_pour_station = station
+	if station.has_method("show_pour_meter"):
+		station.show_pour_meter()
+
 	var tween = create_tween().set_parallel(true)
+
+	var shaker_forward = station.global_transform.basis.z
 	
-	var shaker_forward = shaker.global_transform.basis.z
 	shaker_forward.y = 0
 	shaker_forward = shaker_forward.normalized()
 
-	var target_player_pos = shaker.global_position + (shaker_forward * 1.1)
+	var target_player_pos = station.global_position + (shaker_forward * 1.1)
 	target_player_pos.y = self.global_position.y
 
 	tween.tween_property(self, "global_position", target_player_pos, 0.3)
-	if shaker.is_in_group("shaker"):
+	if station.is_in_group("shaker"):
 		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, PI), 0.3)
 	else:
 		tween.tween_property(self, "quaternion", Quaternion(Vector3.UP, 0), 0.3)
@@ -296,21 +326,25 @@ func start_pouring(shaker):
 	tween.tween_property(camera, "fov", 60, 0.3).set_trans(Tween.TRANS_SINE)
 
 	if pickedObjectRight:
-		var target_transform = shaker.markerRight.global_transform
+		var target_transform = station.markerRight.global_transform
 
-		pickedObjectRight.reparent(shaker.markerRight)
+		pickedObjectRight.reparent(station.markerRight)
 		# Reparent first, then tween in global space so bottles keep world alignment.
 		tween.tween_property(pickedObjectRight, "global_transform", target_transform, 0.3)
 		#pickedObjectRight = null
 	if pickedObjectLeft:
-		var target_transform = shaker.markerLeft.global_transform
+		var target_transform = station.markerLeft.global_transform
 
-		pickedObjectLeft.reparent(shaker.markerLeft)
+		pickedObjectLeft.reparent(station.markerLeft)
 		# Same for left hand: preserve world-space snap after reparenting.
 		tween.tween_property(pickedObjectLeft, "global_transform", target_transform, 0.3)
 		#pickedObjectLeft = null
 
 func reset_pour():
+	if _pour_station != null and _pour_station.has_method("hide_pour_meter"):
+		_pour_station.hide_pour_meter()
+	_pour_station = null
+
 	var tween = create_tween().set_parallel(true).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	if pickedObjectRight:
 		pickedObjectRight.reparent(%CarryObjectRightMarker)
@@ -337,15 +371,16 @@ func reset_pour():
 
 func can_pour(object, is_pouring, target_quat, _delta):
 	if object == null or not is_pouring:
-		return
+		return false
 	
 	#Check if bottle is rotated
 	const ANGLE_TOLERANCE:= 10.0
 	var angle_diff_deg = rad_to_deg(object.quaternion.angle_to(target_quat))
 	if angle_diff_deg > ANGLE_TOLERANCE:
-		return
+		return false
 		
 	object.pour(_delta)
+	return true
 
 func pick_glass(target):
 	if !pickedObjectLeft or !pickedObjectRight:
@@ -429,12 +464,14 @@ func debug_spawn_matching_drink() -> void:
 	get_node(glassContainer).add_child(glass, true)
 	glass.global_position = camera.global_position + camera.global_transform.basis.z * -0.5
 
+	var composition := {}
+	var total_ml := 0.0
 	for ing in order.get("ingredients", []):
 		var item: String = ing.get("item", "")
-		var amount: float = ing.get("amount", 0.0)
-		glass.amount_per_drink_type[item] = amount
-		glass.current_ml += amount
-
-	glass.update_visual()
+		var amount: float = float(ing.get("amount", 0.0))
+		composition[item] = amount
+		total_ml += amount
+	if glass.has_method("get_liquid"):
+		glass.get_liquid(total_ml, composition)
 	pick_up_object(glass)
 	print("[DEBUG] Glass ready — now click them to serve.")

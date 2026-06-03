@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://du5oop4mlsolj"
+path="res://.godot/imported/Space Jazz.mp3-1afd7c1f513c474a4644cc8639c5cf8a.mp3str"
+
+[deps]
+
+source_file="res://audio/music/Space Jazz.mp3"
+dest_files=["res://.godot/imported/Space Jazz.mp3-1afd7c1f513c474a4644cc8639c5cf8a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

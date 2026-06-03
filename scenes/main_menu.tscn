@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ds7a5a3qvxjdf"]
 
-[ext_resource type="Script" uid="uid://denx11eie2qly" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="PackedScene" uid="uid://dp708n1jlya2f" path="res://scenes/options.tscn" id="2_ekxnf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vue75"]

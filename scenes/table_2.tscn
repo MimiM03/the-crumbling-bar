@@ -21,7 +21,7 @@ transform = Transform3D(0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0
 script = ExtResource("1_plky7")
 
 [node name="Chair" parent="." unique_id=1931849647 instance=ExtResource("2_6xk1l")]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -0.00032544133, -0.08380228, 1.6146046)
+transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, -0.00032544133, -0.08380228, 1.6146046)
 
 [node name="Chair2" parent="." unique_id=2113236478 instance=ExtResource("2_6xk1l")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -0.00032544133, -0.08380228, -1.5903519)
